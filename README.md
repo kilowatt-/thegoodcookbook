@@ -9,9 +9,9 @@ The GoodCookBook is a recipe discovery app targeting anybody who cooks or wants 
 
 ### Project task requirements: 
 #### 3-5 minimal requirements (will definitely complete):
-Give users the ability to add a new recipe by creating a “Add new recipe” button on the home page that will then lead users to a form they can fill out and submit.
-Have a homepage that shows all the recipes as cards.
-View individual recipes by clicking on them from the home page which will open a an individual recipe view. This individual recipe view will have all the recipe information including  time, cuisine, food type, difficulty, ingredients, and instructions.
+* Give users the ability to add a new recipe by creating a “Add new recipe” button on the home page that will then lead users to a form they can fill out and submit.
+* Have a homepage that shows all the recipes as cards.
+* View individual recipes by clicking on them from the home page which will open a an individual recipe view. This individual recipe view will have all the recipe information including  time, cuisine, food type, difficulty, ingredients, and instructions.
 #### 3-7 "standard" requirements (will most likely complete):
 * Users will be able to search for recipes that use a subset of the ingredients they input (i.e if a user searches for recipes that use tomatoes and pasta, our search engine will return a list of ingredients that use tomatoes and pasta, tomatoes only, or pasta only)
 * Allow users to rate recipes. This will be added to the individual recipe view and users will be able to see each recipe’s rating on the home page.
