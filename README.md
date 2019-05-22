@@ -30,7 +30,7 @@ The GoodCookBook is a recipe discovery app targeting anybody who cooks or wants 
 * Get recipes from the database/backend
 * Populate cards with recipe data from backend
 * Implement grid view to hold each card
-* Add a new recipe: 
+#### Add a new recipe: 
 * Add recipe to database once user submits and bring user back to refreshed home view
 * Frontend form for user to fill out (text boxes for title, time, and instructions. Drop downs for difficulty, food type, and cuisine. Input field for ingredients)
 * Button on the homepage that will open a dialog box that shows the recipe form
@@ -38,3 +38,6 @@ The GoodCookBook is a recipe discovery app targeting anybody who cooks or wants 
 * Alert box will take user to home page if user clicks confirm and will take user back to the form if user clicks cancel
 
 ### Draw 2-3 rough sketch prototypes of some key tasks of your app. Sketch these physically on paper and then scan and add to your repo. 
+
+![prototype](prototype.jpeg)
+
