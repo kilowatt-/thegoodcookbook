@@ -1,4 +1,4 @@
-export default const FoodType = {
+export const FoodType = {
 	BREAKFAST: 'breakfast',
 	LUNCH: 'lunch',
 	DINNER: 'dinner',
