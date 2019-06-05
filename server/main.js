@@ -1,31 +1,64 @@
 import { Meteor } from 'meteor/meteor';
-import Links from '/imports/api/links';
+import Recipes from '/imports/api/recipes';
 
-function insertLink(title, url) {
-  Links.insert({ title, url, createdAt: new Date() });
+function insertRecipe(id, name, ingredients, procedure, difficulty, time, type, cuisine) {
+  Recipes.insert({
+    recipeID: id,
+    recipeName: name,
+    ingredients: ingredients,
+    procedure: procedure,
+    difficulty: difficulty,
+    time: time,
+    foodType: type,
+    cuisine: cuisine
+  });
 }
 
 Meteor.startup(() => {
   // If the Links collection is empty, add some data.
-  if (Links.find().count() === 0) {
-    insertLink(
-      'Do the Tutorial',
-      'https://www.meteor.com/tutorials/react/creating-an-app'
+  if (Recipes.find().count() === 0) {
+    insertRecipe(
+      1,
+      "Mom's Spaghetti",
+      "tomato sauce, pasta, mushrooms, chicken stock",
+      "blah blah blah",
+      "Easy",
+      30,
+      "Dinner",
+      "Western"
     );
 
-    insertLink(
-      'Follow the Guide',
-      'http://guide.meteor.com'
+    insertRecipe(
+      2,
+      "Dad's Fried Rice",
+      "rice, peas, eggs, soy sauce, sausage",
+      "blah blah blah",
+      "Easy",
+      15,
+      "Dinner",
+      "Asian"
     );
 
-    insertLink(
-      'Read the Docs',
-      'https://docs.meteor.com'
+    insertRecipe(
+      3,
+      "Suzy's Mashed Potatoes",
+      "potatoes, garlic butter, salt",
+      "blah blah blah",
+      "Easy",
+      10,
+      "Dinner",
+      "Western"
     );
 
-    insertLink(
-      'Discussions',
-      'https://forums.meteor.com'
+    insertRecipe(
+      4,
+      "Bob's benedict",
+      "english muffin, eggs, cheese, ham",
+      "blah blah blah",
+      "Hard",
+      30,
+      "Breakfast",
+      "Western"
     );
   }
 });
