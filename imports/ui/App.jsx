@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipeCards from './RecipeCards.jsx';
+import RecipeCards from './components/RecipeCards.jsx';
 
 const App = () => (
   <div>
