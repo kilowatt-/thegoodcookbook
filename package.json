@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.3.4",
+<<<<<<< HEAD
     "formik": "^1.5.7",
+=======
+    "@material-ui/icons": "^4.0.1",
+>>>>>>> 538eb01195888ec6b86488ec96f16b513e849360
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.5.0",
     "react-dom": "^16.8.6",
