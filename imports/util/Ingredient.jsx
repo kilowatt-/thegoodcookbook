@@ -1,6 +1,5 @@
 class Ingredient {
-
-	function Ingredient(name, uom) {
+	constructor(name, uom) {
 		this.name = name;
 		this.uom = uom;
 	}
