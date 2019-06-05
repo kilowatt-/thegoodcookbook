@@ -1,0 +1,25 @@
+body {
+	font-size:12px;
+}
+h1 {
+	border-bottom: 1px dotted gray;
+}
+
+label {
+	display: inline-block;
+	vertical-align: middle;
+	width: 80px;
+}
+
+input {
+	display: inline-block;
+	vertical-align: middle
+}
+
+div.submit_form {
+	width: 100%;
+}
+
+.bt_submit {
+	float:right;
+}
