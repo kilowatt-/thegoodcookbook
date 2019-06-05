@@ -1,0 +1,14 @@
+h1 {
+	border-bottom: 1px dotted gray;
+}
+
+label {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100px;
+}
+
+input {
+	display: inline-block;
+	vertical-align: middle
+}
