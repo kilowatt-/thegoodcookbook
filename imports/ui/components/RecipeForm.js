@@ -1,5 +1,5 @@
-import { Difficulty } from './Difficulty.js';
-import { FoodType } from './FoodType.js'
+import { Difficulty } from '../../util/Difficulty.js';
+import { FoodType } from '../../util/FoodType.js'
 import React from 'react';
 import '../style/RecipeForm.css';
 
@@ -28,8 +28,6 @@ class RecipeForm extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-
-		
 	}
 
 	handleChange(event) {
