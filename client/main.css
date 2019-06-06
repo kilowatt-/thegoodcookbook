@@ -1,4 +1,9 @@
 body {
   padding: 10px;
   font-family: sans-serif;
+  background-color: wheat;
+}
+
+.MuiDialog-paperFullWidth {
+  height: 100%;
 }

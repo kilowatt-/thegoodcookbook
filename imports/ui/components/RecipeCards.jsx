@@ -10,7 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import { setRecipeDetails } from '../actions';
-import RecipeDetails from './RecipeDetails'
+import RecipeDetails from './RecipeDetails';
+import '../style/RecipeCards.css';
 
 class RecipeCards extends Component {
   state = {
@@ -35,25 +36,33 @@ class RecipeCards extends Component {
   render() {
     return (
       <div className="card-container">
-        <Grid container spacing={2} justify="center">
           {this.props.recipes.map(recipe => (
-            <Grid item key={recipe.recipeID}>
+            <div className="card" key={recipe.recipeID}>
               <Card>
+                <CardMedia
+                  component="img"
+                  src="https://i.ibb.co/27fCh60/IMG-0353.jpg"
+                  style={{height: "50%"}}
+                />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {recipe.recipeName}
-                  </Typography>
-                  <Typography component="p">{recipe.difficulty}</Typography>
+                  <div className="card-title-text">
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {recipe.recipeName}
+                    </Typography>
+                  </div>
+                  <div className="card-summary-info">
+                    <Typography>{recipe.difficulty}</Typography>
+                    <Typography>{recipe.time + " mins"}</Typography>
+                  </div>
                 </CardContent>
                 <CardActions>
-                  <Button onClick={()=>this.openDetailedView(recipe)} size="small" color="primary">
+                  <Button onClick={()=>this.openDetailedView(recipe)} size="small">
                     See Recipe
                   </Button>
                 </CardActions>
               </Card>
-            </Grid>
+            </div>
           ))}
-        </Grid>
         <RecipeDetails
           dialogOpen={this.state.detailDialogOpen}
           closeDialog={this.closeRecipeDetails}
