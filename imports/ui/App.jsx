@@ -5,7 +5,8 @@ import PostRecipeButton from './components/PostRecipeButton.jsx'
 
 const App = () => (
   <div>
-    <h1>Welcome to Meteor!</h1> <PostRecipeButton />
+    <h1>the good cook book</h1>
+    <PostRecipeButton />
     <RecipeCards />
   </div>
 );

@@ -21,13 +21,17 @@ const styles = theme => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
+  dialog: {
+    width: '80%',
+    height: '80%',
+  },
 });
 
 const DialogTitle = withStyles(styles)(props => {
   const { children, classes, onClose } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root}>
-      <Typography variant="h6">{children}</Typography>
+      <Typography variant="h5">{children}</Typography>
       {onClose ? (
         <IconButton aria-label="Close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
@@ -48,6 +52,7 @@ export default class CommonDialog extends Component {
     return (
       <div>
         <Dialog
+          fullWidth
           onClose={()=>this.props.closeDialog}
           aria-labelledby="customized-dialog-title"
           open={this.props.dialogOpen}>

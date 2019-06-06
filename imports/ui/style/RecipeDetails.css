@@ -1,0 +1,19 @@
+
+.recipe-details-category-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.recipe-details-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-item {
+  padding: 5px;
+}
+
+.recipe-item-label {
+  padding-bottom: 8px;
+}

@@ -15,7 +15,6 @@ function insertRecipe(id, name, ingredients, procedure, difficulty, time, type, 
 }
 
 Meteor.startup(() => {
-  // If the Links collection is empty, add some data.
   if (Recipes.find().count() === 0) {
     insertRecipe(
       1,
