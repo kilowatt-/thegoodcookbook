@@ -48,7 +48,9 @@ class RecipeDetails extends Component {
           <div className="recipe-item-label">
             <Typography variant="h6">Ingredients:</Typography>
           </div>
-          {this.props.recipe.ingredients}
+          <ul>
+            {this.getIngredientsList(this.props.recipe.ingredients)}
+          </ul>
         </div>
         <div className="recipe-procedure recipe-item">
           <div className="recipe-item-label">
@@ -58,6 +60,22 @@ class RecipeDetails extends Component {
         </div>
       </div>
     );
+  }
+
+  getIngredientsList(ingredients) {
+    if (ingredients instanceof Array ) {
+      return ingredients.map(ingredient => {
+        return (<li key={ingredient.ingredient.name}>
+                  {ingredient.quantity +
+                    " " +
+                    ingredient.ingredient.uom +
+                    " " +
+                    ingredient.ingredient.name}
+                  </li>);
+      });
+    } else {
+      return (<li key="0">{ingredients}</li>);
+    }
   }
 
   getDialogActions() {
