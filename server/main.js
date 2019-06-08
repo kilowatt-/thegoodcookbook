@@ -23,7 +23,7 @@ Meteor.startup(() => {
     let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom), 
         newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
 
-    insert(spaghetti);
+    Recipes.insert(spaghetti);
 
     let rice = new Ingredient('Rice', UOM.OUNCE);
     let peas = new Ingredient('Peas', UOM.GRAM);
@@ -32,7 +32,7 @@ Meteor.startup(() => {
 
     let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)], "blah blah blah", Difficulty.EASY, 15, FoodType.DINNER, "Asian");
 
-    insert(friedRice);
+    Recipes.insert(friedRice);
 
     let potatoes = new Ingredient('Potatoes', UOM.GRAM);
     let garlicButter = new Ingredient('Garlic Butter', UOM.OUNCE);
@@ -40,7 +40,7 @@ Meteor.startup(() => {
 
     let mashedPotatoes = new Recipe('Suzy\'s Mashed Potatoes', [newMap(3,potatoes),newMap(50,garlicButter),newMap(30,salt)], "blah blah blah", Difficulty.EASY, 10, FoodType.DINNER, "Western");
 
-    insert(mashedPotatoes);
+    Recipes.insert(mashedPotatoes);
 
     let muffin = new Ingredient("English Muffin", UOM.PIECES);
     let cheese = new Ingredient("Cheese", UOM.GRAM);
@@ -49,6 +49,6 @@ Meteor.startup(() => {
     let benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)], 
         "blah blah blah", Difficulty.HARD, 30, FoodType.BREAKFAST, "Western");
 
-    insert(benedict);
+    Recipes.insert(benedict);
   }
 });
