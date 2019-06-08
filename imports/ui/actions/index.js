@@ -4,3 +4,8 @@ export const setRecipeDetails = recipe => {
     recipe: recipe
   }
 }
+
+
+export const updateInput = val => {
+	return { type: 'UPDATE_INPUT', payload: val }
+}
