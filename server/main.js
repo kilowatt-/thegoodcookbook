@@ -2,10 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import Recipes from '/imports/api/recipes';
 import Recipe from '../imports/util/Recipe.jsx';
 import Ingredient from '../imports/util/Ingredient.jsx';
-import UOM from '../imports/util/UnitOfMeasurement.jsx';
+import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
 import Difficulty from '../imports/util/Difficulty.jsx';
-import FoodType from '../imports/util/FoodType.jsx'
+import FoodType from '../imports/util/FoodType.jsx';
+import QuantityIngredientMap from '../imports/util/QuantityIngredientMap.jsx'
 
+function newMap(qty, ingredient) {
+    return new QuantityIngredientMap(qty, ingredient);
+}
 
 Meteor.startup(() => {
 
@@ -16,7 +20,8 @@ Meteor.startup(() => {
     let mushroom = new Ingredient('Mushroom', UOM.GRAM);
     let chickenStock = new Ingredient('Chicken Stock', UOM.MILLILITRE);
 
-    let spaghetti = new Recipe('Mom\'s Spaghetti', [tomatoSauce, pasta, mushroom, chickenStock], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
+    let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom), 
+        newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
 
     insert(spaghetti);
 
@@ -25,7 +30,7 @@ Meteor.startup(() => {
     let eggs = new Ingredients('Eggs', UOM.PIECES)
     let sausage = new Ingredients('Sausage', UOM.PIECES);
 
-    let friedRice = new Recipe("Dad\'s Fried Rice", [rice,peas,eggs,sausage], "blah blah blah", Difficulty.EASY, 15, FoodType.DINNER, "Asian");
+    let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)], "blah blah blah", Difficulty.EASY, 15, FoodType.DINNER, "Asian");
 
     insert(friedRice);
 
@@ -33,7 +38,7 @@ Meteor.startup(() => {
     let garlicButter = new Ingredient('Garlic Butter', UOM.OUNCE);
     let salt = new Ingredient('Salt', UOM.TEASPOON);
 
-    let mashedPotatoes = new Recipe('Suzy\'s Mashed Potatoes', [potatoes,garlicButter,salt], "blah blah blah", Difficulty.EASY, 10, FoodType.DINNER, "Western");
+    let mashedPotatoes = new Recipe('Suzy\'s Mashed Potatoes', [newMap(3,potatoes),newMap(50,garlicButter),newMap(30,salt)], "blah blah blah", Difficulty.EASY, 10, FoodType.DINNER, "Western");
 
     insert(mashedPotatoes);
 
@@ -41,7 +46,8 @@ Meteor.startup(() => {
     let cheese = new Ingredient("Cheese", UOM.GRAM);
     let ham = new Ingredient("Ham", UOM.GRAM);
 
-    let benedict = new Recipe("Bob's Benedict", [muffin, cheese, ham], "blah blah blah", Difficulty.HARD, 30, FoodType.BREAKFAST, "Western");
+    let benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)], 
+        "blah blah blah", Difficulty.HARD, 30, FoodType.BREAKFAST, "Western");
 
     insert(benedict);
   }
