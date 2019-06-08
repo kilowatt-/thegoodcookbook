@@ -10,6 +10,7 @@ const EMPTY_RECIPE = {
 	foodType: '',
 	cuisine: ''
 }
+
 const recipeDetailsReducer = (recipe: {}, action) => {
 	if (action.type === 'SET_RECIPE_DETAILS') {
 		return action.recipe;
@@ -18,8 +19,21 @@ const recipeDetailsReducer = (recipe: {}, action) => {
   }
 };
 
+const defaultInputs = {name:'', text: ''}
+const inputReducer = (inputs = defaultInputs, action) => {
+	if (action.type === "UPDATE_INPUT") {
+		const field = action.payload[0];
+		const value = action.payload[1];
+		return {...inputs, [field]:value};
+	}
+	return inputs;
+};
+
+
 const reducers = combineReducers({
-  detailedRecipe: recipeDetailsReducer
+	detailedRecipe: recipeDetailsReducer,
+	inputReducer: inputReducer
 });
+
 
 export default reducers;

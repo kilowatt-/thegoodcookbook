@@ -34,9 +34,13 @@ class RecipeCards extends Component {
   };
 
   render() {
+    let recipes = this.props.recipes
+    if (this.props.searchText){
+      recipes = recipes.filter((item) => item.recipeName.includes(this.props.searchText))
+    }
     return (
       <div className="card-container">
-          {this.props.recipes.map(recipe => (
+          {recipes.map(recipe => (
             <div className="card" key={recipe.recipeID}>
               <Card>
                 <CardMedia
@@ -72,7 +76,11 @@ class RecipeCards extends Component {
   }
 }
 
+const mapStateToProps = (state) => { 
+	return { searchText: state.inputReducer.searchBar }; 
+}
+
 export default compose(
   withTracker(() => {
     return {recipes: Recipes.find().fetch(),};
-  }),connect(null, { setRecipeDetails }))(RecipeCards);
+  }),connect(mapStateToProps, { setRecipeDetails }))(RecipeCards);
