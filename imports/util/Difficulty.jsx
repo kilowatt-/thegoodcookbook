@@ -1,5 +1,5 @@
 export const Difficulty = {
-	EASY: 'easy',
-	MEDIUM: 'medium',
-	HARD: 'hard'
+	EASY: 'Easy',
+	MEDIUM: 'Medium',
+	HARD: 'Hard'
 }

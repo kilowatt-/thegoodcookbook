@@ -12,7 +12,12 @@ class PostRecipeButton extends React.Component {
 		};
 
 		this.handleClick = this.handleClick.bind(this);
-		this.close = this.close.bind(this);
+		this.closeDialog = this.closeDialog.bind(this);
+		this.callback = this.callback.bind(this);
+	}
+
+	callback() {
+		this.closeDialog();
 	}
 
 	handleClick(event) {
@@ -25,7 +30,7 @@ class PostRecipeButton extends React.Component {
 		});
 	}
 
-	close() {
+	closeDialog() {
 		this.setState({
 			dialogOpen:false
 		})
@@ -34,8 +39,8 @@ class PostRecipeButton extends React.Component {
 	render() {
 		return (
 			<div className="post_new_recipe">
-			<Button  onClick= { this.handleClick }>Post New Recipe</Button>
-			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={this.close} dialogContent= {<RecipeForm />}/>
+			<Button variant='contained' color='default' onClick= { this.handleClick }>Post New Recipe</Button>
+			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={this.closeDialog} dialogContent= {<RecipeForm callback={this.callback} />}/>
 			</div>
 			)
 	}
