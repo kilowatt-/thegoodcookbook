@@ -9,7 +9,13 @@ import {UOM} from '../../util/UnitOfMeasurement.jsx';
 import RadioButton from '@material-ui/core/Radio';
 import Ingredient from '../../util/Ingredient';
 import Recipe from '../../util/Recipe';
-import Recipes from '../../api/recipes'
+import Recipes from '../../api/recipes';
+import Select from '@material-ui/core/Select';
+import IngredientInputs from './IngredientInputs.jsx';
+import QuantityIngredientMap from '../../util/QuantityIngredientMap';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
+
 
 class RecipeForm extends React.Component {
 
@@ -17,76 +23,148 @@ class RecipeForm extends React.Component {
 		return true;
 	}
 
+	closeDialog() {
+		this.props.callback();
+	}
+
 	constructor(props) {
 		super(props);
 
 
+		let ingredient = new Ingredient('', UOM.CUP);
+		let qtyMap = new QuantityIngredientMap(1, ingredient);
+
+		let recipe = new Recipe('', [qtyMap], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '');
+
 		this.state = {
-			recipeName: '',
-			ingredients: [],
-			procedure: '',
-			difficulty: Difficulty.EASY,
-			time: 0,
-			foodType: FoodType.BREAKFAST,
-			cuisine: ''
+			recipe: recipe
 		}
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.addNewIngredient = this.addNewIngredient.bind(this);
+		this.removeIngredient = this.removeIngredient.bind(this);
+
+	}
+
+	removeIngredient(id) {
+		event.preventDefault();
+
+		console.log(id);
+
+		let recipe = this.state.recipe;
+
+		let mapList = recipe.ingredients.slice();
+
+		mapList.splice(id, 1);
+
+		recipe.ingredients = mapList;
+
+		this.setState({
+			recipe: recipe
+		});
 
 	}
 
 	addNewIngredient(event) {
 		event.preventDefault();
-	}
 
-	
+		let recipe = this.state.recipe;
+
+		let ingredient = new Ingredient('', UOM.CUP);
+		let qtyMap = new QuantityIngredientMap(1, ingredient);
+
+		let mapList = this.state.recipe.ingredients.slice();
+
+		mapList.push(qtyMap);
+
+		recipe.ingredients = mapList;
+
+		this.setState({
+			recipe: recipe
+		});
+	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 
-		if (this.validate()) {
-			let recipe = new Recipe(this.state.recipeName, this.state.ingredients, this.state.procedure,
-				this.state.difficulty, this.state.time, this.state.foodType, this.state.cuisine);
-			Recipes.insert(recipe);
+		Recipes.insert(this.state.recipe);
+		this.closeDialog();
 
-		}
 	}
 
 	handleChange(event) {
+		let name = [event.target.name][0];
+
+		console.log(name);
+		let recipe = this.state.recipe;
+
+		if(!isNaN(parseInt(name[name.length-1], 10))) {
+			let idx = parseInt(name.substring(4), 10);
+
+
+			let ingredients = recipe.ingredients.slice();
+			let map = ingredients[idx];
+
+			let elemName = name.substring(0, 3);
+
+			switch (elemName) {
+				case 'ing':
+					map.ingredient.setName(event.target.value);
+					break;
+				case 'uom':
+
+					map.ingredient.setUOM(event.target.value);
+					break;
+				case 'qty':
+					map.setQuantity(event.target.value);
+					break;
+				default:
+					break;
+			}
+
+			recipe[ingredients] = map;
+
+			this.setState({
+				recipe: recipe
+			})
+		}
+
+		else 
+			recipe[event.target.name] = event.target.value;
+
 		this.setState({
-				[event.target.name]: event.target.value
+				recipe: recipe
 			});
+		
 	}
 
 	render() {
-
 		return (
 			<div className="submit_form">
-			<form onSubmit={this.handleSubmit}>
-				<label>Name: </label> <Input type="text" name="recipeName" onChange={ this.handleChange } placeholder="Recipe Name" value = { this.state.recipeName } /><br />
-				<label>Ingredients:</label> <Input type="text" name="ingredients" onChange={ this.handleChange }/><Button type='button' onClick={this.addNewIngredient}>+</Button><br />
-				<label>Difficulty: </label> <RadioButton name="difficulty" value={Difficulty.EASY} onChange = { this.handleChange } checked= {this.state.difficulty === Difficulty.EASY} /> Easy
-											<RadioButton name="difficulty" value={Difficulty.MEDIUM} onChange = { this.handleChange } checked={this.state.difficulty === Difficulty.MEDIUM} /> Medium
-											<RadioButton name="difficulty" value={Difficulty.HARD} onChange = { this.handleChange } checked={this.state.difficulty === Difficulty.HARD} /> Hard<br />
-				<label>Time: </label> <Input type="text" name="time" onChange = { this.handleChange } /> min<br />
+			<ValidatorForm onSubmit={this.handleSubmit}>
+				<label>Recipe Name: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="recipeName" onChange={ this.handleChange } value = { this.state.recipe.recipeName } /><br />
+				<label>Ingredients:</label> <IngredientInputs ingredients={this.state.recipe.ingredients} handleChange = {this.handleChange} addNewIngredient={this.addNewIngredient} removeIngredient={this.removeIngredient}/> <Button type='button' color='primary' onClick={this.addNewIngredient}>+ Add New Ingredient</Button> <br />
+				<label>Difficulty: </label> <RadioButton name="difficulty" value={Difficulty.EASY} onChange = { this.handleChange } checked= {this.state.recipe.difficulty === Difficulty.EASY} /> Easy
+											<RadioButton name="difficulty" value={Difficulty.MEDIUM} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.MEDIUM} /> Medium
+											<RadioButton name="difficulty" value={Difficulty.HARD} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.HARD} /> Hard<br />
+				<label>Time: </label> <TextValidator style={{width:30}} validators={['required', 'isNumber', 'minNumber:1']} errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute']} name="time" onChange = { this.handleChange } value={this.state.recipe.time} /> min<br />
 
-				<label>Food Type:</label>   <RadioButton name="foodType" value={FoodType.BREAKFAST} onChange = { this.handleChange } checked= {this.state.foodType === FoodType.BREAKFAST} />Breakfast
-											<RadioButton name="foodType" value={FoodType.LUNCH} onChange = { this.handleChange } checked={this.state.foodType === FoodType.LUNCH} />Lunch
-											<RadioButton name="foodType" value={FoodType.DINNER} onChange = { this.handleChange } checked={this.state.foodType === FoodType.DINNER} />Dinner
-											<RadioButton name="foodType" value={FoodType.SNACK} onChange = { this.handleChange } checked={this.state.foodType === FoodType.SNACK} />Snack
-											<RadioButton name="foodType" value={FoodType.DESSERT} onChange = { this.handleChange } checked={this.state.foodType === FoodType.DESSERT} />Dessert<br />
+				<label>Food Type:</label>   <RadioButton name="foodType" value={FoodType.BREAKFAST} onChange = { this.handleChange } checked= {this.state.recipe.foodType === FoodType.BREAKFAST} />Breakfast
+											<RadioButton name="foodType" value={FoodType.LUNCH} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.LUNCH} />Lunch
+											<RadioButton name="foodType" value={FoodType.DINNER} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DINNER} />Dinner
+											<RadioButton name="foodType" value={FoodType.SNACK} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.SNACK} />Snack
+											<RadioButton name="foodType" value={FoodType.DESSERT} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DESSERT} />Dessert<br />
 
-				<label>Cuisine: </label> <Input type="text" name="cuisine" onChange={ this.handleChange } value = { this.state.cuisine } /><br />
+				<label>Cuisine: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="cuisine" onChange={ this.handleChange } value = { this.state.recipe.cuisine } /><br />
 
 				<label>Instructions:</label>
-				<TextField id="procedure" name="procedure" rows='10' multiline={true} fullWidth={true} value={this.state.procedure} onChange={this.handleChange} variant='outlined'/><br />
+				<TextValidator validators={['required']} errorMessages={['Required']} id="procedure" name="procedure" rows='10' multiline={true} fullWidth={true} value={this.state.recipe.procedure} onChange={this.handleChange} variant='outlined'/><br />
 
 				<Button type="submit" className="bt_submit">Submit</Button>
 
 
-			</form>
+			</ValidatorForm>
 			</div>
 			)
 	}
