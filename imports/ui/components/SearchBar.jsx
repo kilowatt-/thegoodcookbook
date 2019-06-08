@@ -45,13 +45,6 @@ const styles = {
     },
 };
 
-//const classes = useStyles();
-// const [values, setValues] = React.useState({
-//     name: 'Cat in the Hat',
-//     age: '',
-//     multiline: 'Controlled',
-//     currency: 'EUR',
-// });
 
 class SearchBar extends React.Component {
 
