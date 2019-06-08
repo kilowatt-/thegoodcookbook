@@ -79,7 +79,7 @@ class SearchBar extends React.Component {
                     fullWidth
                     margin="normal"
                     variant="filled"
-                    onChange={event => this.props.updateInput(['search-bar', event.target.value])}
+                    onChange={event => this.props.updateInput(['searchBar', event.target.value])}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -90,7 +90,7 @@ class SearchBar extends React.Component {
                     label="Select"
                     className={classes.textField}
                     value='EUR'
-                    onChange={event => this.props.updateInput(['recipe-type', event.target.value])}
+                    onChange={event => this.props.updateInput(['recipeType', event.target.value])}
                     SelectProps={{
                         MenuProps: {
                             className: classes.menu,
