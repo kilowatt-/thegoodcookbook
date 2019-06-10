@@ -8,7 +8,10 @@ class Recipe {
 		this.time = time;
 		this.foodType = foodType;
 		this.cuisine = cuisine;
+		this.imgUrl = '';
 	}
+
+
 }
 
 export default Recipe;
