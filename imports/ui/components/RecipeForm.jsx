@@ -142,6 +142,7 @@ class RecipeForm extends React.Component {
 	render() {
 		return (
 			<div className="submit_form">
+			{ !this.props.closing ?
 			<ValidatorForm onSubmit={this.handleSubmit}>
 				<label>Recipe Name: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="recipeName" onChange={ this.handleChange } value = { this.state.recipe.recipeName } /><br />
 				<label>Ingredients:</label> <IngredientInputs ingredients={this.state.recipe.ingredients} handleChange = {this.handleChange} addNewIngredient={this.addNewIngredient} removeIngredient={this.removeIngredient}/> <Button type='button' color='primary' onClick={this.addNewIngredient}>+ Add New Ingredient</Button> <br />
@@ -166,6 +167,12 @@ class RecipeForm extends React.Component {
 
 
 			</ValidatorForm>
+			:
+			<div>
+			<p>Are you sure you want to close? All changes will be lost!</p>
+			<Button onClick={this.props.callback}>Yes</Button> <Button onClick={this.props.cancelCloseDialog}>No</Button>
+			</div>
+		}
 			</div>
 			)
 	}
