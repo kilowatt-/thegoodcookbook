@@ -149,7 +149,8 @@ class RecipeForm extends React.Component {
 											<RadioButton name="difficulty" value={Difficulty.MEDIUM} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.MEDIUM} /> Medium
 											<RadioButton name="difficulty" value={Difficulty.HARD} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.HARD} /> Hard<br />
 				<label>Time: </label> <TextValidator style={{width:30}} validators={['required', 'isNumber', 'minNumber:1']} errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute']} name="time" onChange = { this.handleChange } value={this.state.recipe.time} /> min<br />
-
+				<label>Image URL:</label> <TextValidator name="imgUrl" validators={['matchRegexp:(http)?s?:?(\/\/[^"\']*\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|png|bmp))$'] }
+				errorMessages={['Enter valid image URL']} placeholder='Accepted extensions:  .gif, .png, .bmp, .jpg, .jpeg' onChange = {this.handleChange} value = {this.state.recipe.imgUrl} /><br />
 				<label>Food Type:</label>   <RadioButton name="foodType" value={FoodType.BREAKFAST} onChange = { this.handleChange } checked= {this.state.recipe.foodType === FoodType.BREAKFAST} />Breakfast
 											<RadioButton name="foodType" value={FoodType.LUNCH} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.LUNCH} />Lunch
 											<RadioButton name="foodType" value={FoodType.DINNER} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DINNER} />Dinner
