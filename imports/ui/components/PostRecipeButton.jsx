@@ -26,8 +26,6 @@ class PostRecipeButton extends React.Component {
 	handleClick(event) {
 		event.preventDefault();
 
-		console.log("Got here");
-
 		this.setState( {
 			dialogOpen: true
 		});

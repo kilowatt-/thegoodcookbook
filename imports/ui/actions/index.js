@@ -5,7 +5,6 @@ export const setRecipeDetails = recipe => {
   }
 }
 
-
 export const updateInput = val => {
 	return { type: 'UPDATE_INPUT', payload: val }
 }
