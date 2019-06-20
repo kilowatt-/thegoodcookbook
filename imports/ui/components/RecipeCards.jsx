@@ -34,7 +34,7 @@ class RecipeCards extends Component {
   };
 
   render() {
-    let recipes = this.props.recipes
+    let recipes = this.props.recipes;
     if (this.props.searchText){
       recipes = recipes.filter((item) => item.recipeName.includes(this.props.searchText))
     }
