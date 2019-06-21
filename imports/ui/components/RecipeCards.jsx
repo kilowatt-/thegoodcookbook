@@ -9,7 +9,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import { setRecipeDetails } from '../actions';
+import { setRecipeDetails, openDetailedView, closeDetailedView } from '../actions';
 import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
 
@@ -26,11 +26,11 @@ class RecipeCards extends Component {
 
   openDetailedView(recipe) {
      this.props.setRecipeDetails(recipe);
-     this.setState({ detailDialogOpen: true });
+     this.props.openDetailedView();
   }
 
   closeRecipeDetails() {
-    this.setState({ detailDialogOpen: false });
+    this.props.closeDetailedView();
   };
 
   render() {
@@ -68,7 +68,7 @@ class RecipeCards extends Component {
             </div>
           ))}
         <RecipeDetails
-          dialogOpen={this.state.detailDialogOpen}
+          dialogOpen={this.props.dialogOpen}
           closeDialog={this.closeRecipeDetails}
         />
       </div>
@@ -76,11 +76,14 @@ class RecipeCards extends Component {
   }
 }
 
-const mapStateToProps = (state) => { 
-	return { searchText: state.inputReducer.searchBar }; 
+const mapStateToProps = (state) => {
+	return {
+    searchText: state.inputReducer.searchBar,
+    dialogOpen: state.detailedViewOpened
+   };
 }
 
 export default compose(
   withTracker(() => {
     return {recipes: Recipes.find().fetch(),};
-  }),connect(mapStateToProps, { setRecipeDetails }))(RecipeCards);
+  }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
