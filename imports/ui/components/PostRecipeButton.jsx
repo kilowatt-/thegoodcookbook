@@ -20,13 +20,14 @@ class PostRecipeButton extends React.Component {
 	}
 
 	callback() {
+		this.setState ({
+			closing: false
+		});
 		this.closeDialog();
 	}
 
 	handleClick(event) {
 		event.preventDefault();
-
-		console.log("Got here");
 
 		this.setState( {
 			dialogOpen: true
