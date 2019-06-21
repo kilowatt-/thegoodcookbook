@@ -34,7 +34,7 @@ class RecipeForm extends React.Component {
 		let ingredient = new Ingredient('', UOM.CUP);
 		let qtyMap = new QuantityIngredientMap(1, ingredient);
 
-		let recipe = new Recipe('', [qtyMap], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '');
+		let recipe = new Recipe('', [qtyMap], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
 
 		this.state = {
 			recipe: recipe

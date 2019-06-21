@@ -1,6 +1,7 @@
 class Recipe {
 
-	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine) {
+	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl, recipeID) {
+		this.recipeID = recipeID;
 		this.recipeName = recipeName;
 		this.ingredients = ingredients;
 		this.procedure = procedure;
@@ -8,7 +9,10 @@ class Recipe {
 		this.time = time;
 		this.foodType = foodType;
 		this.cuisine = cuisine;
-		this.imgUrl = '';
+		if (typeof imgURL !== undefined && imgURL !== '')
+			this.imgURL = '';
+		else
+			this.imgUrl = '';
 	}
 
 

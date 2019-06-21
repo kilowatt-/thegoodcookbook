@@ -20,6 +20,9 @@ class PostRecipeButton extends React.Component {
 	}
 
 	callback() {
+		this.setState ({
+			closing: false
+		});
 		this.closeDialog();
 	}
 
