@@ -10,7 +10,7 @@ class Recipe {
 		this.foodType = foodType;
 		this.cuisine = cuisine;
 		if (typeof imgUrl !== undefined && imgUrl !== '')
-			this.imgUrl = '';
+			this.imgUrl = imgUrl;
 		else
 			this.imgUrl = '';
 	}
