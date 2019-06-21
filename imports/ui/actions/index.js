@@ -5,6 +5,25 @@ export const setRecipeDetails = recipe => {
   }
 }
 
+export const openDetailedView = () => {
+  return {
+    type: 'OPEN_DETAILED_VIEW'
+  }
+}
+
+export const closeDetailedView = () => {
+  return {
+    type: 'CLOSE_DETAILED_VIEW'
+  }
+}
+
 export const updateInput = val => {
 	return { type: 'UPDATE_INPUT', payload: val }
+}
+
+export const addReview = review => {
+  return {
+    type: 'ADD_REVIEW',
+    recipeReview: review
+  }
 }
