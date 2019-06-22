@@ -21,15 +21,9 @@ Meteor.startup(() => {
     let mushroom = new Ingredient('Mushroom', UOM.GRAM);
     let chickenStock = new Ingredient('Chicken Stock', UOM.MILLILITRE);
 
-    let easy = Difficulty.EASY;
-
-    console.log(easy);
-
-
     let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom), 
         newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
 
-    console.log(spaghetti);
 
     Recipes.insert(spaghetti);
 
