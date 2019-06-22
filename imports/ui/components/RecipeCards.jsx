@@ -34,10 +34,8 @@ class RecipeCards extends Component {
   };
 
   render() {
-    let recipes = this.props.recipes;
-    if (this.props.searchText){
-      recipes = recipes.filter((item) => item.recipeName.includes(this.props.searchText))
-    }
+    let recipes = this.filterRecipes(this.props.recipes)
+
     return (
       <div className="card-container">
           {recipes.map(recipe => (
@@ -74,13 +72,32 @@ class RecipeCards extends Component {
       </div>
     );
   }
+
+  filterRecipes(recipes){
+    let filteredRecipes = recipes
+    if (this.props.searchText){
+      filteredRecipes = filteredRecipes.filter((item) => item.recipeName.includes(this.props.searchText))
+    }
+    if (this.props.recipeType){
+      filteredRecipes = filteredRecipes.filter((item) => item.foodType == this.props.recipeType)
+    }
+    if (this.props.selectedDifficulty){
+      filteredRecipes = filteredRecipes.filter((item) => item.difficulty == this.props.selectedDifficulty)
+    }
+    if (this.props.selectedTiming){
+      filteredRecipes = filteredRecipes.filter((item) => item.time < this.props.selectedTiming)
+    }
+    return filteredRecipes
+  }
 }
 
-const mapStateToProps = (state) => {
-	return {
-    searchText: state.inputReducer.searchBar,
-    dialogOpen: state.detailedViewOpened
-   };
+const mapStateToProps = (state) => { 
+  return { searchText: state.inputReducer.searchBar,
+          recipeType: state.inputReducer.recipeType,
+          selectedDifficulty: state.inputReducer.selectedDifficulty,
+          selectedTiming: state.inputReducer.selectedTiming,
+          dialogOpen: state.detailedViewOpened
+        };
 }
 
 export default compose(
