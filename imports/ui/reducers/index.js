@@ -29,19 +29,13 @@ const inputReducer = (inputs = defaultInputs, action) => {
 	return inputs;
 };
 
-const testReviews = [
-	{recipeID: 1, name: "test", rating: 4, review: "blah blah blah"},
-	{recipeID: 1, name: "test", rating: 4, review: "blah blah blah"},
-	{recipeID: 3, name: "xxx", rating: 3, review: "testing 1234fjkldaf"},
-	{recipeID: 1, name: "test", rating: 4, review: "blah blah blah"}
-]
-const reviewReducer = (reviews = testReviews, action) => {
+const reviewReducer = (reviews = [], action) => {
 	if (action.type === 'ADD_REVIEW') {
 		return [...reviews, action.recipeReview];
 	} else {
 		return reviews;
 	}
-}
+};
 
 const recipeDetailedViewReducer = (isOpen = false, action) => {
 	if (action.type === 'OPEN_DETAILED_VIEW') {
