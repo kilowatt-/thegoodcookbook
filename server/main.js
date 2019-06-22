@@ -3,8 +3,8 @@ import Recipes from '/imports/api/recipes';
 import Recipe from '../imports/util/Recipe.jsx';
 import Ingredient from '../imports/util/Ingredient.jsx';
 import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
-import Difficulty from '../imports/util/Difficulty.jsx';
-import FoodType from '../imports/util/FoodType.jsx';
+import {Difficulty} from '../imports/util/Difficulty.jsx';
+import {FoodType} from '../imports/util/FoodType.jsx';
 import QuantityIngredientMap from '../imports/util/QuantityIngredientMap.jsx'
 
 function newMap(qty, ingredient) {
@@ -13,6 +13,7 @@ function newMap(qty, ingredient) {
 
 Meteor.startup(() => {
 
+
   if (Recipes.find().count() === 0) {
 
     let tomatoSauce = new Ingredient('Tomato sauce', UOM.TABLESPOON);
@@ -20,8 +21,15 @@ Meteor.startup(() => {
     let mushroom = new Ingredient('Mushroom', UOM.GRAM);
     let chickenStock = new Ingredient('Chicken Stock', UOM.MILLILITRE);
 
+    let easy = Difficulty.EASY;
+
+    console.log(easy);
+
+
     let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom), 
         newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
+
+    console.log(spaghetti);
 
     Recipes.insert(spaghetti);
 

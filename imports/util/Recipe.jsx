@@ -1,7 +1,6 @@
 class Recipe {
 
-	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl, recipeID) {
-		this.recipeID = recipeID;
+	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl) {
 		this.recipeName = recipeName;
 		this.ingredients = ingredients;
 		this.procedure = procedure;
