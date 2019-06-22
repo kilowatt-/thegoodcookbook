@@ -39,7 +39,7 @@ class RecipeCards extends Component {
     return (
       <div className="card-container">
           {recipes.map(recipe => (
-            <div className="card" key={recipe.recipeID}>
+            <div className="card" key={recipe._id}>
               <Card>
                 <CardMedia
                   component="img"
@@ -91,7 +91,7 @@ class RecipeCards extends Component {
   }
 }
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
   return { searchText: state.inputReducer.searchBar,
           recipeType: state.inputReducer.recipeType,
           selectedDifficulty: state.inputReducer.selectedDifficulty,

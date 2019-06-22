@@ -11,7 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-import '../style/RecipeDetails.css'
+import '../style/RecipeDetails.css';
+import RecipeReviews from './RecipeReviews';
 
 class RecipeDetails extends Component {
   getDialogContent() {
@@ -58,6 +59,7 @@ class RecipeDetails extends Component {
           </div>
           {this.props.recipe.procedure}
         </div>
+        <RecipeReviews />
       </div>
     );
   }
