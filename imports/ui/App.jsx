@@ -4,6 +4,7 @@ import RecipeCards from './components/RecipeCards.jsx';
 import PostRecipeButton from './components/PostRecipeButton.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import FilterBar from './components/FilterBar.jsx';
+import RandomRecipeButton from './components/RandomRecipeButton.jsx'
 
 const App = () => (
   <div>
@@ -11,6 +12,7 @@ const App = () => (
     <SearchBar />
     <FilterBar />
     <PostRecipeButton />
+    <RandomRecipeButton />
     <RecipeCards />
   </div>
 );
