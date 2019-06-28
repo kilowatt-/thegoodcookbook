@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import CommonDialog from './CommonDialog.jsx';
 import RecipeForm from './RecipeForm.jsx';
+import { Meteor } from 'meteor/meteor';
 
 class PostRecipeButton extends React.Component {
 
@@ -54,6 +55,8 @@ class PostRecipeButton extends React.Component {
 	}
 
 	render() {
+
+		console.log("user: " + Meteor.userId());
 		return (
 			<div className="post_new_recipe">
 			<Button variant='contained' color='default' onClick= { this.handleClick }>Post New Recipe</Button>
