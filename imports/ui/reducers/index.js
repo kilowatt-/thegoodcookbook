@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { userReducer } from './userReducer.js';
 
 const EMPTY_RECIPE = {
 	recipeID: '',
@@ -51,7 +52,8 @@ const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,
 	inputReducer: inputReducer,
 	reviews: reviewReducer,
-	detailedViewOpened: recipeDetailedViewReducer
+	detailedViewOpened: recipeDetailedViewReducer,
+	user: userReducer
 });
 
 
