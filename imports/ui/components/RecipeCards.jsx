@@ -87,7 +87,8 @@ class RecipeCards extends Component {
     if (this.props.selectedTiming){
       filteredRecipes = filteredRecipes.filter((item) => item.time < this.props.selectedTiming)
     }
-    return filteredRecipes
+
+    return filteredRecipes;
   }
 }
 
@@ -96,11 +97,14 @@ const mapStateToProps = (state) => {
           recipeType: state.inputReducer.recipeType,
           selectedDifficulty: state.inputReducer.selectedDifficulty,
           selectedTiming: state.inputReducer.selectedTiming,
-          dialogOpen: state.detailedViewOpened
+          dialogOpen: state.detailedViewOpened,
+          favouritesToggle: state.favourites.selected
         };
 }
 
 export default compose(
   withTracker(() => {
-    return {recipes: Recipes.find().fetch(),};
+    Meteor.subscribe('userInfo');
+    return {recipes: Recipes.find().fetch(),
+      user: Meteor.user()};
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);

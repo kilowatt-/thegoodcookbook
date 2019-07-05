@@ -15,11 +15,8 @@ function newMap(qty, ingredient) {
 Meteor.startup(() => {
 
     Accounts.onCreateUser((options, user) => {
-        const emptyFavArray = [];
-
-        user.profile = {
-            favourites: emptyFavArray
-        }
+        
+        user.favourites = [];
 
         return user;
     })
