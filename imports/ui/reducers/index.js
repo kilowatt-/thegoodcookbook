@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { userReducer } from './userReducer.js';
+import { favouritesReducer } from './favouritesReducer.js'
 
 const EMPTY_RECIPE = {
 	recipeID: '',
@@ -53,7 +54,8 @@ const reducers = combineReducers({
 	inputReducer: inputReducer,
 	reviews: reviewReducer,
 	detailedViewOpened: recipeDetailedViewReducer,
-	user: userReducer
+	user: userReducer,
+	favourites: favouritesReducer
 });
 
 

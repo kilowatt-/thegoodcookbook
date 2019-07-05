@@ -5,7 +5,8 @@ import PostRecipeButton from './components/PostRecipeButton.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import FilterBar from './components/FilterBar.jsx';
 import RandomRecipeButton from './components/RandomRecipeButton.jsx';
-import LoginButton from './components/LoginButton.jsx'
+import LoginButton from './components/LoginButton.jsx';
+import FavouritesToggle from './components/FavouritesToggle.jsx'
 
 const App = () => (
   <div>
@@ -15,6 +16,7 @@ const App = () => (
     <FilterBar />
     <PostRecipeButton />
     <RandomRecipeButton />
+    <FavouritesToggle />
     <RecipeCards />
   </div>
 );
