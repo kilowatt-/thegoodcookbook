@@ -21,7 +21,7 @@ class FavouritesToggle extends React.Component {
 		
 		return (
 			<div>
-			{this.props.user ?
+			{this.props.user && !this.props.isLoggingIn ?
 			<FormControlLabel 
 				control={
 					<Switch checked={this.props.selected} onChange={this.handleChange} />
@@ -42,6 +42,7 @@ const mapStateToProps = state => {
 export default compose(
 	withTracker (() => {
 		return {
-			user: Meteor.user()
+			user: Meteor.user(),
+			loggingIn: Meteor.loggingIn()
 		}
 	}), connect(mapStateToProps, {toggleFavourites}))(FavouritesToggle);

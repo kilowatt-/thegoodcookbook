@@ -6,12 +6,23 @@ import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
 import {Difficulty} from '../imports/util/Difficulty.jsx';
 import {FoodType} from '../imports/util/FoodType.jsx';
 import QuantityIngredientMap from '../imports/util/QuantityIngredientMap.jsx'
+import { AccountsServer } from 'meteor/accounts-base';
 
 function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);
 }
 
 Meteor.startup(() => {
+
+    Accounts.onCreateUser((options, user) => {
+        const emptyFavArray = [];
+
+        user.profile = {
+            favourites: emptyFavArray
+        }
+
+        return user;
+    })
 
 
   if (Recipes.find().count() === 0) {
