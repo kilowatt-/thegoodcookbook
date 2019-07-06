@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { updateInput } from "../actions";
 import PropTypes from 'prop-types';
+import ChipInput from 'material-ui-chip-input';
 
 
 const styles = {
@@ -24,8 +25,15 @@ const styles = {
     menu: {
         width: 200,
     },
+    searchIngredients:{
+        margin: 8,
+        height: 40
+    }
 };
 
+const SearchTypes = ['Name', 'Ingredient'].map(function(key){
+    return {label: key, value: key}
+})
 
 class SearchBar extends React.Component {
 
@@ -44,6 +52,50 @@ class SearchBar extends React.Component {
         const { classes } = this.props;
         return (
             <form className={classes.container} noValidate autoComplete="off">
+                {this.getSearchBar()}
+                <TextField
+                    id="filled-select-search"
+                    select
+                    label="Select"
+                    value={this.props.searchType}
+                    onChange={event => this.props.updateInput(['searchType', event.target.value])}
+                    SelectProps={{
+                        MenuProps: {
+                            className: classes.menu,
+                        },
+                    }}
+                    helperText="Search By"
+                    margin="normal"
+                    variant="filled"
+                >
+                    {SearchTypes.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </form>
+        )
+    }
+
+    getSearchBar(){
+        const { classes } = this.props;
+        if (this.props.searchType == 'Ingredient'){
+            return (
+                <ChipInput
+                helperText="Select Your Ingredients!"
+                className={classes.searchIngredients}
+                fullWidth
+                margin="normal"
+                //variant="filled"
+                defaultValue={[]}
+                onChange={chips => this.props.updateInput(['chipSearch', chips])}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                />)
+        }else{
+            return (
                 <TextField
                     id="filled-full-width"
                     label="Search For a Recipe"
@@ -57,8 +109,9 @@ class SearchBar extends React.Component {
                         shrink: true,
                     }}
                 />
-            </form>
-        )
+            )
+        }
+
     }
 
 }
@@ -68,7 +121,7 @@ SearchBar.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-	return { recipeType: state.inputReducer.recipeType };
+	return { searchType: state.inputReducer.searchType };
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(SearchBar);
