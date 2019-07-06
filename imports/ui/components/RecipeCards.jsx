@@ -87,6 +87,9 @@ class RecipeCards extends Component {
     if (this.props.selectedTiming){
       filteredRecipes = filteredRecipes.filter((item) => item.time < this.props.selectedTiming)
     }
+    if (this.props.chipSearch){
+      filteredRecipes = filteredRecipes.filter((item) => this.props.chipSearch.every(val => item.ingredients.replace(/\s/g, '').split(",").includes(val)))
+    }
     return filteredRecipes
   }
 }
@@ -96,7 +99,8 @@ const mapStateToProps = (state) => {
           recipeType: state.inputReducer.recipeType,
           selectedDifficulty: state.inputReducer.selectedDifficulty,
           selectedTiming: state.inputReducer.selectedTiming,
-          dialogOpen: state.detailedViewOpened
+          dialogOpen: state.detailedViewOpened,
+          chipSearch: state.inputReducer.chipSearch
         };
 }
 
