@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
 import Recipe from '../imports/util/Recipe.jsx';
 import Ingredient from '../imports/util/Ingredient.jsx';
@@ -6,12 +7,29 @@ import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
 import {Difficulty} from '../imports/util/Difficulty.jsx';
 import {FoodType} from '../imports/util/FoodType.jsx';
 import QuantityIngredientMap from '../imports/util/QuantityIngredientMap.jsx'
+import { AccountsServer } from 'meteor/accounts-base';
 
 function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);
 }
 
 Meteor.startup(() => {
+
+    Accounts.onCreateUser((options, user) => {
+
+        let favList = {
+            _id: user._id,
+            favourites: []
+        }
+
+        Favourites.insert(favList);
+
+        if (options.profile) {
+            user.profile = options.profile;
+        }
+
+        return user;
+    })
 
 
   if (Recipes.find().count() === 0) {
