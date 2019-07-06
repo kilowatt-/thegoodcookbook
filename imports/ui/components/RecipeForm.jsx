@@ -14,7 +14,9 @@ import Select from '@material-ui/core/Select';
 import IngredientInputs from './IngredientInputs.jsx';
 import QuantityIngredientMap from '../../util/QuantityIngredientMap';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-
+import {EMPTY_RECIPE} from '../../util/Recipe.jsx';
+import {connect} from 'react-redux';
+import {setRecipeDetails} from '../actions/index.js'
 
 
 class RecipeForm extends React.Component {
@@ -29,15 +31,29 @@ class RecipeForm extends React.Component {
 
 	constructor(props) {
 		super(props);
+		
+		if (this.props.editing) {
+			let arr = this.props.recipe.ingredients;
+			let newArr = [];
 
+			arr.forEach((element) => {
+				let map = new QuantityIngredientMap(element.quantity, new Ingredient(element.ingredient.name, element.ingredient.uom));
+				newArr.push(map);
+			});
 
-		let ingredient = new Ingredient('', UOM.CUP);
-		let qtyMap = new QuantityIngredientMap(1, ingredient);
+			let recipe = this.props.recipe;
 
-		let recipe = new Recipe('', [qtyMap], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
+			recipe.ingredients = newArr;
 
-		this.state = {
-			recipe: recipe
+			this.state = {
+				recipe: recipe
+			};
+		}
+
+		else {
+			this.state = {
+				recipe: EMPTY_RECIPE
+			}
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -45,6 +61,10 @@ class RecipeForm extends React.Component {
 		this.addNewIngredient = this.addNewIngredient.bind(this);
 		this.removeIngredient = this.removeIngredient.bind(this);
 
+	}
+
+	convertToMap() {
+		console.log(JSON.stringify(this.state.recipe.ingredients));
 	}
 
 	removeIngredient(id) {
@@ -88,7 +108,19 @@ class RecipeForm extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
-		Recipes.insert(this.state.recipe);
+		if (this.props.editing) {
+			let id = this.props.recipe._id;
+			Recipes.update({_id: id}, this.state.recipe);
+
+			this.props.setRecipeDetails(this.state.recipe);
+		}
+
+		else {
+			this.state.recipe.addCreatedBy();
+			Recipes.insert(this.state.recipe);
+		}
+
+		
 		this.closeDialog();
 
 	}
@@ -105,6 +137,8 @@ class RecipeForm extends React.Component {
 
 			let ingredients = recipe.ingredients.slice();
 			let map = ingredients[idx];
+
+			console.log("typeof map: " + typeof map);
 
 			let elemName = name.substring(0, 3);
 
@@ -178,4 +212,4 @@ class RecipeForm extends React.Component {
 	}
 }
 
-export default RecipeForm;
+export default connect(null, {setRecipeDetails})(RecipeForm);

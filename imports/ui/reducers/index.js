@@ -1,17 +1,9 @@
 import { combineReducers } from 'redux';
 import { userReducer } from './userReducer.js';
 import { favouritesReducer } from './favouritesReducer.js'
+import Recipe from '../../util/Recipe'
+import {EMPTY_RECIPE} from '../../util/Recipe.jsx'
 
-const EMPTY_RECIPE = {
-	recipeID: '',
-	recipeName: '',
-	ingredients: '',
-	procedure: '',
-	difficulty: '',
-	time: '',
-	foodType: '',
-	cuisine: ''
-}
 
 const recipeDetailsReducer = (recipe = EMPTY_RECIPE, action) => {
 	if (action.type === 'SET_RECIPE_DETAILS') {
