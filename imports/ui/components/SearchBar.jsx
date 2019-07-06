@@ -83,12 +83,12 @@ class SearchBar extends React.Component {
         if (this.props.searchType == 'Ingredient'){
             return (
                 <ChipInput
-                helperText="Full width!"
+                helperText="Select Your Ingredients!"
                 className={classes.searchIngredients}
                 fullWidth
                 margin="normal"
                 //variant="filled"
-                defaultValue={['foo', 'bar']}
+                defaultValue={[]}
                 onChange={chips => this.props.updateInput(['chipSearch', chips])}
                 InputLabelProps={{
                     shrink: true,
