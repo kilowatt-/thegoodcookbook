@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
 import Recipe from '../imports/util/Recipe.jsx';
 import Ingredient from '../imports/util/Ingredient.jsx';
@@ -15,8 +16,17 @@ function newMap(qty, ingredient) {
 Meteor.startup(() => {
 
     Accounts.onCreateUser((options, user) => {
-        
-        user.favourites = [];
+
+        let favList = {
+            _id: user._id,
+            favourites: []
+        }
+
+        Favourites.insert(favList);
+
+        if (options.profile) {
+            user.profile = options.profile;
+        }
 
         return user;
     })
