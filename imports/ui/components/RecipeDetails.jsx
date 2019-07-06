@@ -13,11 +13,13 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import '../style/RecipeDetails.css';
 import RecipeReviews from './RecipeReviews';
+import EditRecipeButton from './EditRecipeButton';
 
 class RecipeDetails extends Component {
   getDialogContent() {
     return (
       <div className="recipe-details-content">
+      <EditRecipeButton />
         <div className="recipe-image">
           <Card>
             <CardMedia
@@ -59,6 +61,7 @@ class RecipeDetails extends Component {
           </div>
           {this.props.recipe.procedure}
         </div>
+
         <RecipeReviews />
       </div>
     );

@@ -4,8 +4,10 @@ import CommonDialog from './CommonDialog.jsx';
 import RecipeForm from './RecipeForm.jsx';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { connect } from "react-redux";
+import { compose } from 'redux';
 
-class PostRecipeButton extends React.Component {
+class EditRecipeButton extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -57,13 +59,15 @@ class PostRecipeButton extends React.Component {
 
 	render() {
 
+		console.log(this.props.recipe.createdBy);
 		return (
-			<div className="post_new_recipe">
-			{this.props.user ?
+			<div className="edit_recipe">
+			{this.props.user && Meteor.userId() === this.props.recipe.createdBy ?
 			<div>
-			<Button variant='contained' color='default' onClick= { this.handleClick }>Post New Recipe</Button>
-			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent= {<RecipeForm callback={this.callback} closing={this.state.closing}
-			cancelCloseDialog = {this.cancelCloseDialog} />}/>
+			<Button onClick= { this.handleClick }>Edit Recipe</Button>
+			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Edit Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent= 
+			{<RecipeForm callback={this.callback} closing={this.state.closing}
+			cancelCloseDialog = {this.cancelCloseDialog} editing={true} recipe={this.props.recipe} />}/>
 			</div> : null }
 			</div>
 			
@@ -71,6 +75,10 @@ class PostRecipeButton extends React.Component {
 	}
 }
 
-export default withTracker(() => {
+const mapStateToProps = (state) => {
+  return {recipe: state.detailedRecipe};
+}
+
+export default compose(withTracker(() => {
     return {user: Meteor.user()};
-  })(PostRecipeButton);
+  }), connect(mapStateToProps))(EditRecipeButton);
