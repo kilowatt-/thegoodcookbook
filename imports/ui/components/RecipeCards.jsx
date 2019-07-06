@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import { setRecipeDetails, openDetailedView, closeDetailedView } from '../actions';
 import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
+import Favourites from '../../api/favourites'
 
 class RecipeCards extends Component {
   state = {
@@ -22,6 +23,9 @@ class RecipeCards extends Component {
     super();
     this.openDetailedView = this.openDetailedView.bind(this);
     this.closeRecipeDetails = this.closeRecipeDetails.bind(this);
+    this.isInFavourites = this.isInFavourites.bind(this);
+    this.addToFavourites = this.addToFavourites.bind(this);
+    this.removeFromFavourites = this.removeFromFavourites.bind(this);
   }
 
   openDetailedView(recipe) {
@@ -61,6 +65,11 @@ class RecipeCards extends Component {
                   <Button onClick={()=>this.openDetailedView(recipe)} size="small">
                     See Recipe
                   </Button>
+
+                  {this.props.user ? <Button size="small" onClick={() => 
+                    {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
+                    this.addToFavourites(recipe._id)
+                  }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
                 </CardActions>
               </Card>
             </div>
@@ -71,6 +80,30 @@ class RecipeCards extends Component {
         />
       </div>
     );
+  }
+
+  isInFavourites(item) {
+    return this.props.favourites.favourites.includes(item._id);
+  }
+
+  addToFavourites(id) {
+    let array = [...this.props.favourites.favourites];
+
+    array.push(id);
+
+    Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+  }
+
+  removeFromFavourites(id) {
+    let array = [...this.props.favourites.favourites];
+
+    let index = array.findIndex((str) => str === id);
+
+    if (index !== -1) {
+      array.splice(index, 1);
+
+      Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+    }
   }
 
   filterRecipes(recipes){
@@ -90,7 +123,11 @@ class RecipeCards extends Component {
     if (this.props.chipSearch){
       filteredRecipes = filteredRecipes.filter((item) => this.props.chipSearch.every(val => item.ingredients.replace(/\s/g, '').split(",").includes(val)))
     }
-    return filteredRecipes
+    if (this.props.favouritesToggle) {
+      filteredRecipes = filteredRecipes.filter((item => this.isInFavourites(item)));
+    }
+
+    return filteredRecipes;
   }
 }
 
@@ -100,11 +137,17 @@ const mapStateToProps = (state) => {
           selectedDifficulty: state.inputReducer.selectedDifficulty,
           selectedTiming: state.inputReducer.selectedTiming,
           dialogOpen: state.detailedViewOpened,
-          chipSearch: state.inputReducer.chipSearch
+          chipSearch: state.inputReducer.chipSearch,
+          favouritesToggle: state.favourites.selected
         };
 }
 
 export default compose(
   withTracker(() => {
-    return {recipes: Recipes.find().fetch(),};
+    
+    return {recipes: Recipes.find().fetch(),
+      user: Meteor.user(),
+      favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
+    };
+
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);

@@ -1,3 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
+
+export const LOAD_USER = 'LOAD_USER';
+
 export const setRecipeDetails = recipe => {
   return {
     type: 'SET_RECIPE_DETAILS',
@@ -27,3 +32,6 @@ export const addReview = review => {
     recipeReview: review
   }
 }
+
+
+
