@@ -83,7 +83,7 @@ class SearchBar extends React.Component {
         if (this.props.searchType == 'Ingredient'){
             return (
                 <ChipInput
-                helperText="Select Your Ingredients!"
+                helperText="Select Your!"
                 className={classes.searchIngredients}
                 fullWidth
                 margin="normal"

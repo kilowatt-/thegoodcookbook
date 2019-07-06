@@ -131,7 +131,12 @@ class RecipeCards extends Component {
       filteredRecipes = filteredRecipes.filter((item) => item.time < this.props.selectedTiming)
     }
     if (this.props.chipSearch){
-      filteredRecipes = filteredRecipes.filter((item) => this.props.chipSearch.every(val => item.ingredients.replace(/\s/g, '').split(",").includes(val)))
+      filteredRecipes = filteredRecipes.filter((item) => {
+        let ing = item.ingredients.map(x => x.ingredient.name)
+        return this.props.chipSearch.every(val => {
+          return ing.includes(val)
+        })
+      })
     }
     if (this.props.favouritesToggle) {
       filteredRecipes = filteredRecipes.filter((item => this.isInFavourites(item)));
