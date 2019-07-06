@@ -25,13 +25,3 @@ export const closeDetailedView = () => {
 export const updateInput = val => {
 	return { type: 'UPDATE_INPUT', payload: val }
 }
-
-export const addReview = review => {
-  return {
-    type: 'ADD_REVIEW',
-    recipeReview: review
-  }
-}
-
-
-

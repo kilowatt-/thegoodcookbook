@@ -13,19 +13,25 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import '../style/RecipeDetails.css';
 import RecipeReviews from './RecipeReviews';
+import EditRecipeButton from './EditRecipeButton';
+import Icon from '@material-ui/core/Icon';
 
 class RecipeDetails extends Component {
   getDialogContent() {
     return (
       <div className="recipe-details-content">
+      <EditRecipeButton />
         <div className="recipe-image">
           <Card>
             <CardMedia
               component="img"
-              src="https://i.ibb.co/27fCh60/IMG-0353.jpg"
+              src={this.props.recipe.imgUrl}
               style={{height: "50%"}}
             />
           </Card>
+        </div>
+        <div className="ratings-stars">
+          {this.getStars(this.props.recipe.avgRating)}
         </div>
         <div className="recipe-details-category-container">
           <div className="recipe-item">
@@ -59,6 +65,7 @@ class RecipeDetails extends Component {
           </div>
           {this.props.recipe.procedure}
         </div>
+
         <RecipeReviews />
       </div>
     );
@@ -84,6 +91,17 @@ class RecipeDetails extends Component {
     return (
       <div></div>
     );
+  }
+
+  getStars(rating) {
+    let stars = [];
+    for(let i = 0; i < rating; i++) {
+      stars.push(<Icon color="primary" fontSize="large">star</Icon>);
+    }
+    for(let i = rating; i < 5; i++) {
+      stars.push(<Icon color="disabled" fontSize="large">star</Icon>)
+    }
+    return stars;
   }
 
   render() {

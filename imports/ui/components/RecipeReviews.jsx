@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { addReview } from '../actions';
 import '../style/RecipeReviews.css';
+import Reviews from '../../api/reviews';
+import Icon from '@material-ui/core/Icon';
+import Recipes from '../../api/recipes';
 
 class RecipeReviews extends Component {
 
@@ -24,14 +29,21 @@ class RecipeReviews extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getStars = this.getStars.bind(this);
   }
 
   handleSubmit(event) {
     let newReview = this.state.review;
     newReview["recipeID"] = this.props.recipe._id;
     newReview["dateAdded"] = new Date();
-    this.props.addReview(newReview);
     event.preventDefault();
+    Reviews.insert(newReview);
+    let recipeToUpdate = this.props.recipe;
+    let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
+    recipeToUpdate["numRatings"] = this.props.recipe.numRatings + 1;
+    let newAvgRating = totalRating/recipeToUpdate.numRatings;
+    recipeToUpdate["avgRating"] = newAvgRating;
+    Recipes.update({_id: this.props.recipe._id}, recipeToUpdate);
     this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
   }
 
@@ -48,17 +60,18 @@ class RecipeReviews extends Component {
     let ratings = reviews.map(review => Number(review.rating));
     let totalRating = ratings.reduce( (a,b) => a + b, 0);
     let avgRating = ratings.length > 0? totalRating/ratings.length: 0;
+    let avgRatingStars = [];
+    for (let i = 0; i < avgRating; i++) {
+      avgRatingStars.push(<Icon>star</Icon>);
+    }
     let currKey = 0;
     return (
       <div className="review-container recipe-item">
         <div className="recipe-item-label">
           <Typography variant="h6">Reviews:</Typography>
         </div>
-        <div className="avg-rating">
-          {"average rating: " + avgRating}
-        </div>
         <div className="add-new-review">
-          <ValidatorForm onSubmit={this.handleSubmit}>
+          <ValidatorForm onSubmit={this.handleSubmit} className={this.props.user? "show" : "hide"}>
             <div className="title-text">Add New Review</div>
             <label>Name: </label>
             <TextValidator validators={['required']} errorMessages={['Required']} name="name" onChange={this.handleChange} value={this.state.review.name}/><br />
@@ -78,8 +91,7 @@ class RecipeReviews extends Component {
           {reviews.map(review => (
             <div className="each-review" key={currKey++}>
               <div className="review-rating review-part">
-                <label>Rating: </label>
-                <div>{review.rating}</div>
+              {this.getStars(Number(review.rating))}
               </div>
               <div className="review-name review-part">
                 <div>{review.name + " says:"}</div>
@@ -93,13 +105,28 @@ class RecipeReviews extends Component {
       </div>
     )
   }
+
+ getStars(rating) {
+    let stars = [];
+    for(let i = 0; i < rating; i++) {
+      stars.push(<Icon color="primary">star</Icon>);
+    }
+    for(let i = rating; i < 5; i++) {
+      stars.push(<Icon color="disabled">star</Icon>)
+    }
+    return stars;
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    recipe: state.detailedRecipe,
-    reviews: state.reviews
+    recipe: state.detailedRecipe
   };
 }
 
-export default connect(mapStateToProps, { addReview })(RecipeReviews);
+export default compose(
+  withTracker(() => {
+    return {reviews: Reviews.find().fetch(),
+      user: Meteor.user()
+    };
+  }),connect(mapStateToProps))(RecipeReviews);

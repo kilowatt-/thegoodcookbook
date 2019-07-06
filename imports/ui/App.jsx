@@ -10,7 +10,7 @@ import FavouritesToggle from './components/FavouritesToggle.jsx'
 
 const App = () => (
   <div>
-    <h1>the good cook book</h1>
+    <h1 className="title">the good cook book</h1>
     <LoginButton />
     <SearchBar />
     <FilterBar />

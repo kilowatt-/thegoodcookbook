@@ -62,6 +62,7 @@ class FilterBar extends React.Component {
                     id="filled-select-recipe"
                     select
                     label="Select"
+                    style={{ color: 'lightgray' }}
                     className={classes.textField}
                     value={this.props.recipeType}
                     onChange={event => this.props.updateInput(['recipeType', event.target.value])}
@@ -134,10 +135,10 @@ FilterBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
     return { recipeType: state.inputReducer.recipeType,
         selectedDifficulty: state.inputReducer.selectedDifficulty,
-        selectedTiming: state.inputReducer.selectedTiming }; 
+        selectedTiming: state.inputReducer.selectedTiming };
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(FilterBar);

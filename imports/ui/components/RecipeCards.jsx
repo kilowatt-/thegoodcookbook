@@ -13,6 +13,7 @@ import { setRecipeDetails, openDetailedView, closeDetailedView } from '../action
 import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
 import Favourites from '../../api/favourites'
+import Icon from '@material-ui/core/Icon';
 
 class RecipeCards extends Component {
   state = {
@@ -26,6 +27,7 @@ class RecipeCards extends Component {
     this.isInFavourites = this.isInFavourites.bind(this);
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
+    this.getStars = this.getStars.bind(this);
   }
 
   openDetailedView(recipe) {
@@ -47,7 +49,7 @@ class RecipeCards extends Component {
               <Card>
                 <CardMedia
                   component="img"
-                  src="https://i.ibb.co/27fCh60/IMG-0353.jpg"
+                  src={recipe.imgUrl}
                   style={{height: "50%"}}
                 />
                 <CardContent>
@@ -56,9 +58,17 @@ class RecipeCards extends Component {
                       {recipe.recipeName}
                     </Typography>
                   </div>
+                  <div className="card-rating-stars">
+                    {this.getStars(Number(recipe.avgRating))}
+                  </div>
                   <div className="card-summary-info">
-                    <Typography>{recipe.difficulty}</Typography>
-                    <Typography>{recipe.time + " mins"}</Typography>
+                    <div className="card-summary-info-item">
+                      <Typography>{recipe.difficulty}</Typography>
+                    </div>
+                    <div className="card-summary-info-item">
+                      <Icon>access_time</Icon>
+                      <Typography>{recipe.time + " mins"}</Typography>
+                    </div>
                   </div>
                 </CardContent>
                 <CardActions>
@@ -66,7 +76,7 @@ class RecipeCards extends Component {
                     See Recipe
                   </Button>
 
-                  {this.props.user ? <Button size="small" onClick={() => 
+                  {this.props.user ? <Button size="small" onClick={() =>
                     {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
                     this.addToFavourites(recipe._id)
                   }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
@@ -126,6 +136,17 @@ class RecipeCards extends Component {
 
     return filteredRecipes;
   }
+
+  getStars(rating) {
+    let stars = [];
+    for(let i = 0; i < rating; i++) {
+      stars.push(<Icon color="primary">star</Icon>);
+    }
+    for(let i = rating; i < 5; i++) {
+      stars.push(<Icon color="disabled">star</Icon>)
+    }
+    return stars;
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -140,7 +161,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-    
+
     return {recipes: Recipes.find().fetch(),
       user: Meteor.user(),
       favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)

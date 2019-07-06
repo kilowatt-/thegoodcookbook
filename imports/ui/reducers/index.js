@@ -1,17 +1,9 @@
 import { combineReducers } from 'redux';
 import { userReducer } from './userReducer.js';
 import { favouritesReducer } from './favouritesReducer.js'
+import Recipe from '../../util/Recipe'
+import {EMPTY_RECIPE} from '../../util/Recipe.jsx'
 
-const EMPTY_RECIPE = {
-	recipeID: '',
-	recipeName: '',
-	ingredients: '',
-	procedure: '',
-	difficulty: '',
-	time: '',
-	foodType: '',
-	cuisine: ''
-}
 
 const recipeDetailsReducer = (recipe = EMPTY_RECIPE, action) => {
 	if (action.type === 'SET_RECIPE_DETAILS') {
@@ -31,14 +23,6 @@ const inputReducer = (inputs = defaultInputs, action) => {
 	return inputs;
 };
 
-const reviewReducer = (reviews = [], action) => {
-	if (action.type === 'ADD_REVIEW') {
-		return [...reviews, action.recipeReview];
-	} else {
-		return reviews;
-	}
-};
-
 const recipeDetailedViewReducer = (isOpen = false, action) => {
 	if (action.type === 'OPEN_DETAILED_VIEW') {
 		return true;
@@ -52,7 +36,6 @@ const recipeDetailedViewReducer = (isOpen = false, action) => {
 const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,
 	inputReducer: inputReducer,
-	reviews: reviewReducer,
 	detailedViewOpened: recipeDetailedViewReducer,
 	user: userReducer,
 	favourites: favouritesReducer
