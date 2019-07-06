@@ -7,7 +7,7 @@ import QuantityIngredientMap from './QuantityIngredientMap'
 
 class Recipe {
 
-	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl) {
+	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl, avgRating, numRatings) {
 		this.recipeName = recipeName;
 		this.ingredients = ingredients;
 		this.procedure = procedure;
@@ -18,8 +18,10 @@ class Recipe {
 		if (typeof imgUrl !== undefined && imgUrl !== '')
 			this.imgUrl = imgUrl;
 		else
-			this.imgUrl = '';
+			this.imgUrl = 'http://www.mayline.com/products/images/product/noimage.jpg';
 		this.createdBy = '';
+		this.avgRating = 0;
+		this.numRatings = 0;
 	}
 
 	addCreatedBy() {

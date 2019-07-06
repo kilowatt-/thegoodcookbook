@@ -1,7 +1,9 @@
 body {
   padding: 10px;
   font-family: sans-serif;
-  background-color: wheat;
+  background-image: url("https://cdn.hipwallpaper.com/i/4/61/ATMqIK.jpg");
+  background-size: cover;
+  color: lightgray;
 }
 
 .MuiDialog-paperFullWidth {

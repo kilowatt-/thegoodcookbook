@@ -12,6 +12,7 @@ import { addReview } from '../actions';
 import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';
+import Recipes from '../../api/recipes';
 
 class RecipeReviews extends Component {
 
@@ -37,6 +38,12 @@ class RecipeReviews extends Component {
     newReview["dateAdded"] = new Date();
     event.preventDefault();
     Reviews.insert(newReview);
+    let recipeToUpdate = this.props.recipe;
+    let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
+    recipeToUpdate["numRatings"] = this.props.recipe.numRatings + 1;
+    let newAvgRating = totalRating/recipeToUpdate.numRatings;
+    recipeToUpdate["avgRating"] = newAvgRating;
+    Recipes.update({_id: this.props.recipe._id}, recipeToUpdate);
     this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
   }
 

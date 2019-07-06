@@ -16,7 +16,7 @@ const styles = {
     },
     textField: {
         marginLeft: 8,
-        marginRight: 8,
+        marginRight: 8
     },
     dense: {
         marginTop: 8,
@@ -47,9 +47,8 @@ class SearchBar extends React.Component {
                 <TextField
                     id="filled-full-width"
                     label="Search For a Recipe"
-                    style={{ margin: 8 }}
+                    style={{ margin: 8, backgroundColor: 'lightgray' }}
                     placeholder="ex: Pesto Ravioli"
-                    helperText="Full width!"
                     fullWidth
                     margin="normal"
                     variant="filled"
@@ -68,8 +67,8 @@ SearchBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => { 
-	return { recipeType: state.inputReducer.recipeType }; 
+const mapStateToProps = (state) => {
+	return { recipeType: state.inputReducer.recipeType };
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(SearchBar);

@@ -13,6 +13,7 @@
   flex-shrink: 0;
   flex-direction: column;
   padding: 2px;
+  height: 100%;
 }
 
 .MuiCard-root {
@@ -34,4 +35,9 @@
   flex-grow: 0;
   flex-shrink: 0;
   justify-content: space-between;
+}
+
+.card-summary-info-item {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
 }
