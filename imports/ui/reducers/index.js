@@ -31,14 +31,6 @@ const inputReducer = (inputs = defaultInputs, action) => {
 	return inputs;
 };
 
-const reviewReducer = (reviews = [], action) => {
-	if (action.type === 'ADD_REVIEW') {
-		return [...reviews, action.recipeReview];
-	} else {
-		return reviews;
-	}
-};
-
 const recipeDetailedViewReducer = (isOpen = false, action) => {
 	if (action.type === 'OPEN_DETAILED_VIEW') {
 		return true;
@@ -52,7 +44,6 @@ const recipeDetailedViewReducer = (isOpen = false, action) => {
 const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,
 	inputReducer: inputReducer,
-	reviews: reviewReducer,
 	detailedViewOpened: recipeDetailedViewReducer,
 	user: userReducer,
 	favourites: favouritesReducer

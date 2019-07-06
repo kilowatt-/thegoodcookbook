@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
+import Reviews from '/imports/api/reviews';
 import Recipe from '../imports/util/Recipe.jsx';
 import Ingredient from '../imports/util/Ingredient.jsx';
 import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
@@ -15,22 +16,24 @@ function newMap(qty, ingredient) {
 
 Meteor.startup(() => {
 
-    Accounts.onCreateUser((options, user) => {
+  Accounts.onCreateUser((options, user) => {
 
-        let favList = {
-            _id: user._id,
-            favourites: []
-        }
+      let favList = {
+          _id: user._id,
+          favourites: []
+      }
 
-        Favourites.insert(favList);
-
+      Favourites.insert(favList);
         if (options.profile) {
             user.profile = options.profile;
         }
 
         return user;
-    })
+      })
 
+  if(Reviews.find().count() === 0) {
+    Reviews.insert({});
+  }
 
   if (Recipes.find().count() === 0) {
 
@@ -39,7 +42,7 @@ Meteor.startup(() => {
     let mushroom = new Ingredient('Mushroom', UOM.GRAM);
     let chickenStock = new Ingredient('Chicken Stock', UOM.MILLILITRE);
 
-    let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom), 
+    let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom),
         newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western");
 
 
@@ -66,7 +69,7 @@ Meteor.startup(() => {
     let cheese = new Ingredient("Cheese", UOM.GRAM);
     let ham = new Ingredient("Ham", UOM.GRAM);
 
-    let benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)], 
+    let benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)],
         "blah blah blah", Difficulty.HARD, 30, FoodType.BREAKFAST, "Western");
 
     Recipes.insert(benedict);
