@@ -4,8 +4,8 @@ import { favouritesReducer } from './favouritesReducer.js';
 import { recipeDetailsReducer } from './recipeDetailsReducer.js';
 import { recipeDetailedViewReducer } from './recipeDetailedViewReducer.js';
 import { userReducer } from './userReducer.js';
-import Recipe from '../../util/Recipe';
-import {EMPTY_RECIPE} from '../../util/Recipe.jsx'
+import Recipe from '../../model/Recipe';
+import {EMPTY_RECIPE} from '../../model/Recipe.jsx'
 
 
 

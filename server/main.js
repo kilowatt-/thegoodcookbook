@@ -2,12 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
 import Reviews from '/imports/api/reviews';
-import Recipe from '../imports/util/Recipe.jsx';
-import Ingredient from '../imports/util/Ingredient.jsx';
-import {UOM} from '../imports/util/UnitOfMeasurement.jsx';
-import {Difficulty} from '../imports/util/Difficulty.jsx';
-import {FoodType} from '../imports/util/FoodType.jsx';
-import QuantityIngredientMap from '../imports/util/QuantityIngredientMap.jsx'
+import Recipe from '../imports/model/Recipe.jsx';
+import Ingredient from '../imports/model/Ingredient.jsx';
+import {UOM} from '../imports/model/UnitOfMeasurement.jsx';
+import {Difficulty} from '../imports/model/Difficulty.jsx';
+import {FoodType} from '../imports/model/FoodType.jsx';
+import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.jsx'
 import { AccountsServer } from 'meteor/accounts-base';
 
 function newMap(qty, ingredient) {
