@@ -7,8 +7,6 @@ import { userReducer } from './userReducer.js';
 import Recipe from '../../model/Recipe';
 import {EMPTY_RECIPE} from '../../model/Recipe.jsx'
 
-
-
 const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,
 	inputReducer: inputReducer,
