@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import RadioButton from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { addReview } from '../actions';
 import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';

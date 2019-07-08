@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
-import { increment } from "../actions";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { updateInput } from "../actions";
+import { updateInput } from "../actions/input.js";
 import PropTypes from 'prop-types';
 import ChipInput from 'material-ui-chip-input';
 
