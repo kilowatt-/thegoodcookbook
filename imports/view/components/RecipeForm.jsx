@@ -16,7 +16,7 @@ import QuantityIngredientMap from '../../model/QuantityIngredientMap';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {EMPTY_RECIPE} from '../../model/Recipe.jsx';
 import {connect} from 'react-redux';
-import {setRecipeDetails} from '../actions/recipe.js'
+import {setRecipeDetails} from '../../controller/actions/recipe.js'
 
 
 class RecipeForm extends React.Component {
