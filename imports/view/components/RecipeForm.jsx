@@ -9,7 +9,7 @@ import {UOM} from '../../model/UnitOfMeasurement.jsx';
 import RadioButton from '@material-ui/core/Radio';
 import Ingredient from '../../model/Ingredient';
 import Recipe from '../../model/Recipe';
-import Recipes from '../../api/recipes';
+import Recipes from '../../model/api/recipes';
 import Select from '@material-ui/core/Select';
 import IngredientInputs from './IngredientInputs.jsx';
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';

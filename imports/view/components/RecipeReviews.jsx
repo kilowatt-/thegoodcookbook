@@ -9,9 +9,9 @@ import RadioButton from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import '../style/RecipeReviews.css';
-import Reviews from '../../api/reviews';
+import Reviews from '../../model/api/reviews';
 import Icon from '@material-ui/core/Icon';
-import Recipes from '../../api/recipes';
+import Recipes from '../../model/api/recipes';
 
 class RecipeReviews extends Component {
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Recipes from '../../api/recipes';
+import Recipes from '../../model/api/recipes';
 import { Grid, Paper, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -13,7 +13,7 @@ import { openDetailedView, closeDetailedView } from '../../controller/actions/de
 import { setRecipeDetails } from '../../controller/actions/recipe.js';
 import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
-import Favourites from '../../api/favourites';
+import Favourites from '../../model/api/favourites';
 import Icon from '@material-ui/core/Icon';
 
 class RecipeCards extends Component {
