@@ -1,0 +1,15 @@
+#login_error_msg {
+	color: red;
+}
+
+.bt_login {
+	vertical-align: middle;
+}
+
+.login {
+	float: right;
+	vertical-align: top;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
