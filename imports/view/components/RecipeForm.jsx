@@ -12,9 +12,9 @@ import Recipe from '../../model/Recipe';
 import Recipes from '../../model/api/recipes';
 import Select from '@material-ui/core/Select';
 import IngredientInputs from './IngredientInputs.jsx';
+import StepsInput from './StepsInput'
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {EMPTY_RECIPE} from '../../model/Recipe.jsx';
 import {connect} from 'react-redux';
 import {setRecipeDetails} from '../../controller/actions/recipe.js'
 
@@ -33,6 +33,7 @@ class RecipeForm extends React.Component {
 		super(props);
 		
 		if (this.props.editing) {
+			console.log("got here");
 			let arr = this.props.recipe.ingredients;
 			let newArr = [];
 
@@ -46,13 +47,13 @@ class RecipeForm extends React.Component {
 			recipe.ingredients = newArr;
 
 			this.state = {
-				recipe: recipe
+				recipe: Object.assign({}, recipe)
 			};
 		}
 
 		else {
 			this.state = {
-				recipe: EMPTY_RECIPE
+				recipe: Recipe.constructEmptyRecipe()
 			}
 		}
 
@@ -61,16 +62,44 @@ class RecipeForm extends React.Component {
 		this.addNewIngredient = this.addNewIngredient.bind(this);
 		this.removeIngredient = this.removeIngredient.bind(this);
 
+		this.addNewStep = this.addNewStep.bind(this);
+		this.removeStep = this.removeStep.bind(this);
+		this.closeDialog = this.closeDialog.bind(this);
+
 	}
 
-	convertToMap() {
-		console.log(JSON.stringify(this.state.recipe.ingredients));
+	addNewStep() {
+		event.preventDefault();
+
+		let recipe = this.state.recipe;
+		let procedure = recipe.procedure.slice();
+
+		procedure.push('');
+		recipe.procedure = procedure;
+
+		this.setState({
+			recipe: recipe
+		})
+	}
+
+	removeStep(index) {
+		event.preventDefault();
+
+		let recipe = this.state.recipe;
+
+		let procedure = recipe.procedure.slice();
+
+		procedure.splice(index, 1);
+
+		recipe.procedure = procedure;
+
+		this.setState({
+			procedure: procedure
+		})
 	}
 
 	removeIngredient(id) {
 		event.preventDefault();
-
-		console.log(id);
 
 		let recipe = this.state.recipe;
 
@@ -128,40 +157,43 @@ class RecipeForm extends React.Component {
 	handleChange(event) {
 		let name = [event.target.name][0];
 
-		console.log(name);
 		let recipe = this.state.recipe;
 
 		if(!isNaN(parseInt(name[name.length-1], 10))) {
 			let idx = parseInt(name.substring(4), 10);
 
-
-			let ingredients = recipe.ingredients.slice();
-			let map = ingredients[idx];
-
-			console.log("typeof map: " + typeof map);
-
 			let elemName = name.substring(0, 3);
 
-			switch (elemName) {
-				case 'ing':
-					map.ingredient.setName(event.target.value);
-					break;
-				case 'uom':
+			if (elemName !== 'stp') {
+				let ingredients = recipe.ingredients.slice();
+				let map = ingredients[idx];
 
-					map.ingredient.setUOM(event.target.value);
-					break;
-				case 'qty':
-					map.setQuantity(event.target.value);
-					break;
-				default:
-					break;
+				switch (elemName) {
+					case 'ing':
+						map.ingredient.setName(event.target.value);
+						break;
+					case 'uom':
+						map.ingredient.setUOM(event.target.value);
+						break;
+					case 'qty':
+						map.setQuantity(event.target.value);
+						break;
+					default:
+						break;
+				}
+
+				recipe[ingredients] = map;
 			}
 
-			recipe[ingredients] = map;
+			else {
+				let procedure = recipe.procedure.slice();
 
-			this.setState({
-				recipe: recipe
-			})
+				procedure[idx] = event.target.value;
+
+				recipe.procedure = procedure;
+
+				console.log(recipe.procedure);
+			}
 		}
 
 		else 
@@ -195,16 +227,15 @@ class RecipeForm extends React.Component {
 				<label>Cuisine: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="cuisine" onChange={ this.handleChange } value = { this.state.recipe.cuisine } /><br />
 
 				<label>Instructions:</label>
-				<TextValidator validators={['required']} errorMessages={['Required']} id="procedure" name="procedure" rows='10' multiline={true} fullWidth={true} value={this.state.recipe.procedure} onChange={this.handleChange} variant='outlined'/><br />
+				<StepsInput procedure = {this.state.recipe.procedure} handleChange = {this.handleChange} removeStep = {this.removeStep}/><Button type='button' color='primary' onClick={this.addNewStep}>+ Add New Step</Button><br />
 
 				<Button type="submit" className="bt_submit">Submit</Button>
-
 
 			</ValidatorForm>
 			:
 			<div>
 			<p>Are you sure you want to close? All changes will be lost!</p>
-			<Button onClick={this.props.callback}>Yes</Button> <Button onClick={this.props.cancelCloseDialog}>No</Button>
+			<Button onClick={this.closeDialog}>Yes</Button> <Button onClick={this.props.cancelCloseDialog}>No</Button>
 			</div>
 		}
 			</div>
