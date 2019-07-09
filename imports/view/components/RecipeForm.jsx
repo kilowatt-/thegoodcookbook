@@ -33,7 +33,6 @@ class RecipeForm extends React.Component {
 		super(props);
 		
 		if (this.props.editing) {
-			console.log("got here");
 			let arr = this.props.recipe.ingredients;
 			let newArr = [];
 
