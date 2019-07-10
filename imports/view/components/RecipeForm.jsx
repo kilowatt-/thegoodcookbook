@@ -17,7 +17,7 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {EMPTY_RECIPE} from '../../model/Recipe.jsx';
 import {connect} from 'react-redux';
 import {setRecipeDetails} from '../../controller/actions/recipe.js'
-
+import { Meteor } from 'meteor/meteor';
 
 class RecipeForm extends React.Component {
 
@@ -31,7 +31,7 @@ class RecipeForm extends React.Component {
 
 	constructor(props) {
 		super(props);
-		
+
 		if (this.props.editing) {
 			let arr = this.props.recipe.ingredients;
 			let newArr = [];
@@ -107,17 +107,17 @@ class RecipeForm extends React.Component {
 
 		if (this.props.editing) {
 			let id = this.props.recipe._id;
-			Recipes.update({_id: id}, this.state.recipe);
+			Meteor.call('recipes.updateRecipe', id, this.state.recipe);
 
 			this.props.setRecipeDetails(this.state.recipe);
 		}
 
 		else {
 			this.state.recipe.addCreatedBy();
-			Recipes.insert(this.state.recipe);
+			Meteor.call('recipes.insert', this.state.recipe);
 		}
 
-		
+
 		this.closeDialog();
 
 	}
@@ -161,13 +161,13 @@ class RecipeForm extends React.Component {
 			})
 		}
 
-		else 
+		else
 			recipe[event.target.name] = event.target.value;
 
 		this.setState({
 				recipe: recipe
 			});
-		
+
 	}
 
 	render() {

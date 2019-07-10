@@ -12,6 +12,7 @@ import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';
 import Recipes from '../../api/recipes';
+import { Meteor } from 'meteor/meteor';
 
 class RecipeReviews extends Component {
 
@@ -36,13 +37,12 @@ class RecipeReviews extends Component {
     newReview["recipeID"] = this.props.recipe._id;
     newReview["dateAdded"] = new Date();
     event.preventDefault();
-    Reviews.insert(newReview);
+    Meteor.call('reviews.insert', newReview);
     let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
     recipeToUpdate["numRatings"] = this.props.recipe.numRatings + 1;
     let newAvgRating = totalRating/recipeToUpdate.numRatings;
-    recipeToUpdate["avgRating"] = newAvgRating;
-    Recipes.update({_id: this.props.recipe._id}, recipeToUpdate);
+    Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
     this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
   }
 
