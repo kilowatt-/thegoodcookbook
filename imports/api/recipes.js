@@ -6,7 +6,7 @@ export default Recipes = new Mongo.Collection('recipes');
 
 Meteor.methods({
   'recipes.insert'(recipe) {
-    Recipes.insert(review);
+    Recipes.insert(recipe);
   },
   'recipes.updateAvgRating'(recipeID, newRating) {
     Recipes.update(recipeID, { $set: { avgRating: newRating}});

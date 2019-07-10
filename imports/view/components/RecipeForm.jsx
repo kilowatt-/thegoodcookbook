@@ -117,7 +117,7 @@ class RecipeForm extends React.Component {
 
 		else {
 			this.state.recipe.addCreatedBy();
-			Meteor.call('recipes.isnert', this.state.recipe);
+			Meteor.call('recipes.insert', this.state.recipe);
 		}
 
 
