@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { Metoer } from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 export default Favourites = new Mongo.Collection('favourites');
