@@ -1,11 +1,16 @@
 body {
-  padding: 10px;
   font-family: sans-serif;
   background-image: url("https://cdn.hipwallpaper.com/i/4/61/ATMqIK.jpg");
   background-size: cover;
   color: lightgray;
+  margin: 0;
 }
 
 .MuiDialog-paperFullWidth {
   height: 100%;
+}
+
+#content {
+	margin: 10px;
+	padding: 10px;
 }
