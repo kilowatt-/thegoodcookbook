@@ -63,9 +63,6 @@ class RecipeForm extends React.Component {
 
 	}
 
-	convertToMap() {
-		console.log(JSON.stringify(this.state.recipe.ingredients));
-	}
 
 	removeIngredient(id) {
 		event.preventDefault();

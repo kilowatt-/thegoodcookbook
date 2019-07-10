@@ -9,12 +9,15 @@ import {Difficulty} from '../imports/model/Difficulty.jsx';
 import {FoodType} from '../imports/model/FoodType.jsx';
 import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.jsx'
 import { AccountsServer } from 'meteor/accounts-base';
+import publish from './publish'
 
 function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);
 }
 
 Meteor.startup(() => {
+
+  publish();
 
   Accounts.onCreateUser((options, user) => {
 

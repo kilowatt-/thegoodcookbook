@@ -125,7 +125,9 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-    return {reviews: Reviews.find().fetch(),
+    Meteor.subscribe('reviews');
+    return {
+      reviews: Reviews.find().fetch(),
       user: Meteor.user()
     };
   }),connect(mapStateToProps))(RecipeReviews);

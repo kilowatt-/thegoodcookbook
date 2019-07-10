@@ -171,7 +171,8 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-
+    Meteor.subscribe('recipes');
+    Meteor.subscribe('favourites');
     return {recipes: Recipes.find().fetch(),
       user: Meteor.user(),
       favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
