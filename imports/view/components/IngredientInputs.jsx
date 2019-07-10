@@ -3,9 +3,9 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import {UOM} from '../../util/UnitOfMeasurement.jsx';
+import {UOM} from '../../model/UnitOfMeasurement.jsx';
 import MenuItem from '@material-ui/core/MenuItem';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {TextValidator} from 'react-material-ui-form-validator';
 
 class IngredientInputs extends React.Component {
 

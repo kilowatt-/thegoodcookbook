@@ -1,22 +1,22 @@
-import { Difficulty } from '../../util/Difficulty.jsx';
-import { FoodType } from '../../util/FoodType.jsx'
+import { Difficulty } from '../../model/Difficulty.jsx';
+import { FoodType } from '../../model/FoodType.jsx'
 import React from 'react';
 import '../style/RecipeForm.css';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import {UOM} from '../../util/UnitOfMeasurement.jsx';
+import {UOM} from '../../model/UnitOfMeasurement.jsx';
 import RadioButton from '@material-ui/core/Radio';
-import Ingredient from '../../util/Ingredient';
-import Recipe from '../../util/Recipe';
+import Ingredient from '../../model/Ingredient';
+import Recipe from '../../model/Recipe';
 import Recipes from '../../api/recipes';
 import Select from '@material-ui/core/Select';
 import IngredientInputs from './IngredientInputs.jsx';
-import QuantityIngredientMap from '../../util/QuantityIngredientMap';
+import QuantityIngredientMap from '../../model/QuantityIngredientMap';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {EMPTY_RECIPE} from '../../util/Recipe.jsx';
+import {EMPTY_RECIPE} from '../../model/Recipe.jsx';
 import {connect} from 'react-redux';
-import {setRecipeDetails} from '../actions/index.js'
+import {setRecipeDetails} from '../../controller/actions/recipe.js'
 
 
 class RecipeForm extends React.Component {

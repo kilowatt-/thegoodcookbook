@@ -5,19 +5,20 @@ import PostRecipeButton from './components/PostRecipeButton.jsx'
 import SearchBar from './components/SearchBar.jsx'
 import FilterBar from './components/FilterBar.jsx';
 import RandomRecipeButton from './components/RandomRecipeButton.jsx';
-import LoginButton from './components/LoginButton.jsx';
-import FavouritesToggle from './components/FavouritesToggle.jsx'
+import FavouritesToggle from './components/FavouritesToggle.jsx';
+import Header from './components/Header.jsx'
 
 const App = () => (
-  <div>
-    <h1 className="title">the good cook book</h1>
-    <LoginButton />
+  <div className="wrapper">
+    <Header />
+    <div id="content">
     <SearchBar />
     <FilterBar />
     <PostRecipeButton />
     <RandomRecipeButton />
     <FavouritesToggle />
     <RecipeCards />
+    </div>
   </div>
 );
 

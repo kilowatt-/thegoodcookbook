@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { compose } from 'redux';
-import { increment } from "../actions";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { updateInput } from "../actions";
+import { updateInput } from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
-import FoodType from '../../util/FoodType.jsx';
-import Difficulty from '../../util/Difficulty.jsx';
+import FoodType from '../../model/FoodType.jsx';
+import Difficulty from '../../model/Difficulty.jsx';
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
     return {label: key, value: FoodType.FoodType[key]}

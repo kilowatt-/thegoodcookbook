@@ -5,4 +5,3 @@ export const toggleFavourites = () => {
 		type: TOGGLE_FAVOURITES
 	}	
 }
-
