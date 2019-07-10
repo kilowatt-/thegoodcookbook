@@ -67,8 +67,6 @@ class RecipeForm extends React.Component {
 
 	}
 
-<<<<<<< HEAD
-=======
 	addNewStep() {
 		event.preventDefault();
 
@@ -80,9 +78,8 @@ class RecipeForm extends React.Component {
 
 		this.setState({
 			recipe: recipe
-		})
+		});
 	}
->>>>>>> a57e1d4553be4476a326700ed955cff43f1558d1
 
 	removeStep(index) {
 		event.preventDefault();

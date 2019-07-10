@@ -125,7 +125,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-    Meteor.subscribe('reviews');
     return {
       reviews: Reviews.find().fetch(),
       user: Meteor.user()

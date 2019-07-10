@@ -27,10 +27,8 @@ Meteor.startup(() => {
       }
 
       Favourites.insert(favList);
-      
-        if (options.profile) {
-            _.extend(user, options.profile);
-        }
+
+      user['name'] = options.name;
 
         return user;
       })

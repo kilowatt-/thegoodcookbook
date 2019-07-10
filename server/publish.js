@@ -11,7 +11,11 @@ function publish() {
 
 	Meteor.publish('favourites', () => {
 		return Favourites.find({});
-	})
+	});
+
+	Meteor.publish('userName', () => {
+		return Meteor.users.find({_id: this.userId}, {fields: {'name': 1}});
+	});
 
 }
 
