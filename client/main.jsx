@@ -11,12 +11,10 @@ import reducers from '/imports/controller/reducers';
 Meteor.startup(() => {
 
 	Tracker.autorun(() => {
-		if (Meteor.user())
-			Meteor.subscribe('userName');
-		
 		Meteor.subscribe('reviews');
 		Meteor.subscribe('recipes');
     	Meteor.subscribe('favourites');
+    	Meteor.subscribe('userData');
 	})
 
 	const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
