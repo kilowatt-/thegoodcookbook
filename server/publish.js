@@ -9,8 +9,11 @@ function publish() {
 		return Reviews.find({});
 	});
 
-	Meteor.publish('favourites', () => {
-		return Favourites.find({});
+	Meteor.publish('favourites', function() {
+		if (this.userId)
+			return Favourites.find({_id: this.userId});
+		else
+			return this.ready();
 	});
 
 	Meteor.publish('userData', function() {
