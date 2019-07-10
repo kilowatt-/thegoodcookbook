@@ -30,8 +30,10 @@ class Recipe {
 		}
 	}
 
-}
+	static constructEmptyRecipe() {
+		return new Recipe('', [new QuantityIngredientMap(1, new Ingredient('', UOM.CUP))], [''], Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
+	}
 
-export const EMPTY_RECIPE = new Recipe('', [new QuantityIngredientMap(1, new Ingredient('', UOM.CUP))], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
+}
 
 export default Recipe;

@@ -4,8 +4,6 @@ import { favouritesReducer } from './favouritesReducer.js';
 import { recipeDetailsReducer } from './recipeDetailsReducer.js';
 import { recipeDetailedViewReducer } from './recipeDetailedViewReducer.js';
 import { userReducer } from './userReducer.js';
-import Recipe from '../../model/Recipe';
-import {EMPTY_RECIPE} from '../../model/Recipe.jsx'
 
 const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,

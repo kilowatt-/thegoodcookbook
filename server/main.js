@@ -47,7 +47,7 @@ Meteor.startup(() => {
     let chickenStock = new Ingredient('Chicken Stock', UOM.MILLILITRE);
 
     let spaghetti = new Recipe('Mom\'s Spaghetti', [newMap(1, tomatoSauce), newMap(4, pasta), newMap(5, mushroom),
-        newMap(200, chickenStock)], "blah blah blah", Difficulty.EASY, 30, FoodType.DINNER, "Western", "https://upload.wikimedia.org/wikipedia/commons/7/7c/Spaghetti_and_meatballs_1.jpg");
+        newMap(200, chickenStock)], ["blah blah blah"], Difficulty.EASY, 30, FoodType.DINNER, "Western", "https://upload.wikimedia.org/wikipedia/commons/7/7c/Spaghetti_and_meatballs_1.jpg");
 
 
     Recipes.insert(spaghetti);
@@ -67,7 +67,7 @@ Meteor.startup(() => {
     let salt = new Ingredient('Salt', UOM.TEASPOON);
 
     let mashedPotatoes = new Recipe('Suzy\'s Mashed Potatoes', [newMap(3,potatoes),newMap(50,garlicButter),newMap(30,salt)],
-    "blah blah blah", Difficulty.EASY, 10, FoodType.DINNER, "Western", "https://media4.s-nbcnews.com/j/newscms/2018_46/1387085/mashed-potatoes-stock-today-main-181117_509c77e441e8d664744d7bbb5882ecdf.fit-760w.jpg");
+    ["blah blah blah"], Difficulty.EASY, 10, FoodType.DINNER, "Western", "https://media4.s-nbcnews.com/j/newscms/2018_46/1387085/mashed-potatoes-stock-today-main-181117_509c77e441e8d664744d7bbb5882ecdf.fit-760w.jpg");
 
     Recipes.insert(mashedPotatoes);
 
@@ -76,7 +76,7 @@ Meteor.startup(() => {
     let ham = new Ingredient("Ham", UOM.GRAM);
 
     let benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)],
-        "blah blah blah", Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
+        ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
     Recipes.insert(benedict);
   }
