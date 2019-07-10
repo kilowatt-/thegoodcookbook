@@ -1,4 +1,4 @@
-import {LOAD_USER} from '../actions/index.js';
+import {LOAD_USER} from '../actions/user.js';
 
 const INITIAL_USER = {
 	username: '',

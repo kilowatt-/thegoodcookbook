@@ -2,11 +2,10 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker'
 import { render } from 'react-dom';
-import App from '/imports/ui/App'
+import App from '/imports/view/App'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducers from '/imports/ui/reducers';
-import { loadUser } from '/imports/ui/actions/user.js';
+import reducers from '/imports/controller/reducers';
 
 
 Meteor.startup(() => {

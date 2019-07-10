@@ -1,0 +1,15 @@
+header {
+	background-color: rgba(38, 106, 46, 0.8);
+	width: 100%;
+	height: 80px;
+	position: relative;
+
+}
+
+h1 {
+	border-bottom: none;
+	vertical-align: middle;
+	position: absolute; 
+	left: 0; 
+	top: 0
+}

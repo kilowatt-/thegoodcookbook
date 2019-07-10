@@ -3,8 +3,8 @@ import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { setRecipeDetails } from '../actions';
-import { openDetailedView } from '../actions';
+import { setRecipeDetails } from '../../controller/actions/recipe.js';
+import { openDetailedView } from '../../controller/actions/detailedView.js'
 import RecipeDetails from './RecipeDetails.jsx'
 
 

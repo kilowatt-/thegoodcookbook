@@ -1,12 +1,14 @@
 body {
-  padding: 10px;
   font-family: sans-serif;
-  /*background-image: url("https://cdn.hipwallpaper.com/i/4/61/ATMqIK.jpg"); //temporary for the demo*/
-  background-color: wheat;
+  background-image: url("https://cdn.hipwallpaper.com/i/4/61/ATMqIK.jpg");
   background-size: cover;
-  /*color: lightgray;*/
+  color: lightgray;
 }
 
 .MuiDialog-paperFullWidth {
   height: 100%;
+}
+
+#content {
+	padding: 10px;
 }

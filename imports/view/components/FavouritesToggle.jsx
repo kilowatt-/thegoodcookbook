@@ -3,7 +3,7 @@ import Switch from '@material-ui/core/Switch';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import {toggleFavourites} from '../actions/favourites.js';
+import {toggleFavourites} from '../../controller/actions/favourites.js';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 class FavouritesToggle extends React.Component {
