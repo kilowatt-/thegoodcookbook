@@ -15,7 +15,7 @@ class LoginForm extends React.Component {
 		this.openRegistrationForm = this.openRegistrationForm.bind(this);
 		this.closeForm = this.closeForm.bind(this);
 
-		this.logOut = this.logout.bind(this);
+		this.logout = this.logout.bind(this);
 
 		this.state = {
 			email: '',
@@ -63,14 +63,6 @@ class LoginForm extends React.Component {
 		event.preventDefault();
 
 		Meteor.logout();
-	}
-
-	handleChange(event) {
-		event.preventDefault();
-
-		this.setState ({
-			[event.target.name]: event.target.value
-		})
 	}
 
 	handleChange(event) {

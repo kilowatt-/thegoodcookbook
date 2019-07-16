@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { TextValidator} from 'react-material-ui-form-validator';
 
 class StepsInput extends React.Component {
 	constructor(props) {

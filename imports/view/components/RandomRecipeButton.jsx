@@ -4,9 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { setRecipeDetails } from '../../controller/actions/recipe.js';
-import { openDetailedView } from '../../controller/actions/detailedView.js'
-import RecipeDetails from './RecipeDetails.jsx'
-
+import { openDetailedView } from '../../controller/actions/detailedView.js';
 
 class RandomRecipeButton extends React.Component {
 

@@ -2,26 +2,19 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import RadioButton from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';
-import Recipes from '../../api/recipes';
 import { Meteor } from 'meteor/meteor';
 
 class RecipeReviews extends Component {
 
-  validate() {
-    return true;
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       review: {recipeID: '', name: '', rating: '0', comment: ''}

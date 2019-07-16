@@ -2,15 +2,11 @@ import { Difficulty } from '../../model/Difficulty.js';
 import { FoodType } from '../../model/FoodType.js'
 import React from 'react';
 import '../style/RecipeForm.css';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import {UOM} from '../../model/UnitOfMeasurement.js';
 import RadioButton from '@material-ui/core/Radio';
 import Ingredient from '../../model/Ingredient';
 import Recipe from '../../model/Recipe';
-import Recipes from '../../api/recipes';
-import Select from '@material-ui/core/Select';
 import IngredientInputs from './IngredientInputs.jsx';
 import StepsInput from './StepsInput'
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';
@@ -20,10 +16,6 @@ import {setRecipeDetails} from '../../controller/actions/recipe.js'
 import { Meteor } from 'meteor/meteor';
 
 class RecipeForm extends React.Component {
-
-	validate() {
-		return true;
-	}
 
 	closeDialog() {
 		this.props.callback();
