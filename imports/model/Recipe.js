@@ -1,8 +1,8 @@
 import {Meteor} from 'meteor/meteor';
-import {Difficulty} from './Difficulty.jsx'
-import {FoodType} from './FoodType.jsx'
-import Ingredient from './Ingredient.jsx';
-import {UOM} from './UnitOfMeasurement.jsx';
+import {Difficulty} from './Difficulty.js'
+import {FoodType} from './FoodType.js'
+import Ingredient from './Ingredient.js';
+import {UOM} from './UnitOfMeasurement.js';
 import QuantityIngredientMap from './QuantityIngredientMap'
 
 class Recipe {
