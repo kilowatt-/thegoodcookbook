@@ -1,8 +1,8 @@
 import {Meteor} from 'meteor/meteor';
-import {Difficulty} from './Difficulty.jsx'
-import {FoodType} from './FoodType.jsx'
-import Ingredient from './Ingredient.jsx';
-import {UOM} from './UnitOfMeasurement.jsx';
+import {Difficulty} from './Difficulty.js'
+import {FoodType} from './FoodType.js'
+import Ingredient from './Ingredient.js';
+import {UOM} from './UnitOfMeasurement.js';
 import QuantityIngredientMap from './QuantityIngredientMap'
 
 class Recipe {
@@ -30,8 +30,10 @@ class Recipe {
 		}
 	}
 
-}
+	static constructEmptyRecipe() {
+		return new Recipe('', [new QuantityIngredientMap(1, new Ingredient('', UOM.CUP))], [''], Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
+	}
 
-export const EMPTY_RECIPE = new Recipe('', [new QuantityIngredientMap(1, new Ingredient('', UOM.CUP))], '', Difficulty.EASY, 0, FoodType.BREAKFAST, '', '');
+}
 
 export default Recipe;

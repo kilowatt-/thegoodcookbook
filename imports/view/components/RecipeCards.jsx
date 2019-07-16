@@ -15,6 +15,7 @@ import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
 import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
+import { Meteor } from 'meteor/meteor';
 
 class RecipeCards extends Component {
   state = {
@@ -102,7 +103,7 @@ class RecipeCards extends Component {
 
     array.push(id);
 
-    Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+    Meteor.call('favourites.update', Meteor.userId(), array);
   }
 
   removeFromFavourites(id) {
@@ -113,7 +114,7 @@ class RecipeCards extends Component {
     if (index !== -1) {
       array.splice(index, 1);
 
-      Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+      Meteor.call('favourites.update', Meteor.userId(), array);
     }
   }
 
@@ -171,7 +172,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-
     return {recipes: Recipes.find().fetch(),
       user: Meteor.user(),
       favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
