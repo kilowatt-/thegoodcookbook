@@ -17,7 +17,7 @@ import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
 
-const PAGE_SIZE = 1
+const PAGE_SIZE = 5
 import { Meteor } from 'meteor/meteor';
 
 class RecipeCards extends Component {
@@ -157,6 +157,7 @@ const getFilter = () => {
     const foodType = Session.get('recipeType')
     const selectedTiming = Session.get('selectedTiming')
     const searchText = Session.get('searchText')
+    const chipSearch = Session.get('chipSearch')
     if (difficulty){
       filter.difficulty = difficulty
     }
@@ -168,6 +169,12 @@ const getFilter = () => {
     }
     if (searchText){
       filter.recipeName = { $regex: new RegExp(searchText, "i")}
+    }
+    if (chipSearch && chipSearch.length){
+      filter["ingredients.ingredient.name"] = 
+      {
+              $all: chipSearch  
+      }
     }
     return filter
 }
@@ -181,3 +188,4 @@ export default compose(
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
+
