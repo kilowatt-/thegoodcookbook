@@ -6,8 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { updateInput } from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
-import FoodType from '../../model/FoodType.jsx';
-import Difficulty from '../../model/Difficulty.jsx';
+import FoodType from '../../model/FoodType.js';
+import Difficulty from '../../model/Difficulty.js';
 
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){

@@ -1,9 +1,7 @@
 import React from 'react';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import {UOM} from '../../model/UnitOfMeasurement.jsx';
+import {UOM} from '../../model/UnitOfMeasurement.js';
 import MenuItem from '@material-ui/core/MenuItem';
 import {TextValidator} from 'react-material-ui-form-validator';
 

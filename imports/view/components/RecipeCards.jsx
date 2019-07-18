@@ -18,6 +18,7 @@ import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
 
 const PAGE_SIZE = 1
+import { Meteor } from 'meteor/meteor';
 
 class RecipeCards extends Component {
   state = {
@@ -107,7 +108,7 @@ class RecipeCards extends Component {
 
     array.push(id);
 
-    Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+    Meteor.call('favourites.update', Meteor.userId(), array);
   }
 
   removeFromFavourites(id) {
@@ -118,7 +119,7 @@ class RecipeCards extends Component {
     if (index !== -1) {
       array.splice(index, 1);
 
-      Favourites.update({_id: Meteor.userId()}, {$set: {favourites: array}});
+      Meteor.call('favourites.update', Meteor.userId(), array);
     }
   }
 

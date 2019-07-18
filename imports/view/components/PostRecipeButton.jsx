@@ -62,7 +62,8 @@ class PostRecipeButton extends React.Component {
 			{this.props.user ?
 			<div>
 			<Button variant='contained' color='default' onClick= { this.handleClick }>Post New Recipe</Button>
-			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent= {<RecipeForm callback={this.callback} closing={this.state.closing}
+			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent= 
+			{<RecipeForm callback={this.callback} closing={this.state.closing} editing={false}
 			cancelCloseDialog = {this.cancelCloseDialog} />}/>
 			</div> : null }
 			</div>

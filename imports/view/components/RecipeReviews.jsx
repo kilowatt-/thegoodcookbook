@@ -2,25 +2,19 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import RadioButton from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';
-import Recipes from '../../api/recipes';
+import { Meteor } from 'meteor/meteor';
 
 class RecipeReviews extends Component {
 
-  validate() {
-    return true;
-  }
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       review: {recipeID: '', name: '', rating: '0', comment: ''}
@@ -36,13 +30,12 @@ class RecipeReviews extends Component {
     newReview["recipeID"] = this.props.recipe._id;
     newReview["dateAdded"] = new Date();
     event.preventDefault();
-    Reviews.insert(newReview);
+    Meteor.call('reviews.insert', newReview);
     let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
     recipeToUpdate["numRatings"] = this.props.recipe.numRatings + 1;
     let newAvgRating = totalRating/recipeToUpdate.numRatings;
-    recipeToUpdate["avgRating"] = newAvgRating;
-    Recipes.update({_id: this.props.recipe._id}, recipeToUpdate);
+    Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
     this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
   }
 
@@ -125,7 +118,8 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withTracker(() => {
-    return {reviews: Reviews.find().fetch(),
+    return {
+      reviews: Reviews.find().fetch(),
       user: Meteor.user()
     };
   }),connect(mapStateToProps))(RecipeReviews);
