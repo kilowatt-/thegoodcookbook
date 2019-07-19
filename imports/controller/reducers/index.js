@@ -3,15 +3,18 @@ import { inputReducer } from './inputReducer.js';
 import { favouritesReducer } from './favouritesReducer.js';
 import { recipeDetailsReducer } from './recipeDetailsReducer.js';
 import { recipeDetailedViewReducer } from './recipeDetailedViewReducer.js';
-import { userReducer } from './userReducer.js';
+import { userReducer, loginDialogReducer, signupDialogReducer } from './userReducer.js';
+import { navBarReducer } from './navBarReducer.js';
 
 const reducers = combineReducers({
 	detailedRecipe: recipeDetailsReducer,
 	inputReducer: inputReducer,
 	detailedViewOpened: recipeDetailedViewReducer,
 	user: userReducer,
-	favourites: favouritesReducer
+	favourites: favouritesReducer,
+	loginDialogOpened: loginDialogReducer,
+	signupDialogOpened: signupDialogReducer,
+	currentTab: navBarReducer
 });
-
 
 export default reducers;

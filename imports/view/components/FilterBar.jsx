@@ -8,6 +8,7 @@ import { updateInput } from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
+import Button from '@material-ui/core/Button';
 
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
@@ -29,10 +30,11 @@ const styles = {
     container: {
         display: 'flex',
         flexWrap: 'nowrap',
+        margin: 8
     },
     textField: {
-        marginLeft: 8,
-        marginRight: 8,
+        marginLeft: 4,
+        marginRight: 4
     },
     dense: {
         marginTop: 8,
@@ -56,6 +58,12 @@ class FilterBar extends React.Component {
             </div>);
     }
 
+    clearFilters() {
+        this.props.updateInput(['recipeType', ''])
+        this.props.updateInput(['selectedDifficulty', ''])
+        this.props.updateInput(['selectedTiming', ''])
+    }
+
     FilterFields() {
         const { classes } = this.props;
         return (
@@ -63,7 +71,6 @@ class FilterBar extends React.Component {
                 <TextField
                     id="filled-select-recipe"
                     select
-                    label="Select"
                     style={{ color: 'lightgray' }}
                     className={classes.textField}
                     value={this.props.recipeType}
@@ -86,7 +93,6 @@ class FilterBar extends React.Component {
                 <TextField
                     id="filled-select-difficulty"
                     select
-                    label="Select"
                     className={classes.textField}
                     value={this.props.selectedDifficulty}
                     onChange={event => this.props.updateInput(['selectedDifficulty', event.target.value])}
@@ -108,7 +114,6 @@ class FilterBar extends React.Component {
                 <TextField
                 id="filled-select-timing"
                 select
-                label="Select"
                 className={classes.textField}
                 value={this.props.selectedTiming}
                 onChange={event => this.props.updateInput(['selectedTiming', event.target.value])}
@@ -117,7 +122,7 @@ class FilterBar extends React.Component {
                         className: classes.menu,
                     },
                 }}
-                helperText="Timing"
+                helperText="Time Needed"
                 margin="normal"
                 variant="filled"
             >
@@ -127,6 +132,7 @@ class FilterBar extends React.Component {
                     </MenuItem>
                 ))}
             </TextField>
+            <Button variant='contained' color='default' onClick= { this.clearFilters.bind(this) }>Clear All</Button>
             </form>
         )
     }

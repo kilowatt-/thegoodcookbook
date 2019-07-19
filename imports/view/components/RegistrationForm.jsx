@@ -2,6 +2,8 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { Meteor } from 'meteor/meteor';
+import { closeSignupDialog } from '../../controller/actions/user.js';
+import { connect } from 'react-redux';
 
 class RegistrationForm extends React.Component {
 
@@ -37,6 +39,7 @@ class RegistrationForm extends React.Component {
 
 			else {
 				Meteor.loginWithPassword(this.state.email, this.state.password);
+				this.props.closeSignupDialog();
 				this.props.callback();
 			}
 		})
@@ -65,4 +68,4 @@ class RegistrationForm extends React.Component {
 	}
 }
 
-export default RegistrationForm;
+export default connect(null, { closeSignupDialog })(RegistrationForm);
