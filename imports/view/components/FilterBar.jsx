@@ -8,6 +8,7 @@ import { updateInput } from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
+import Button from '@material-ui/core/Button';
 
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
@@ -55,6 +56,12 @@ class FilterBar extends React.Component {
             <div>
                 {this.FilterFields()}
             </div>);
+    }
+
+    clearFilters() {
+        this.props.updateInput(['recipeType', ''])
+        this.props.updateInput(['selectedDifficulty', ''])
+        this.props.updateInput(['selectedTiming', ''])
     }
 
     FilterFields() {
@@ -125,6 +132,7 @@ class FilterBar extends React.Component {
                     </MenuItem>
                 ))}
             </TextField>
+            <Button variant='contained' color='default' onClick= { this.clearFilters.bind(this) }>Clear All</Button>
             </form>
         )
     }
