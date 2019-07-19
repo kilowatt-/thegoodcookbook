@@ -16,6 +16,7 @@ import '../style/RecipeCards.css';
 import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
+import { NavBarTabs } from '../../model/NavBarTabs.js';
 
 const PAGE_SIZE = 5
 import { Meteor } from 'meteor/meteor';
@@ -147,7 +148,7 @@ const mapStateToProps = (state) => {
   Session.set('chipSearch', state.inputReducer.chipSearch)
   return {
           dialogOpen: state.detailedViewOpened,
-          favouritesToggle: state.favourites.selected
+          favouritesToggle: state.currentTab === NavBarTabs.FAVORITES
         };
 }
 
@@ -171,9 +172,9 @@ const getFilter = () => {
       filter.recipeName = { $regex: new RegExp(searchText, "i")}
     }
     if (chipSearch && chipSearch.length){
-      filter["ingredients.ingredient.name"] = 
+      filter["ingredients.ingredient.name"] =
       {
-              $all: chipSearch  
+              $all: chipSearch
       }
     }
     return filter
@@ -188,4 +189,3 @@ export default compose(
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
-

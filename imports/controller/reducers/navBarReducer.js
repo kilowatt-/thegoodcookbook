@@ -1,7 +1,7 @@
 import {BROWSE_FAVORITES, BROWSE_ADDED, BROWSE_ALL} from '../actions/navBar.js';
 import { NavBarTabs } from '../../model/NavBarTabs.js';
 
-export const NavBarReducer = (state = NavBarTabs.ALL, action) => {
+export const navBarReducer = (state = NavBarTabs.ALL, action) => {
   if(action.type === BROWSE_FAVORITES) {
     return NavBarTabs.FAVORITES;
   } else if (action.type === BROWSE_ADDED) {

@@ -11,6 +11,7 @@ import CommonDialog from './CommonDialog';
 import LoginForm from './LoginForm';
 import Icon from '@material-ui/core/Icon';
 import {openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog} from '../../controller/actions/user.js';
+import { browseAll } from '../../controller/actions/navBar.js';
 
 class UserProfileTab extends React.Component {
 
@@ -46,6 +47,7 @@ class UserProfileTab extends React.Component {
 	logout(event) {
     event.preventDefault();
     Meteor.logout();
+		this.props.browseAll();
   }
 
 	render() {
@@ -82,4 +84,4 @@ export default compose(
 		return {
 			user: Meteor.user()
 		};
-}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog }))(UserProfileTab);
+}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll }))(UserProfileTab);

@@ -14,7 +14,7 @@ const reducers = combineReducers({
 	favourites: favouritesReducer,
 	loginDialogOpened: loginDialogReducer,
 	signupDialogOpened: signupDialogReducer,
-	navBarReducer: navBarReducer
+	currentTab: navBarReducer
 });
 
 export default reducers;
