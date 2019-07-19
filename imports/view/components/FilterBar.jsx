@@ -29,10 +29,11 @@ const styles = {
     container: {
         display: 'flex',
         flexWrap: 'nowrap',
+        margin: 8
     },
     textField: {
-        marginLeft: 8,
-        marginRight: 8,
+        marginLeft: 4,
+        marginRight: 4
     },
     dense: {
         marginTop: 8,
@@ -63,7 +64,6 @@ class FilterBar extends React.Component {
                 <TextField
                     id="filled-select-recipe"
                     select
-                    label="Select"
                     style={{ color: 'lightgray' }}
                     className={classes.textField}
                     value={this.props.recipeType}
@@ -86,7 +86,6 @@ class FilterBar extends React.Component {
                 <TextField
                     id="filled-select-difficulty"
                     select
-                    label="Select"
                     className={classes.textField}
                     value={this.props.selectedDifficulty}
                     onChange={event => this.props.updateInput(['selectedDifficulty', event.target.value])}
@@ -108,7 +107,6 @@ class FilterBar extends React.Component {
                 <TextField
                 id="filled-select-timing"
                 select
-                label="Select"
                 className={classes.textField}
                 value={this.props.selectedTiming}
                 onChange={event => this.props.updateInput(['selectedTiming', event.target.value])}
@@ -117,7 +115,7 @@ class FilterBar extends React.Component {
                         className: classes.menu,
                     },
                 }}
-                helperText="Timing"
+                helperText="Time Needed"
                 margin="normal"
                 variant="filled"
             >

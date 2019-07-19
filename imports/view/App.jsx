@@ -11,13 +11,16 @@ import Header from './components/Header.jsx'
 const App = () => (
   <div className="wrapper">
     <Header />
+    <hr></hr>
+    <div className="search-filter-bar">
+      <SearchBar />
+      <FilterBar />
+      <RandomRecipeButton />
+    </div>
     <div id="content">
-    <SearchBar />
-    <FilterBar />
-    <PostRecipeButton />
-    <RandomRecipeButton />
-    <FavouritesToggle />
-    <RecipeCards />
+      <PostRecipeButton />
+      <FavouritesToggle />
+      <RecipeCards />
     </div>
   </div>
 );
