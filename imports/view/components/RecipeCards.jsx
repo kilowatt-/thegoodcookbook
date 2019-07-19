@@ -22,8 +22,8 @@ class RecipeCards extends Component {
     detailDialogOpen: false
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.openDetailedView = this.openDetailedView.bind(this);
     this.closeRecipeDetails = this.closeRecipeDetails.bind(this);
     this.isInFavourites = this.isInFavourites.bind(this);
@@ -42,7 +42,8 @@ class RecipeCards extends Component {
   };
 
   render() {
-    let recipes = this.filterRecipes(this.props.recipes)
+
+    let recipes = (this.props.recommended ? this.props.recommended :this.filterRecipes(this.props.recipes));
 
     return (
       <div className="card-container">
@@ -170,7 +171,7 @@ const mapStateToProps = (state) => {
           chipSearch: state.inputReducer.chipSearch,
           favouritesToggle: state.favourites.selected
         };
-}
+};
 
 export default compose(
   withTracker(() => {

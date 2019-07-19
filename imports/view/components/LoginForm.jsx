@@ -63,6 +63,8 @@ class LoginForm extends React.Component {
 		event.preventDefault();
 
 		Meteor.logout();
+
+
 	}
 
 	handleChange(event) {
@@ -90,7 +92,8 @@ class LoginForm extends React.Component {
 			</ValidatorForm>
 
 			<CommonDialog dialogOpen = { this.state.registering } dialogTitle='Register' closeDialog={this.closeForm} dialogContent= 
-			{<RegistrationForm />}/>
+			{<RegistrationForm callback={() => {this.setState({registering: false})}
+			}/>}/>
 			</div>
 			}
 			</div>
