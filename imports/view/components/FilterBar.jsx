@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
 
+
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
     return {label: key, value: FoodType.FoodType[key]}
 })
@@ -20,6 +21,8 @@ const Difficulties = Object.keys(Difficulty.Difficulty).map(function(key){
 const Timings = [10,20,30,40,50,60].map(function(key){
     return {label: key, value: key}
 })
+
+
 
 
 const styles = {
@@ -120,7 +123,7 @@ class FilterBar extends React.Component {
             >
                 {Timings.map(option => (
                     <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                         {"<" + option.label}
                     </MenuItem>
                 ))}
             </TextField>
