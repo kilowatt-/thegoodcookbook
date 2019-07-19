@@ -1,4 +1,4 @@
-import {LOAD_USER} from '../actions/user.js';
+import {LOAD_USER, OPEN_LOGIN, CLOSE_LOGIN, OPEN_SIGNUP, CLOSE_SIGNUP} from '../actions/user.js';
 
 const INITIAL_USER = {
 	username: '',
@@ -17,4 +17,24 @@ export const userReducer = (user = INITIAL_USER, action) => {
 
 	else
 		return user;
-} 
+}
+
+export const loginDialogReducer = (isOpen = false, action) => {
+	if (action.type === OPEN_LOGIN) {
+		return true;
+	} else if (action.type === CLOSE_LOGIN) {
+		return false;
+	} else {
+		return isOpen;
+	}
+}
+
+export const signupDialogReducer = (isOpen = false, action) => {
+	if (action.type === OPEN_SIGNUP) {
+		return true;
+	} else if (action.type === CLOSE_SIGNUP) {
+		return false;
+	} else {
+		return isOpen;
+	}
+}
