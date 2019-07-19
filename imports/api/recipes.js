@@ -13,5 +13,11 @@ Meteor.methods({
   },
   'recipes.updateRecipe'(recipeID, newRecipe) {
     Recipes.update(recipeID, newRecipe);
+  },
+  'recipes.increaseFavouriteCount'(recipeID) {
+    Recipes.update(recipeID, {$inc: {'favouriteCount' : 1}});
+  },
+  'recipes.decreaseFavouriteCount'(recipeID) {
+    Recipes.update(recipeID, {$dec: {'favouriteCount': 1}});
   }
-})
+});

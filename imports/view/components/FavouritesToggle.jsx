@@ -9,7 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 class FavouritesToggle extends React.Component {
 
 	constructor(props) {
-		super();
+		super(props);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
@@ -18,7 +18,6 @@ class FavouritesToggle extends React.Component {
 	}
 
 	render() {
-		
 		return (
 			<div>
 			{this.props.user && !this.props.isLoggingIn ?

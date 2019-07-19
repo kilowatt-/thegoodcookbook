@@ -104,6 +104,7 @@ class RecipeCards extends Component {
     array.push(id);
 
     Meteor.call('favourites.update', Meteor.userId(), array);
+    Meteor.call('recipes.increaseFavouriteCount', id);
   }
 
   removeFromFavourites(id) {
@@ -115,6 +116,7 @@ class RecipeCards extends Component {
       array.splice(index, 1);
 
       Meteor.call('favourites.update', Meteor.userId(), array);
+      Meteor.call('recipes.decreaseFavouriteCount', id);
     }
   }
 

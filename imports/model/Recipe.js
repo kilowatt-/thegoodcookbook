@@ -7,7 +7,7 @@ import QuantityIngredientMap from './QuantityIngredientMap'
 
 class Recipe {
 
-	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl, avgRating, numRatings) {
+	constructor(recipeName, ingredients, procedure, difficulty, time, foodType, cuisine, imgUrl) {
 		this.recipeName = recipeName;
 		this.ingredients = ingredients;
 		this.procedure = procedure;
@@ -22,6 +22,7 @@ class Recipe {
 		this.createdBy = '';
 		this.avgRating = 0;
 		this.numRatings = 0;
+		this.favouriteCount = 0;
 	}
 
 	addCreatedBy() {
