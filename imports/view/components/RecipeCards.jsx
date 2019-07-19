@@ -15,6 +15,9 @@ import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
 import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
+import { Session } from 'meteor/session'
+
+const PAGE_SIZE = 5
 import { Meteor } from 'meteor/meteor';
 
 class RecipeCards extends Component {
@@ -30,6 +33,7 @@ class RecipeCards extends Component {
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
     this.getStars = this.getStars.bind(this);
+    Session.set('recipePage', PAGE_SIZE)
   }
 
   openDetailedView(recipe) {
@@ -42,7 +46,7 @@ class RecipeCards extends Component {
   };
 
   render() {
-    let recipes = this.filterRecipes(this.props.recipes)
+    let recipes = this.props.recipes
 
     return (
       <div className="card-container">
@@ -86,6 +90,7 @@ class RecipeCards extends Component {
               </Card>
             </div>
           ))}
+        <Button onClick={()=>this.moreRecipes()} >More</Button>
         <RecipeDetails
           dialogOpen={this.props.dialogOpen}
           closeDialog={this.closeRecipeDetails}
@@ -118,33 +123,8 @@ class RecipeCards extends Component {
     }
   }
 
-  filterRecipes(recipes){
-    let filteredRecipes = recipes
-    if (this.props.searchText){
-      filteredRecipes = filteredRecipes.filter((item) => item.recipeName.includes(this.props.searchText))
-    }
-    if (this.props.recipeType){
-      filteredRecipes = filteredRecipes.filter((item) => item.foodType == this.props.recipeType)
-    }
-    if (this.props.selectedDifficulty){
-      filteredRecipes = filteredRecipes.filter((item) => item.difficulty == this.props.selectedDifficulty)
-    }
-    if (this.props.selectedTiming){
-      filteredRecipes = filteredRecipes.filter((item) => item.time < this.props.selectedTiming)
-    }
-    if (this.props.chipSearch){
-      filteredRecipes = filteredRecipes.filter((item) => {
-        let ing = item.ingredients.map(x => x.ingredient.name)
-        return this.props.chipSearch.every(val => {
-          return ing.includes(val)
-        })
-      })
-    }
-    if (this.props.favouritesToggle) {
-      filteredRecipes = filteredRecipes.filter((item => this.isInFavourites(item)));
-    }
-
-    return filteredRecipes;
+  moreRecipes() {
+    Session.set('recipePage', Session.get('recipePage') + PAGE_SIZE)
   }
 
   getStars(rating) {
@@ -160,21 +140,52 @@ class RecipeCards extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { searchText: state.inputReducer.searchBar,
-          recipeType: state.inputReducer.recipeType,
-          selectedDifficulty: state.inputReducer.selectedDifficulty,
-          selectedTiming: state.inputReducer.selectedTiming,
+  Session.set('selectedDifficulty', state.inputReducer.selectedDifficulty)
+  Session.set('recipeType', state.inputReducer.recipeType)
+  Session.set('selectedTiming', state.inputReducer.selectedTiming)
+  Session.set('searchText', state.inputReducer.searchBar)
+  Session.set('chipSearch', state.inputReducer.chipSearch)
+  return {
           dialogOpen: state.detailedViewOpened,
-          chipSearch: state.inputReducer.chipSearch,
           favouritesToggle: state.favourites.selected
         };
 }
 
+const getFilter = () => {
+    var filter = {}
+    const difficulty = Session.get('selectedDifficulty')
+    const foodType = Session.get('recipeType')
+    const selectedTiming = Session.get('selectedTiming')
+    const searchText = Session.get('searchText')
+    const chipSearch = Session.get('chipSearch')
+    if (difficulty){
+      filter.difficulty = difficulty
+    }
+    if (foodType){
+      filter.foodType = foodType
+    }
+    if (selectedTiming){
+      filter.time = {$lt:selectedTiming}
+    }
+    if (searchText){
+      filter.recipeName = { $regex: new RegExp(searchText, "i")}
+    }
+    if (chipSearch && chipSearch.length){
+      filter["ingredients.ingredient.name"] = 
+      {
+              $all: chipSearch  
+      }
+    }
+    return filter
+}
+
 export default compose(
   withTracker(() => {
-    return {recipes: Recipes.find().fetch(),
+
+    return {recipes: Recipes.find(getFilter(),{limit:Session.get('recipePage')}).fetch(),
       user: Meteor.user(),
       favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
+
