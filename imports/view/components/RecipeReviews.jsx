@@ -27,6 +27,7 @@ class RecipeReviews extends Component {
 
   handleSubmit(event) {
     let newReview = this.state.review;
+    newReview["name"] = Meteor.user().name;
     newReview["recipeID"] = this.props.recipe._id;
     newReview["dateAdded"] = new Date();
     event.preventDefault();
@@ -65,8 +66,6 @@ class RecipeReviews extends Component {
         <div className="add-new-review">
           <ValidatorForm onSubmit={this.handleSubmit} className={this.props.user? "show" : "hide"}>
             <div className="title-text">Add New Review</div>
-            <label>Name: </label>
-            <TextValidator validators={['required']} errorMessages={['Required']} name="name" onChange={this.handleChange} value={this.state.review.name}/><br />
             <label>Rating: </label>
             <RadioButton name="rating" value={0} onChange = { this.handleChange } checked={this.state.review.rating === '0'} />0
             <RadioButton name="rating" value={1} onChange = { this.handleChange } checked={this.state.review.rating === '1'} />1
@@ -76,7 +75,7 @@ class RecipeReviews extends Component {
             <RadioButton name="rating" value={5} onChange = { this.handleChange } checked={this.state.review.rating === '5'} />5<br />
             <label>Comment: </label>
             <TextValidator name="comment" onChange={this.handleChange} value={this.state.review.comment} multiline={true} variant='outlined'/>
-            <Button type="submit" className="bt_submit">Submit</Button>
+            <Button type="submit">Submit</Button>
           </ValidatorForm>
         </div>
         <div className="list-of-reviews">
