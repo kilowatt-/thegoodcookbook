@@ -1,16 +1,17 @@
 import React from 'react';
 import UserProfileTab from './UserProfileTab.jsx';
-import '../style/header.css'
+import '../style/header.css';
+import NavBar from './NavBar.jsx';
 
 class Header extends React.Component {
 	render() {
 		return(
 			<header>
-			<h1 className="title">The Good Cook Book</h1>
+			<div className="title">The Good Cook Book</div>
+			<NavBar />
 			<UserProfileTab />
 			</header>
 			)
-
 	}
 }
 
