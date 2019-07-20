@@ -4,6 +4,7 @@ import CommonDialog from './CommonDialog.jsx';
 import RecipeForm from './RecipeForm.jsx';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import '../style/RandomRecipeButton.css';
 
 class PostRecipeButton extends React.Component {
 
@@ -58,8 +59,8 @@ class PostRecipeButton extends React.Component {
 	render() {
 
 		return (
-			<div className="post_new_recipe">
-				<Button variant='outlined' onClick= { this.handleClick }>Post New Recipe</Button>
+			<div className="post_new_recipe random-recipe-button-container">
+				<Button variant='outlined' onClick= { this.handleClick }>Add New Recipe</Button>
 				<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent=
 				{<RecipeForm callback={this.callback} closing={this.state.closing} editing={false}
 				cancelCloseDialog = {this.cancelCloseDialog} />}/>

@@ -188,7 +188,7 @@ export default compose(
 
     return {recipes: Recipes.find(getFilter(),{limit:Session.get('recipePage')}).fetch(),
       user: Meteor.user(),
-      favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
+      favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : [])
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);

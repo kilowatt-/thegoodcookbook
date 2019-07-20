@@ -55,9 +55,12 @@ class UserProfileTab extends React.Component {
 		return (
 			<div className="login">
 				{this.props.user ?
-					<div>
+					<div className="user-profile">
 						<Icon>person</Icon>
-					 {Meteor.user().name} (<a href="#" onClick={this.logout}>Logout</a>)
+						<div className="username">
+							{Meteor.user().name}
+							<div className="logout-button">(<a href="#" onClick={this.logout}>Logout</a>)</div>
+						</div>
 					</div> :
 					<div className="login-signup">
 						<Button onClick={this.openLoginForm}>Login</Button>

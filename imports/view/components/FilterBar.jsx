@@ -89,6 +89,7 @@ class FilterBar extends React.Component {
                             {option.label}
                         </MenuItem>
                     ))}
+                    <MenuItem key='' value=''></MenuItem>
                 </TextField>
                 <TextField
                     id="filled-select-difficulty"
@@ -110,6 +111,7 @@ class FilterBar extends React.Component {
                             {option.label}
                         </MenuItem>
                     ))}
+                    <MenuItem key='' value=''></MenuItem>
                 </TextField>
                 <TextField
                 id="filled-select-timing"
@@ -131,8 +133,9 @@ class FilterBar extends React.Component {
                          {"<" + option.label}
                     </MenuItem>
                 ))}
+                <MenuItem key='' value=''></MenuItem>
             </TextField>
-            <Button variant='contained' color='default' onClick= { this.clearFilters.bind(this) }>Clear All</Button>
+            {/*<Button variant='contained' color='default' onClick= { this.clearFilters.bind(this) }>Clear All</Button>*/}
             </form>
         )
     }
