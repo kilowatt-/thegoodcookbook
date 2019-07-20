@@ -48,7 +48,7 @@ class RecipeCards extends Component {
 
   render() {
 
-    let recipes = (this.props.recommended ? this.props.recommended :this.filterRecipes(this.props.recipes));
+    let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
 
     return (
       <div className="card-container">
