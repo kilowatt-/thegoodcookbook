@@ -31,13 +31,16 @@
 .MuiCardContent-root {
   display: flex;
   flex-direction: column;
-  flex-basis: 30%;
-  flex-grow: 0;
-  flex-shrink: 0;
   justify-content: space-between;
+  height: 160px;
 }
 
 .card-summary-info-item {
   display: grid;
   grid-template-columns: 1fr 4fr;
+}
+
+.MuiCardMedia-media {
+  min-height: 190px;
+  max-height: 190px;
 }

@@ -1,0 +1,20 @@
+.nav-bar-container {
+    background-color: moccasin;
+}
+
+.nav-bar {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text {
+  width: 100%;
+}
+
+.nav-bar-buttons {
+  width: 100%;
+  padding-top: 5px;
+  margin-top: 10px;
+}

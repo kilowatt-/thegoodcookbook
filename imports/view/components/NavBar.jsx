@@ -5,11 +5,8 @@ import { compose } from 'redux';
 import { Meteor } from 'meteor/meteor';
 import { browseFavorites, browseAdded, browseAll } from '../../controller/actions/navBar.js';
 import Button from '@material-ui/core/Button';
-import SearchBar from './SearchBar.jsx'
-import FilterBar from './FilterBar.jsx';
-import RandomRecipeButton from './RandomRecipeButton.jsx';
 import { NavBarTabs } from '../../model/NavBarTabs.js';
-import PostRecipeButton from './PostRecipeButton.jsx';
+import '../style/NavBar.css';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -39,19 +36,20 @@ class NavBar extends React.Component {
       <div className="nav-bar-container">
         {this.props.user ?
           <div className="nav-bar">
-            <Button onClick={this.browseAll}>All Recipes</Button>
-            <Button onClick={this.browseFavorites}>My Favorites</Button>
-            <Button onClick={this.browseAdded}>My Added Recipes</Button>
-          </div> :
-          <div></div>
+            <div className="nav-bar-buttons">
+              <Button onClick={this.browseAll}>All Recipes</Button>
+              {this.props.currentTab === NavBarTabs.ALL? <hr></hr> : null}
+            </div>
+            <div className="nav-bar-buttons">
+              <Button onClick={this.browseFavorites}>My Favorites</Button>
+              {this.props.currentTab === NavBarTabs.FAVORITES? <hr></hr> : null}
+            </div>
+            <div className="nav-bar-buttons">
+              <Button onClick={this.browseAdded}>My Added Recipes</Button>
+              {this.props.currentTab === NavBarTabs.ADDED? <hr></hr> : null}
+            </div>
+          </div> : null
         }
-        <hr></hr>
-        <div className="search-filter-bar">
-          <SearchBar />
-          <FilterBar />
-          {this.props.currentTab === NavBarTabs.ALL? <RandomRecipeButton /> : null}
-          {this.props.currentTab === NavBarTabs.ADDED? <PostRecipeButton /> : null}
-        </div>
       </div>
     )
   }
