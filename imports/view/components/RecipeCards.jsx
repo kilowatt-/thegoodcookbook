@@ -26,15 +26,23 @@ class RecipeCards extends Component {
     detailDialogOpen: false
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.openDetailedView = this.openDetailedView.bind(this);
     this.closeRecipeDetails = this.closeRecipeDetails.bind(this);
     this.isInFavourites = this.isInFavourites.bind(this);
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
     this.getStars = this.getStars.bind(this);
-    Session.set('recipePage', PAGE_SIZE)
+    Session.set('recipePage', PAGE_SIZE);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+      Session.set('favourites', this.props.currentTab === NavBarTabs.FAVORITES);
+
+      if (this.props.currentTab === NavBarTabs.FAVORITES) {
+          Session.set('favouritesList', this.props.favourites.favourites);
+      }
   }
 
   openDetailedView(recipe) {
@@ -47,7 +55,8 @@ class RecipeCards extends Component {
   };
 
   render() {
-    let recipes = this.props.recipes
+
+    let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
 
     return (
       <div className="card-container">
@@ -110,6 +119,7 @@ class RecipeCards extends Component {
     array.push(id);
 
     Meteor.call('favourites.update', Meteor.userId(), array);
+    Meteor.call('recipes.increaseFavouriteCount', id);
   }
 
   removeFromFavourites(id) {
@@ -121,6 +131,7 @@ class RecipeCards extends Component {
       array.splice(index, 1);
 
       Meteor.call('favourites.update', Meteor.userId(), array);
+      Meteor.call('recipes.decreaseFavouriteCount', id);
     }
   }
 
@@ -141,24 +152,26 @@ class RecipeCards extends Component {
 }
 
 const mapStateToProps = (state) => {
-  Session.set('selectedDifficulty', state.inputReducer.selectedDifficulty)
-  Session.set('recipeType', state.inputReducer.recipeType)
-  Session.set('selectedTiming', state.inputReducer.selectedTiming)
-  Session.set('searchText', state.inputReducer.searchBar)
-  Session.set('chipSearch', state.inputReducer.chipSearch)
+  Session.set('selectedDifficulty', state.inputReducer.selectedDifficulty);
+  Session.set('recipeType', state.inputReducer.recipeType);
+  Session.set('selectedTiming', state.inputReducer.selectedTiming);
+  Session.set('searchText', state.inputReducer.searchBar);
+  Session.set('chipSearch', state.inputReducer.chipSearch);
+  Session.set('favourites', state.currentTab === NavBarTabs.FAVORITES);
   return {
           dialogOpen: state.detailedViewOpened,
-          favouritesToggle: state.currentTab === NavBarTabs.FAVORITES
+          currentTab: state.currentTab
         };
-}
+};
 
 const getFilter = () => {
-    var filter = {}
-    const difficulty = Session.get('selectedDifficulty')
-    const foodType = Session.get('recipeType')
-    const selectedTiming = Session.get('selectedTiming')
-    const searchText = Session.get('searchText')
-    const chipSearch = Session.get('chipSearch')
+    let filter = {};
+    const difficulty = Session.get('selectedDifficulty');
+    const foodType = Session.get('recipeType');
+    const selectedTiming = Session.get('selectedTiming');
+    const searchText = Session.get('searchText');
+    const chipSearch = Session.get('chipSearch');
+    const favourites = Session.get('favourites');
     if (difficulty){
       filter.difficulty = difficulty
     }
@@ -177,15 +190,22 @@ const getFilter = () => {
               $all: chipSearch
       }
     }
-    return filter
-}
+    if (favourites) {
+        filter._id =
+            {
+                $in: Session.get('favouritesList')
+            }
+    }
+
+    return filter;
+};
 
 export default compose(
   withTracker(() => {
 
     return {recipes: Recipes.find(getFilter(),{limit:Session.get('recipePage')}).fetch(),
-      user: Meteor.user(),
-      favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : [])
+        user: Meteor.user(),
+        favourites: Favourites.findOne({_id: Meteor.userId()})
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);

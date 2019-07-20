@@ -6,16 +6,16 @@ export const browseFavorites = () => {
   return {
     type: BROWSE_FAVORITES
   }
-}
+};
 
 export const browseAdded = () => {
   return {
     type: BROWSE_ADDED
   }
-}
+};
 
 export const browseAll = () => {
   return {
     type: BROWSE_ALL
   }
-}
+};

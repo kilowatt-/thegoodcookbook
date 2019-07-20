@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
   return {
     currentTab: state.currentTab
   }
-}
+};
 
 export default compose(
 	withTracker(() => {
