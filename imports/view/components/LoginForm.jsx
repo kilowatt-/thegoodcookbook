@@ -51,9 +51,9 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <ValidatorForm onSubmit={this.handleSubmit}>
-          <TextValidator className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} variant="filled" label="Email" />
-          <TextValidator className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} variant="filled" label="Password" />
+        <ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
+          <TextValidator className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} variant="outlined" label="Email" />
+          <TextValidator className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} variant="outlined" label="Password" />
           <Button type="submit" className="bt_login">Login</Button><br />
         </ValidatorForm>
       </div>

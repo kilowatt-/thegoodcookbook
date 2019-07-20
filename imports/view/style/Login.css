@@ -40,3 +40,13 @@
 .logout-button {
 	padding-left: 2px;
 }
+
+.login-form {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+
+.MuiFormControl-root.MuiTextField-root {
+	margin-top: 20px;
+}
