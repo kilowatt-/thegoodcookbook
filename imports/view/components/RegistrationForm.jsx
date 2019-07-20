@@ -28,9 +28,7 @@ class RegistrationForm extends React.Component {
 			email: this.state.email,
 			password: this.state.password,
 			name: this.state.name
-		}
-
-		console.log(user);
+		};
 
 		Meteor.call('createUser', user, (err) => {
 			if (err) {
