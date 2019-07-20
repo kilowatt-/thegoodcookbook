@@ -4,7 +4,15 @@ function findNearestNeighbours(recipe) {
     let cuisine = recipe.cuisine;
     let ingredientMapArray = recipe.ingredients;
 
-    
+    let ingredientArray = ingredientMapArray.map((ingr, index) => {
+        ingr.ingredient;
+    });
+
+    let recipes = Recipe.find().fetch();
+
+    recipes.forEach(elem => {
+
+    })
 
 }
 

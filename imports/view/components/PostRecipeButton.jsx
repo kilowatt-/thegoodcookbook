@@ -59,13 +59,9 @@ class PostRecipeButton extends React.Component {
 	render() {
 
 		return (
-<<<<<<< Updated upstream
 			<div className="post_new_recipe random-recipe-button-container">
 				<Button variant='outlined' onClick= { this.handleClick }>Add New Recipe</Button>
-=======
-			<div className="post_new_recipe">
-				<Button onClick= { this.handleClick }>Post New Recipe</Button>
->>>>>>> Stashed changes
+
 				<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Post New Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent=
 				{<RecipeForm callback={this.callback} closing={this.state.closing} editing={false}
 				cancelCloseDialog = {this.cancelCloseDialog} />}/>
