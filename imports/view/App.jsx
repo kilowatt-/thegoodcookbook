@@ -3,7 +3,7 @@ import RecipeCards from './components/RecipeCards.jsx';
 import Header from './components/Header.jsx';
 import SearchFilterBar from "./components/SearchFilterBar";
 import RecommendedCards from "./components/RecommendedCards";
-
+import RecommendedCards from "./components/RecommendedCards";
 
 
 const App = () => (

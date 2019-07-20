@@ -29,7 +29,7 @@ class RandomRecipeButton extends React.Component {
 	render() {
 		return (
 			<div className="random-recipe-button-container">
-				<Button className="random-recipe-button" variant="outlined" onClick= { this.random }>Random Recipe</Button>
+				<Button className="random-recipe-button" onClick= { this.random }>Random Recipe</Button>
       </div>
 			);
 	}
