@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
     withTracker(() => {
-        return {recipes: Recipes.find({},{limit: LIMIT,
+        return {recipes: Recipes.find({"numRatings": {$gt: 0}}, {limit: LIMIT,
                 sort: {"avgRating": -1, "numRatings": -1}}).fetch(),
             user: Meteor.user(),
             favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)

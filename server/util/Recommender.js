@@ -10,10 +10,6 @@ function findNearestNeighbours(recipe) {
 
     let recipes = Recipe.find().fetch();
 
-    recipes.forEach(elem => {
-
-    })
-
 }
 
 // Gets a recipe's nearest neighbours

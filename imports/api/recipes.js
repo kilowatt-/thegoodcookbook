@@ -11,6 +11,9 @@ Meteor.methods({
   'recipes.updateAvgRating'(recipeID, newRating) {
     Recipes.update(recipeID, { $set: { avgRating: newRating}});
   },
+  'recipes.increaseNumRatings'(recipeID) {
+    Recipes.update(recipeID, { $inc: { numRatings: 1}});
+  },
   'recipes.updateRecipe'(recipeID, newRecipe) {
     Recipes.update(recipeID, newRecipe);
   },
