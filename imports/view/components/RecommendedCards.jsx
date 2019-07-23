@@ -1,31 +1,78 @@
 import RecipeCards from './RecipeCards'
 import {compose} from "redux";
 import {withTracker} from "meteor/react-meteor-data";
-import Recipes from "../../api/recipes";
 import {Meteor} from "meteor/meteor";
-import Favourites from "../../api/favourites";
 import {connect} from "react-redux";
 import {setRecipeDetails} from "../../controller/actions/recipe";
 import {closeDetailedView, openDetailedView} from "../../controller/actions/detailedView";
 import React from "react";
-
-let LIMIT = 5;
+import '../style/RecipeCards.css';
 
 class RecommendedCards extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            loading: false,
+            recommendations: []
+        }
+    }
+
+    componentDidMount() {
+        this.updateCards();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.user !== prevProps.user)
+            this.updateCards();
+    }
+
+    updateCards() {
+        if (this.props.user) {
+            this.setState({
+                loading: true
+            });
+            Meteor.call('getRecommended', (error, result) => {
+                if (error) {
+                    //TODO do something with error...
+                    console.log(error);
+                } else {
+                    this.setState({
+                        loading: false,
+                        recommendations: result,
+                    })
+                }
+
+            })
+        } else {
+            this.setState({
+                loading: false,
+                recommendations: []
+            });
+        }
     }
 
     render() {
-        if (Meteor.user()) {
-            console.log(Meteor.call('getRecommended'));
-
-            return (
-                <div>
-                    <h2>Recommended for You</h2>
-                    <RecipeCards recommended={this.props.recipes}/>
-                </div>)
+        if (this.props.user) {
+            if (!this.props.loading) {
+                return (
+                    <div>
+                        <h2>Recommended for You</h2>
+                        <RecipeCards recommended={this.state.recommendations}/>
+                    </div>)
+            }
+            else {
+                return (
+                    <div>
+                        <h2>Recommended for you</h2>
+                        <div className="spinner">
+                            <div className="bounce1"></div>
+                            <div className="bounce2"></div>
+                            <div className="bounce3"></div>
+                        </div>
+                    </div>
+                )
+            }
         }
         else
             return null;
@@ -35,16 +82,13 @@ class RecommendedCards extends React.Component {
 const mapStateToProps = (state) => {
     return {
         dialogOpen: state.detailedViewOpened,
-        favouritesToggle: state.favourites.selected
     };
 };
 
 export default compose(
     withTracker(() => {
-        return {recipes: Recipes.find({"numRatings": {$gt: 0}}, {limit: LIMIT,
-                sort: {"avgRating": -1, "numRatings": -1}}).fetch(),
-            user: Meteor.user(),
-            favourites: (Meteor.user() ? Favourites.findOne({_id: Meteor.userId()}) : null)
+        return {
+            user: Meteor.user()
         };
 
     }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);
