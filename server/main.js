@@ -24,14 +24,14 @@ Meteor.startup(() => {
       let favList = {
           _id: user._id,
           favourites: []
-      }
+      };
 
       Favourites.insert(favList);
 
       user['name'] = options.name;
 
         return user;
-      })
+      });
 
   if(Reviews.find().count() === 0) {
     Reviews.insert({});
@@ -56,7 +56,7 @@ Meteor.startup(() => {
     let sausage = new Ingredient('Sausage', UOM.PIECES);
 
     let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)],
-    "blah blah blah", Difficulty.EASY, 15, FoodType.DINNER, "Asian", "https://www.evolvingtable.com/wp-content/uploads/2016/04/Chicken-Fried-Rice-4.jpg");
+    ["blah blah blah"], Difficulty.EASY, 15, FoodType.DINNER, "Asian", "https://www.evolvingtable.com/wp-content/uploads/2016/04/Chicken-Fried-Rice-4.jpg");
 
     Recipes.insert(friedRice);
 
