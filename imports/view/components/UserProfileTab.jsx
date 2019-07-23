@@ -54,15 +54,21 @@ class UserProfileTab extends React.Component {
 		this.setState({
 			loggingOut: true
 		});
-		Meteor.logout();
-		this.props.browseAll();
+		Meteor.logout( () => {
+			this.setState({
+				loggingOut: false
+			});
+			this.props.browseAll();
+		}
+		);
+
   	}
 
 	render() {
 
 		return (
 			<div className="login">
-				{this.props.user ?
+				{Meteor.user() ?
 					<div className="user-profile">
 						<Icon>person</Icon>
 						<div className="username">
@@ -90,9 +96,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default compose(
-	withTracker(() => {
-		return {
-			user: Meteor.user()
-		};
-}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll }))(UserProfileTab);
+export default connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll })(UserProfileTab);

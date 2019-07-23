@@ -83,7 +83,7 @@ class RegistrationForm extends React.Component {
 				<TextValidator disabled={this.state.signingUp} className="tf_password_repeat" validators={['required', 'passwordsMatch']} errorMessages={['Required', 'Passwords must match']} id="password_verify" name="password_verify"  value={this.state.password_verify} type='password' onChange={this.handleChange} fullWidth label="Verify password" InputLabelProps={{
 					shrink: true
 				}} />
-				<Button type="submit" className="bt_login">Submit</Button><br />
+				<Button disabled={this.state.signingUp} type="submit" className="bt_login">Submit</Button><br />
 				<span style={{color:"red"}}>{this.state.error}</span>
 				<span>{this.state.signingUp ? "Signup in progress..." : null}</span>
 			</ValidatorForm>

@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
         <ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
           <TextValidator className="tf_email"  disabled={this.state.loggingIn} validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} variant="outlined" label="Email" />
           <TextValidator className="tf_password" disabled={this.state.loggingIn} validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} variant="outlined" label="Password" />
-          <Button type="submit" className="bt_login">Login</Button><br />
+          <Button type="submit" disabled={this.state.loggingIn} className="bt_login">Login</Button><br />
           <span style={{color:"red"}}>{this.state.error}</span>
           <span>{this.state.loggingIn ? "Logging in..." : null}</span>
         </ValidatorForm>
