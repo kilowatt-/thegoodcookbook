@@ -1,5 +1,4 @@
 import React from 'react';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Button from '@material-ui/core/Button';
 import { Meteor } from 'meteor/meteor';
 import '../style/Login.css';
@@ -93,7 +92,12 @@ const mapStateToProps = (state) => {
 		loginDialogOpen: state.loginDialogOpened,
 		signupDialogOpen: state.signupDialogOpened
 	}
-}
+};
 
 
-export default connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll })(UserProfileTab);
+export default compose(
+	withTracker(() => {
+		return {
+			user: Meteor.user()
+		};
+	}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll }))(UserProfileTab);

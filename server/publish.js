@@ -1,4 +1,5 @@
 import {Meteor} from 'meteor/meteor';
+import {getRecommendedForUser} from "./util/Recommender";
 
 function publish() {
 	Meteor.publish('recipes', () => {
@@ -24,6 +25,15 @@ function publish() {
 		
 		else 
 			return this.ready();
+	});
+
+	Meteor.methods({
+		getRecommended() {
+			if (this.userId)
+				return getRecommendedForUser();
+
+			return {};
+		}
 	});
 }
 

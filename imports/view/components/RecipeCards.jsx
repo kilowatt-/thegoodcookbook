@@ -106,7 +106,7 @@ class RecipeCards extends Component {
               <div className="bounce2"></div>
               <div className="bounce3"></div>
           </div> : null}
-        <Button onClick={()=>this.moreRecipes()} >More</Button>
+          {this.props.recommended ? null : <Button onClick={()=>this.moreRecipes()} >More</Button>}
         <RecipeDetails
           dialogOpen={this.props.dialogOpen}
           closeDialog={this.closeRecipeDetails}

@@ -18,12 +18,15 @@ class RecommendedCards extends React.Component {
     }
 
     render() {
-        if (Meteor.user())
+        if (Meteor.user()) {
+            console.log(Meteor.call('getRecommended'));
+
             return (
                 <div>
                     <h2>Recommended for You</h2>
-                    <RecipeCards recommended={this.props.recipes} />
-                </div>);
+                    <RecipeCards recommended={this.props.recipes}/>
+                </div>)
+        }
         else
             return null;
     }

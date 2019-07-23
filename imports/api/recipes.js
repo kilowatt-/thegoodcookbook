@@ -22,8 +22,5 @@ Meteor.methods({
   },
   'recipes.decreaseFavouriteCount'(recipeID) {
     Recipes.update(recipeID, {$inc: {'favouriteCount': -1}});
-  },
-  'recipes.getRecommendationsForUser'(userID) {
-
   }
 });
