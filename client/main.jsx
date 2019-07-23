@@ -7,9 +7,11 @@ import { Provider } from 'react-redux';
 import {createStore} from 'redux';
 import reducers from '/imports/controller/reducers';
 import {recipeLoadBegin, recipeLoadError, recipeLoadSuccess} from "../imports/controller/actions/recipe";
+import {getFavouritesBegin, getFavouritesError, getFavouritesSuccess} from "../imports/controller/actions/favourites";
 
 function loadOnStartup(store) {
 	store.dispatch(recipeLoadBegin());
+	store.dispatch(getFavouritesBegin());
 }
 
 Meteor.startup(() => {
@@ -23,7 +25,7 @@ Meteor.startup(() => {
 	Tracker.autorun(() => {
 		Meteor.subscribe('reviews');
 		Meteor.subscribe('recipes', {onReady: () => {store.dispatch(recipeLoadSuccess())}});
-		Meteor.subscribe('favourites');
+		Meteor.subscribe('favourites', {onReady: () => {store.dispatch(getFavouritesSuccess())}});
 		Meteor.subscribe('userData');
 	});
 

@@ -169,7 +169,8 @@ const mapStateToProps = (state) => {
   return {
           dialogOpen: state.detailedViewOpened,
           currentTab: state.currentTab,
-          recipeLoadingState: state.loadRecipe
+          recipeLoadingState: state.loadRecipe,
+          favouritesLoadingState: state.favourites
         };
 };
 
