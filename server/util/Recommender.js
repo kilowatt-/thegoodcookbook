@@ -1,6 +1,7 @@
 import Favourites from '/imports/api/favourites';
 import Recipes from "../../imports/api/recipes";
 import Heap from 'heap';
+import {FoodType} from "../../imports/model/FoodType";
 
 const INGREDIENT_SIMILARITY_WEIGHT = 0.6;
 const FOOD_TYPE_WEIGHT = 0.2;
@@ -45,11 +46,43 @@ function findNearestNeighbours(recipe) {
 }
 
 function rateIngredientsSimilarity(newIngredients, existingIngredients) {
-    return 0;
+    let newIngrSet = new Set(newIngredients.map(ingrMap => ingrMap.ingredient));
+    let existingIngrSet = new Set(existingIngredients.map(ingrMap => ingrMap.ingredient));
+
+    let setToIterate = (newIngrSet.size <= existingIngrSet.size ? newIngrSet : existingIngrSet);
+    let otherSet = (setToIterate === newIngrSet ? existingIngrSet : newIngrSet);
+
+    let total = setToIterate.size;
+    let similarity = 0;
+
+    for (let ingredient of setToIterate) {
+        if (otherSet.has(ingredient))
+            similarity++;
+    }
+
+    return similarity/total;
 }
 
 function rateFoodTypeSimilarity(newFoodType, existingFoodType) {
-    return 0;
+    let similarityRating = 0;
+
+    switch (newFoodType) {
+        case FoodType.BREAKFAST:
+            break;
+        case FoodType.LUNCH:
+            break;
+        case FoodType.DINNER:
+            break;
+        case FoodType.DESSERT:
+            break;
+        case FoodType.SNACK:
+            break;
+        default:
+            throw "Unsupported input";
+            break;
+    }
+
+    return similarityRating;
 }
 
 function rateSimilarity(newRecipe, existingRecipe) {
@@ -71,7 +104,7 @@ function rateSimilarity(newRecipe, existingRecipe) {
 
 // Gets a recipe's nearest neighbours
 function getNearestNeighbours(recipeId) {
-
+    return []; // stub
 }
 
 export function getRecommendedForUser() {
