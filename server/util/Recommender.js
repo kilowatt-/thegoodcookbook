@@ -9,7 +9,9 @@ const CUISINE_WEIGHT = 0.2;
 const TOO_SIMILAR_THRESHOLD = 0.85;
 const TOO_DISSIMILAR_THRESHOLD = 0.3;
 
-// Gets 5 nearest neighbours. Should be run whenever a new recipe is posted.
+const LIMIT = 5;
+
+// Gets LIMIT nearest neighbours. Should be run whenever a new recipe is posted.
 function findNearestNeighbours(recipe) {
 
     let recipes = Recipe.find().fetch();
@@ -17,6 +19,8 @@ function findNearestNeighbours(recipe) {
     let similarityHeap= new Heap((m1, m2) => {
         return m2.similarity - m1.similarity;
     });
+
+    let similarityArray = [];
 
     for (i = 0; i < recipes.length; i++) {
         let map = {
@@ -28,6 +32,16 @@ function findNearestNeighbours(recipe) {
             similarityHeap.push(map);
         }
     }
+
+    for (i = 0; i < LIMIT; i++) {
+        if (similarityHeap.empty())
+            break;
+        else {
+            similarityArray.push(similarityHeap.pop());
+        }
+    }
+
+    return similarityArray;
 }
 
 function rateIngredientsSimilarity(newIngredients, existingIngredients) {
