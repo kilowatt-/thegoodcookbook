@@ -32,7 +32,7 @@ function publish() {
 			if (this.userId)
 				return getRecommendedForUser();
 
-			return {};
+			return [];
 		}
 	});
 }

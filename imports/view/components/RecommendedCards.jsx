@@ -79,16 +79,10 @@ class RecommendedCards extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        dialogOpen: state.detailedViewOpened,
-    };
-};
-
 export default compose(
     withTracker(() => {
         return {
-            user: Meteor.user()
-        };
+            user: Meteor.user(),
+        }
 
-    }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);
+    }),connect(null, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);
