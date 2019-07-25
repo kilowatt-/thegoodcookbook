@@ -64,19 +64,71 @@ function rateIngredientsSimilarity(newIngredients, existingIngredients) {
 }
 
 function rateFoodTypeSimilarity(newFoodType, existingFoodType) {
+    const SIMILARITY_BETWEEN_BREAKFAST_AND_LUNCH = 0.4;
+    const SIMILARITY_BETWEEN_BREAKFAST_AND_SNACK = 0.7;
+    const SIMILARITY_BETWEEN_BREAKFAST_AND_DESSERT = 0.5;
+
+    const SIMILARITY_BETWEEN_LUNCH_AND_DINNER = 0.8;
+
+    const SIMILARITY_BETWEEN_DESSERT_AND_SNACK = 0.7;
+
     let similarityRating = 0;
 
     switch (newFoodType) {
         case FoodType.BREAKFAST:
-            break;
+            switch (existingFoodType) {
+                case FoodType.BREAKFAST:
+                    return 1;
+                case FoodType.LUNCH:
+                    return SIMILARITY_BETWEEN_BREAKFAST_AND_LUNCH;
+                case FoodType.SNACK:
+                    return SIMILARITY_BETWEEN_BREAKFAST_AND_SNACK;
+                case FoodType.DESSERT:
+                    return SIMILARITY_BETWEEN_BREAKFAST_AND_DESSERT;
+                default:
+                    return 0;
+            }
         case FoodType.LUNCH:
-            break;
+            switch (existingFoodType) {
+                case FoodType.LUNCH:
+                    return 1;
+                case FoodType.DINNER:
+                    return SIMILARITY_BETWEEN_LUNCH_AND_DINNER;
+                default:
+                    return 0;
+            }
         case FoodType.DINNER:
-            break;
+            switch (existingFoodType) {
+                case FoodType.DINNER:
+                    return 1;
+                case FoodType.LUNCH:
+                    return SIMILARITY_BETWEEN_LUNCH_AND_DINNER;
+                default:
+                    return 0;
+            }
         case FoodType.DESSERT:
-            break;
+            switch (existingFoodType) {
+                case FoodType.DESSERT:
+                    return 1;
+                case FoodType.BREAKFAST:
+                    return SIMILARITY_BETWEEN_BREAKFAST_AND_DESSERT;
+                case FoodType.SNACK:
+                    return SIMILARITY_BETWEEN_DESSERT_AND_SNACK;
+                default:
+                    return 0;
+            }
+
         case FoodType.SNACK:
-            break;
+            switch (existingFoodType) {
+                case FoodType.SNACK:
+                    return 1;
+                case FoodType.BREAKFAST:
+                    return SIMILARITY_BETWEEN_BREAKFAST_AND_SNACK;
+                case FoodType.DESSERT:
+                    return SIMILARITY_BETWEEN_DESSERT_AND_SNACK;
+                default:
+                    return 0;
+            }
         default:
             throw "Unsupported input";
             break;
