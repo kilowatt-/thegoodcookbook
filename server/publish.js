@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import {getRecommendedForUser} from "./util/Recommender";
+import {findNearestNeighbours, getRecommendedForUser} from "./util/Recommender";
 
 function publish() {
 	Meteor.publish('recipes', () => {
@@ -35,6 +35,15 @@ function publish() {
 			return [];
 		}
 	});
+
+	Meteor.methods( {
+		findNearestNeighbours(recipe) {
+			if (recipe)
+				findNearestNeighbours(recipe);
+			else
+				throw "Passed null recipe"
+		}
+	})
 }
 
 export default publish;

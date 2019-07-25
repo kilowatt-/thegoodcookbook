@@ -7,9 +7,8 @@ import Ingredient from '../imports/model/Ingredient.js';
 import {UOM} from '../imports/model/UnitOfMeasurement.js';
 import {Difficulty} from '../imports/model/Difficulty.js';
 import {FoodType} from '../imports/model/FoodType.js';
-import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.js'
-import { AccountsServer } from 'meteor/accounts-base';
-import publish from './publish'
+import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.js';
+import publish from './publish';
 
 function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);

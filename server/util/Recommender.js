@@ -3,8 +3,8 @@ import Recipes from "../../imports/api/recipes";
 import Heap from 'heap';
 import {FoodType} from "../../imports/model/FoodType";
 
-const INGREDIENT_SIMILARITY_WEIGHT = 0.6;
-const FOOD_TYPE_WEIGHT = 0.2;
+const INGREDIENT_SIMILARITY_WEIGHT = 0.7;
+const FOOD_TYPE_WEIGHT = 0.1;
 const CUISINE_WEIGHT = 0.2;
 
 const TOO_SIMILAR_THRESHOLD = 0.85;
@@ -13,9 +13,9 @@ const TOO_DISSIMILAR_THRESHOLD = 0.3;
 const LIMIT = 5;
 
 // Gets LIMIT nearest neighbours. Should be run whenever a new recipe is posted.
-function findNearestNeighbours(recipe) {
+export function findNearestNeighbours(recipe) {
 
-    let recipes = Recipe.find().fetch();
+    let recipes = Recipes.find().fetch();
 
     let similarityHeap= new Heap((m1, m2) => {
         return m2.similarity - m1.similarity;
@@ -46,8 +46,18 @@ function findNearestNeighbours(recipe) {
 }
 
 function rateIngredientsSimilarity(newIngredients, existingIngredients) {
-    let newIngrSet = new Set(newIngredients.map(ingrMap => ingrMap.ingredient));
-    let existingIngrSet = new Set(existingIngredients.map(ingrMap => ingrMap.ingredient));
+
+    let newIngrArray = newIngredients.map((ingrMap) => {
+        return ingrMap.ingredient.name;
+    });
+
+    let existingIngrArray = existingIngredients.map((ingrMap) => {
+        return ingrMap.ingredient.name;
+    });
+
+
+    let newIngrSet = new Set(newIngrArray);
+    let existingIngrSet = new Set(existingIngrArray);
 
     let setToIterate = (newIngrSet.size <= existingIngrSet.size ? newIngrSet : existingIngrSet);
     let otherSet = (setToIterate === newIngrSet ? existingIngrSet : newIngrSet);
@@ -71,8 +81,6 @@ function rateFoodTypeSimilarity(newFoodType, existingFoodType) {
     const SIMILARITY_BETWEEN_LUNCH_AND_DINNER = 0.8;
 
     const SIMILARITY_BETWEEN_DESSERT_AND_SNACK = 0.7;
-
-    let similarityRating = 0;
 
     switch (newFoodType) {
         case FoodType.BREAKFAST:
@@ -131,10 +139,7 @@ function rateFoodTypeSimilarity(newFoodType, existingFoodType) {
             }
         default:
             throw "Unsupported input";
-            break;
     }
-
-    return similarityRating;
 }
 
 function rateSimilarity(newRecipe, existingRecipe) {
@@ -151,7 +156,11 @@ function rateSimilarity(newRecipe, existingRecipe) {
     let foodTypeSimilarity = rateFoodTypeSimilarity(newFoodType, existingFoodType) * FOOD_TYPE_WEIGHT;
     let cuisineSimilarity = (newCuisine.toLowerCase() === existingCuisine.toLowerCase() ? CUISINE_WEIGHT : 0);
 
-    return ingredientsSimilarity + foodTypeSimilarity + cuisineSimilarity;
+    let similarity = ingredientsSimilarity + foodTypeSimilarity + cuisineSimilarity;
+
+    console.log("Similarity between " + newRecipe.recipeName + " and " + existingRecipe.recipeName + ": " + similarity);
+
+    return similarity;
 }
 
 // Gets a recipe's nearest neighbours

@@ -6,7 +6,14 @@ export default Recipes = new Mongo.Collection('recipes');
 
 Meteor.methods({
   'recipes.insert'(recipe) {
-    Recipes.insert(recipe);
+    Recipes.insert(recipe, (err, id) => {
+      if (err) {
+        //TODO: figure out what to do if there is an error
+      }
+
+        console.log("got here! um....");
+        Meteor.call('findNearestNeighbours', recipe);
+    });
   },
   'recipes.updateAvgRating'(recipeID, newRating) {
     Recipes.update(recipeID, { $set: { avgRating: newRating}});

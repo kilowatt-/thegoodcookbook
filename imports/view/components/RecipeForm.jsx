@@ -182,8 +182,6 @@ class RecipeForm extends React.Component {
 				procedure[idx] = event.target.value;
 
 				recipe.procedure = procedure;
-
-				console.log(recipe.procedure);
 			}
 		}
 
