@@ -25,11 +25,25 @@ export function findNearestNeighbours(recipe) {
 
     let similarityArray = [];
 
+    let isUpdating = (recipe.nearestNeighbours !== undefined);
+
+    let nnSet = new Set();
+
+    if (isUpdating) {
+        recipe.nearestNeighbours.forEach((elem) => {
+            nnSet.add(elem.recipeID);
+        })
+    }
+
     for (i = 0; i < recipes.length; i++) {
         let map = {
             recipeID: recipes[i]._id,
             similarity: rateSimilarity(recipe, recipes[i])
         };
+
+        if (isUpdating && nnSet.has(map.recipeID)) {
+            updateNearestNeighboursForRecipe(recipe._id, map.similarity, map.recipeID);
+        }
 
         if (map.similarity >= TOO_DISSIMILAR_THRESHOLD && map.similarity <= TOO_SIMILAR_THRESHOLD) {
             similarityHeap.push(map);
@@ -165,7 +179,18 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
     let nearestNeighbours = existingRecipe.nearestNeighbours;
 
-    if (nearestNeighbours.length === 0 || similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity) {
+    let existsInNearestNeighbours = () => {
+        nearestNeighbours.forEach((elem) => {
+                if (elem.recipeID === newRecipeId)
+                    return true;
+            }
+        );
+
+        return false;
+    };
+
+    if (existsInNearestNeighbours() || nearestNeighbours.length === 0 ||
+        similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity) {
 
         let insertionIndex = 0;
 
