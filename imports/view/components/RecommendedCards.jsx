@@ -7,6 +7,7 @@ import {setRecipeDetails} from "../../controller/actions/recipe";
 import {closeDetailedView, openDetailedView} from "../../controller/actions/detailedView";
 import React from "react";
 import '../style/RecipeCards.css';
+import Favourites from "../../api/favourites";
 
 class RecommendedCards extends React.Component {
     constructor(props) {
@@ -23,7 +24,8 @@ class RecommendedCards extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.user !== prevProps.user)
+        if (this.props.user !== prevProps.user || (prevProps.favourites && this.props.favourites
+            && this.props.favourites.length !== prevProps.favourites.length))
             this.updateCards();
     }
 
@@ -53,7 +55,7 @@ class RecommendedCards extends React.Component {
 
     render() {
         if (this.props.user) {
-            if (!this.props.loading) {
+            if (!this.state.loading) {
                 return (
                     <div>
                         <h2>Recommended for You</h2>
@@ -82,6 +84,7 @@ export default compose(
     withTracker(() => {
         return {
             user: Meteor.user(),
+            favourites: Favourites.findOne({_id: Meteor.userId()})
         }
 
     }),connect(null, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);

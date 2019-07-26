@@ -157,15 +157,9 @@ function rateSimilarity(newRecipe, existingRecipe) {
     let foodTypeSimilarity = rateFoodTypeSimilarity(newFoodType, existingFoodType) * FOOD_TYPE_WEIGHT;
     let cuisineSimilarity = (newCuisine.toLowerCase() === existingCuisine.toLowerCase() ? CUISINE_WEIGHT : 0);
 
-    let similarity = ingredientsSimilarity + foodTypeSimilarity + cuisineSimilarity;
-
-    return similarity;
+    return ingredientsSimilarity + foodTypeSimilarity + cuisineSimilarity;
 }
 
-// Gets a recipe's nearest neighbours
-function getNearestNeighbours(recipeId) {
-    return []; // stub
-}
 
 export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
@@ -198,7 +192,23 @@ export function getRecommendedForUser() {
     let favourites = Favourites.findOne({_id: Meteor.userId()}).favourites;
 
     if (favourites.length > 0) {
-        return []; // stub: randomly pick from each favourite's nearest neighbours
+        let recipes = Recipes.find({_id: {$in: favourites}}).fetch();
+        let allRecommendations = [];
+
+        for (i = 0; i < recipes.length; i++) {
+            let nearestNeighbours = recipes[i].nearestNeighbours;
+
+            nearestNeighbours.forEach((map) => {
+                allRecommendations.push(map.recipeID);
+            });
+        }
+
+        let recommendedRecipes = (allRecommendations.length > 0 ? Recipes.find({$and: [{_id: {$in: allRecommendations}},{_id: {$nin: favourites}}]})
+            .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
+            sort: {"avgRating": -1, "numRatings": -1}}).fetch());
+
+        return recommendedRecipes;
+
     }
     else {
         return Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
