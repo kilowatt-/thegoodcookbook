@@ -59,7 +59,6 @@ class EditRecipeButton extends React.Component {
 
 	render() {
 
-		console.log(this.props.recipe.createdBy);
 		return (
 			<div className="edit_recipe">
 			{this.props.user && Meteor.userId() === this.props.recipe.createdBy ?

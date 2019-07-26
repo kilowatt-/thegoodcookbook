@@ -34,8 +34,7 @@ class RecommendedCards extends React.Component {
             });
             Meteor.call('getRecommended', (error, result) => {
                 if (error) {
-                    //TODO do something with error...
-                    console.log(error);
+                    throw error;
                 } else {
                     this.setState({
                         loading: false,
