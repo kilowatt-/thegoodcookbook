@@ -32,9 +32,7 @@ Meteor.startup(() => {
         return user;
       });
 
-  if(Reviews.find().count() === 0) {
-    Reviews.insert({});
-  }
+
 
   if (Recipes.find().count() === 0) {
 

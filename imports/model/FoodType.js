@@ -4,4 +4,4 @@ export const FoodType = {
 	DINNER: 'Dinner',
 	SNACK: 'Snack',
 	DESSERT: 'Dessert'
-}
+};

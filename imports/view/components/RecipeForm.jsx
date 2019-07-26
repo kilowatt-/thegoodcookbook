@@ -148,6 +148,8 @@ class RecipeForm extends React.Component {
 	handleChange(event) {
 		let name = [event.target.name][0];
 
+		console.log(name);
+
 		let recipe = this.state.recipe;
 
 		if(!isNaN(parseInt(name[name.length-1], 10))) {
@@ -173,7 +175,7 @@ class RecipeForm extends React.Component {
 						break;
 				}
 
-				recipe[ingredients] = map;
+				console.log(recipe);
 			}
 
 			else {

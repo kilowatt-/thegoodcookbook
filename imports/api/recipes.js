@@ -8,10 +8,9 @@ Meteor.methods({
   'recipes.insert'(recipe) {
     Recipes.insert(recipe, (err, id) => {
       if (err) {
-        //TODO: figure out what to do if there is an error
+        throw err;
       }
 
-        console.log("got here! um....");
         Meteor.call('findNearestNeighbours', recipe);
     });
   },
@@ -22,7 +21,13 @@ Meteor.methods({
     Recipes.update(recipeID, { $inc: { numRatings: 1}});
   },
   'recipes.updateRecipe'(recipeID, newRecipe) {
-    Recipes.update(recipeID, newRecipe);
+    Recipes.update(recipeID, newRecipe, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      Meteor.call('findNearestNeighbours', newRecipe);
+    });
   },
   'recipes.increaseFavouriteCount'(recipeID) {
     Recipes.update(recipeID, {$inc: {'favouriteCount' : 1}});

@@ -3,10 +3,12 @@ import Recipes from "../../imports/api/recipes";
 import Heap from 'heap';
 import {FoodType} from "../../imports/model/FoodType";
 
+//WEIGHTS
 const INGREDIENT_SIMILARITY_WEIGHT = 0.7;
 const FOOD_TYPE_WEIGHT = 0.1;
 const CUISINE_WEIGHT = 0.2;
 
+//SIMILARITY THRESHOLDS
 const TOO_SIMILAR_THRESHOLD = 0.85;
 const TOO_DISSIMILAR_THRESHOLD = 0.3;
 
@@ -15,7 +17,7 @@ const LIMIT = 5;
 // Gets LIMIT nearest neighbours. Should be run whenever a new recipe is posted.
 export function findNearestNeighbours(recipe) {
 
-    let recipes = Recipes.find().fetch();
+    let recipes = Recipes.find({_id: {$ne: recipe._id}}).fetch();
 
     let similarityHeap= new Heap((m1, m2) => {
         return m2.similarity - m1.similarity;
@@ -41,7 +43,6 @@ export function findNearestNeighbours(recipe) {
             similarityArray.push(similarityHeap.pop());
         }
     }
-
     return similarityArray;
 }
 
@@ -158,14 +159,38 @@ function rateSimilarity(newRecipe, existingRecipe) {
 
     let similarity = ingredientsSimilarity + foodTypeSimilarity + cuisineSimilarity;
 
-    console.log("Similarity between " + newRecipe.recipeName + " and " + existingRecipe.recipeName + ": " + similarity);
-
     return similarity;
 }
 
 // Gets a recipe's nearest neighbours
 function getNearestNeighbours(recipeId) {
     return []; // stub
+}
+
+export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
+    let existingRecipe = Recipes.findOne({_id: existingRecipeId});
+    let nearestNeighbours = existingRecipe.nearestNeighbours;
+
+    if (nearestNeighbours.length === 0 || similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity) {
+
+        let insertionIndex = 0;
+
+        for (i = 0; i < nearestNeighbours.length; i++) {
+
+            let currentSimilarity = nearestNeighbours[i].similarity;
+
+            if (similarityRating > currentSimilarity)
+                break;
+        }
+
+        if (nearestNeighbours.length >= LIMIT)
+            nearestNeighbours.pop();
+
+        nearestNeighbours.splice(insertionIndex, 0, newRecipeId);
+
+        Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
+    }
+
 }
 
 export function getRecommendedForUser() {
