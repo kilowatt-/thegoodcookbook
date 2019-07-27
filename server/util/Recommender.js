@@ -179,18 +179,17 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
     let nearestNeighbours = existingRecipe.nearestNeighbours;
 
-    let existsInNearestNeighbours = () => {
-        nearestNeighbours.forEach((elem) => {
-                if (elem.recipeID === newRecipeId)
-                    return true;
-            }
-        );
+    let indexInNN = nearestNeighbours.findIndex((elem) => {
+        return elem.recipeID === newRecipeId;
+    });
 
-        return false;
+    let recipeMap = {
+        recipeID: newRecipeId,
+        similarity: similarityRating
     };
 
-    if (existsInNearestNeighbours() || nearestNeighbours.length === 0 ||
-        similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity) {
+    if (indexInNN === -1 && (nearestNeighbours.length === 0 ||
+        similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity)) {
 
         let insertionIndex = 0;
 
@@ -198,16 +197,33 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
 
             let currentSimilarity = nearestNeighbours[i].similarity;
 
-            if (similarityRating > currentSimilarity)
+            if (similarityRating >= currentSimilarity)
                 break;
         }
 
         if (nearestNeighbours.length >= LIMIT)
             nearestNeighbours.pop();
 
-        nearestNeighbours.splice(insertionIndex, 0, newRecipeId);
+        nearestNeighbours.splice(insertionIndex, 0, recipeMap);
 
         Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
+    }
+
+    else if (indexInNN > -1) {
+        nearestNeighbours.splice(indexInNN, 1);
+
+        if (similarityRating > TOO_DISSIMILAR_THRESHOLD && similarityRating < TOO_SIMILAR_THRESHOLD) {
+
+            let partitionIndex = nearestNeighbours.findIndex((elem) => {
+                    return elem.similarity <= similarityRating;
+                }
+            );
+
+            if (partitionIndex === -1)
+                nearestNeighbours.push(recipeMap);
+            else
+                nearestNeighbours.splice(partitionIndex, 1, recipeMap);
+        }
     }
 
 }
