@@ -6,11 +6,13 @@ import NavBar from './NavBar.jsx';
 class Header extends React.Component {
 	render() {
 		return(
-			<header>
-			<div className="title">The Good Cook Book</div>
-			<NavBar />
-			<UserProfileTab />
-			</header>
+			<div className="header-content">
+				<div className="title-and-nav-bar">
+					<div className="title">The Good Cook Book</div>
+					<NavBar />
+				</div>
+				<UserProfileTab />
+			</div>
 			)
 	}
 }

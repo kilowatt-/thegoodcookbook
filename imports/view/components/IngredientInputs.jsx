@@ -4,6 +4,10 @@ import Select from '@material-ui/core/Select';
 import {UOM} from '../../model/UnitOfMeasurement.js';
 import MenuItem from '@material-ui/core/MenuItem';
 import {TextValidator} from 'react-material-ui-form-validator';
+import '../style/RecipeForm.css';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
+import TextField from '@material-ui/core/TextField';
 
 class IngredientInputs extends React.Component {
 
@@ -27,7 +31,7 @@ class IngredientInputs extends React.Component {
 
 					let menuKey = uom;
 					return (
-						
+
 						<MenuItem key={uom} value={values[index]}>{values[index]}</MenuItem>
 
 						)
@@ -42,7 +46,7 @@ class IngredientInputs extends React.Component {
 
 		return (
 
-	
+
 			ingredients.map((ingredient,index) => {
 				let ingredientId = 'ing_' + index;
 				let uomId = 'uom_' + index;
@@ -50,17 +54,41 @@ class IngredientInputs extends React.Component {
 				let btnId = 'btn_' + index;
 
 				return (
-				<div key={index}>
-					<TextValidator validators={['required', 'isNumber']} errorMessages={['Required', 'Must be a number']} key={qtyId} name={qtyId} onChange={this.props.handleChange} value={ingredient.quantity} style={{width:30}} /> <TextValidator validators={['required']} errorMessages={['Required']} key={ingredientId} name={ingredientId} style={{width:150}} onChange={ this.props.handleChange } value={ingredient.ingredient.name} /> 
-					<Select key={uomId} name={uomId} onChange={ this.props.handleChange } value={ingredient.ingredient.uom} style={{width:80}}>
-					{this.renderMenuItems()}
-					</Select>
-					{index > 0 ? <Button color="secondary" key={btnId} name={btnId} onClick={() => this.removeIngredient(index)}>Delete</Button> : null}
-				
+				<div key={index} className="single-ingredient">
+					<div className="amount-input">
+						<TextValidator className="ingredient-amount-input"
+													validators={['required', 'isNumber']}
+													errorMessages={['Required', 'Must be a number']}
+													key={qtyId}
+													name={qtyId}
+													onChange={this.props.handleChange}
+													value={ingredient.quantity}/>
+						<TextField key={uomId}
+										select
+										name={uomId}
+										className="ingredient-amount-select"
+										onChange={ this.props.handleChange }
+										value={ingredient.ingredient.uom}
+										variant="outlined">
+										{this.renderMenuItems()}
+										</TextField>
+					</div>
+					<TextValidator validators={['required']}
+												errorMessages={['Required']}
+												className="ingredient-name-input"
+												key={ingredientId}
+												name={ingredientId}
+												onChange={ this.props.handleChange }
+												value={ingredient.ingredient.name}
+												fullWidth />
+					{index > 0 ?
+						<Tooltip title="Delete Ingredient">
+								<Icon className="icon-delete" onClick={() => this.removeIngredient(index)} key={btnId} name={btnId}>close</Icon>
+						</Tooltip>:
+						null}
 				</div>
 				)
-				}
-				)
+			})
 			)
 	}
 }

@@ -62,9 +62,6 @@ export default class CommonDialog extends Component {
           <DialogContent dividers>
             {this.props.dialogContent}
           </DialogContent>
-          <DialogActions>
-            {this.props.dialogActions}
-          </DialogActions>
         </Dialog>
       </div>
     );

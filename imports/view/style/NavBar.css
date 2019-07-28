@@ -1,5 +1,7 @@
 .nav-bar-container {
     background-color: moccasin;
+    display: flex;
+    padding-left: 10px;
 }
 
 .nav-bar {

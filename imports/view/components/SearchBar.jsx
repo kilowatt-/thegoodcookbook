@@ -10,7 +10,7 @@ import ChipInput from 'material-ui-chip-input';
 import Icon from '@material-ui/core/Icon';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
-import '../style/SearchBar.css';
+import '../style/SearchFilterBar.css';
 
 const styles = {
     container: {
@@ -20,17 +20,14 @@ const styles = {
     },
     textField: {
         margin:0,
-        marginTop: 16
-    },
-    dense: {
-        marginTop: 8,
+        marginTop: 8
     },
     menu: {
         width: 200,
     },
     searchIngredients:{
         margin: 0,
-        marginTop: 16
+        marginTop: 8
     }
 };
 
@@ -46,7 +43,7 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="search-section">
                 {this.TextFields()}
             </div>);
     }
