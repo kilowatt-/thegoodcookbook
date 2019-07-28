@@ -166,6 +166,7 @@ const mapStateToProps = (state) => {
   Session.set('searchText', state.inputReducer.searchBar);
   Session.set('chipSearch', state.inputReducer.chipSearch);
   Session.set('favourites', state.currentTab === NavBarTabs.FAVORITES);
+  Session.set('addedOnly', state.currentTab === NavBarTabs.ADDED)
   return {
           dialogOpen: state.detailedViewOpened,
           currentTab: state.currentTab,
@@ -182,6 +183,7 @@ const getFilter = () => {
     const searchText = Session.get('searchText');
     const chipSearch = Session.get('chipSearch');
     const favourites = Session.get('favourites');
+    const addedOnly = Session.get('addedOnly');
     if (difficulty){
       filter.difficulty = difficulty
     }
@@ -205,6 +207,9 @@ const getFilter = () => {
             {
                 $in: Session.get('favouritesList')
             }
+    }
+    if (addedOnly) {
+      filter.createdBy = Meteor.userId();
     }
 
     return filter;

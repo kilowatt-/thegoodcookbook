@@ -1,0 +1,34 @@
+.MuiFormControl-root.MuiTextField-root.MuiFormControl-marginNormal {
+  min-width: 30%;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.MuiFormControl-root.MuiTextField-root.MuiFormControl-fullWidth {
+  margin-top: 8px;
+}
+
+.MuiInputBase-input.MuiFilledInput-input.MuiInputBase-inputSelect.MuiFilledInput-inputSelect.MuiSelect-filled {
+  padding: 10px;
+}
+.search-section {
+  flex-grow: 1;
+}
+
+.filter-section {
+  flex-grow: 1;
+}
+
+.search-filter-bar {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+  grid-template-rows: 1fr;
+  background-color: seashell;
+}
+
+.search-filter-section {
+  grid-column: 1/span 2;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

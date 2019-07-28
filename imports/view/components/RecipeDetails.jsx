@@ -63,7 +63,9 @@ class RecipeDetails extends Component {
           <div className="recipe-item-label">
             <Typography variant="h6">Procedure:</Typography>
           </div>
-          {this.props.recipe.procedure}
+          <ul>
+            {this.getProcedureList(this.props.recipe.procedure)}
+          </ul>
         </div>
 
         <RecipeReviews />
@@ -84,6 +86,19 @@ class RecipeDetails extends Component {
       });
     } else {
       return (<li key="0">{ingredients}</li>);
+    }
+  }
+
+  getProcedureList(procedure) {
+    let id = 0;
+    if (procedure instanceof Array ) {
+      return procedure.map(step => {
+        return (<li key={id++}>
+                  {step}
+                  </li>);
+      });
+    } else {
+      return (<li key={0}>{procedure}</li>);
     }
   }
 
