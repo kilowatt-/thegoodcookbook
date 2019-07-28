@@ -4,21 +4,23 @@
 
 .bt_login {
 	vertical-align: middle;
+	margin: 8px;
 }
 
 .login {
+	display: flex;
 	float: right;
 	vertical-align: top;
-	position: absolute;
 	right: 0;
 	top: 0;
 	height: 100%;
 	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .login-signup {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 2fr 3fr;
 	grid-template-rows: 1fr;
 	height: 100%;
 }
@@ -45,8 +47,24 @@
 	display: flex;
 	flex-direction: column;
 	padding: 5px;
+	width: 75%;
 }
 
 .MuiFormControl-root.MuiTextField-root {
 	margin-top: 20px;
+}
+
+.account-form-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.account-input {
+	padding: 8px;
+}
+
+.material-icons.MuiIcon-root.account-icon {
+	font-size: 125px;
+	color: sandybrown;
 }

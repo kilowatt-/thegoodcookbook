@@ -7,6 +7,7 @@ import {UOM} from '../../model/UnitOfMeasurement.js';
 import RadioButton from '@material-ui/core/Radio';
 import Ingredient from '../../model/Ingredient';
 import Recipe from '../../model/Recipe';
+import {NO_IMAGE_URL} from '../../model/NoImgUrl'
 import IngredientInputs from './IngredientInputs.jsx';
 import StepsInput from './StepsInput'
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';
@@ -14,6 +15,7 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {connect} from 'react-redux';
 import {setRecipeDetails} from '../../controller/actions/recipe.js'
 import { Meteor } from 'meteor/meteor';
+import FormLabel from '@material-ui/core/FormLabel';
 
 class RecipeForm extends React.Component {
 
@@ -130,14 +132,22 @@ class RecipeForm extends React.Component {
 
 		if (this.props.editing) {
 			let id = this.props.recipe._id;
-			Meteor.call('recipes.updateRecipe', id, this.state.recipe);
+			let recipeToAdd = this.state.recipe;
+			if(recipeToAdd.imgUrl === '') {
+				recipeToAdd.imgUrl = NO_IMAGE_URL;
+			}
+			Meteor.call('recipes.updateRecipe', id, recipeToAdd);
 
 			this.props.setRecipeDetails(this.state.recipe);
 		}
 
 		else {
 			this.state.recipe.addCreatedBy();
-			Meteor.call('recipes.insert', this.state.recipe);
+			let recipeToAdd = this.state.recipe;
+			if(recipeToAdd.imgUrl === '') {
+				recipeToAdd.imgUrl = NO_IMAGE_URL;
+			}
+			Meteor.call('recipes.insert', recipeToAdd);
 		}
 
 
@@ -201,27 +211,110 @@ class RecipeForm extends React.Component {
 			<div className="submit_form">
 			{ !this.props.closing ?
 			<ValidatorForm onSubmit={this.handleSubmit}>
-				<label>Recipe Name: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="recipeName" onChange={ this.handleChange } value = { this.state.recipe.recipeName } /><br />
-				<label>Ingredients:</label> <IngredientInputs ingredients={this.state.recipe.ingredients} handleChange = {this.handleChange} addNewIngredient={this.addNewIngredient} removeIngredient={this.removeIngredient}/> <Button type='button' color='primary' onClick={this.addNewIngredient}>+ Add New Ingredient</Button> <br />
-				<label>Difficulty: </label> <RadioButton name="difficulty" value={Difficulty.EASY} onChange = { this.handleChange } checked= {this.state.recipe.difficulty === Difficulty.EASY} /> Easy
-											<RadioButton name="difficulty" value={Difficulty.MEDIUM} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.MEDIUM} /> Medium
-											<RadioButton name="difficulty" value={Difficulty.HARD} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.HARD} /> Hard<br />
-				<label>Time: </label> <TextValidator style={{width:30}} validators={['required', 'isNumber', 'minNumber:1']} errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute']} name="time" onChange = { this.handleChange } value={this.state.recipe.time} /> min<br />
-				<label>Image URL:</label> <TextValidator name="imgUrl" validators={['matchRegexp:(http)?s?:?(\/\/[^"\']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$'] }
-				errorMessages={['Enter valid image URL']} placeholder='Accepted extensions:  .gif, .png, .bmp, .jpg, .jpeg' onChange = {this.handleChange} value = {this.state.recipe.imgUrl} /><br />
-				<label>Food Type:</label>   <RadioButton name="foodType" value={FoodType.BREAKFAST} onChange = { this.handleChange } checked= {this.state.recipe.foodType === FoodType.BREAKFAST} />Breakfast
-											<RadioButton name="foodType" value={FoodType.LUNCH} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.LUNCH} />Lunch
-											<RadioButton name="foodType" value={FoodType.DINNER} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DINNER} />Dinner
-											<RadioButton name="foodType" value={FoodType.SNACK} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.SNACK} />Snack
-											<RadioButton name="foodType" value={FoodType.DESSERT} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DESSERT} />Dessert<br />
-
-				<label>Cuisine: </label> <TextValidator validators={['required']} errorMessages={['Required']} name="cuisine" onChange={ this.handleChange } value = { this.state.recipe.cuisine } /><br />
-
-				<label>Instructions:</label>
-				<StepsInput procedure = {this.state.recipe.procedure} handleChange = {this.handleChange} removeStep = {this.removeStep}/><Button type='button' color='primary' onClick={this.addNewStep}>+ Add New Step</Button><br />
-
+				<div className="recipe-name-input recipe-form-input text-input">
+					<FormLabel component="legend">Recipe Name</FormLabel>
+					<TextValidator className="recipe-input-text-box"
+												validators={['required']}
+												errorMessages={['Required']}
+												name="recipeName"
+												onChange={ this.handleChange }
+												value = { this.state.recipe.recipeName }
+												fullWidth
+												variant="outlined"/>
+				</div>
+				<div className="difficulty-input recipe-form-input">
+					<FormLabel component="legend">Difficulty</FormLabel>
+					<div className="radio-group-options">
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="difficulty" value={Difficulty.EASY} onChange = { this.handleChange } checked= {this.state.recipe.difficulty === Difficulty.EASY} />
+							<div className="radio-button-label">Easy</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="difficulty" value={Difficulty.MEDIUM} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.MEDIUM} />
+							<div className="radio-button-label">Medium</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="difficulty" value={Difficulty.HARD} onChange = { this.handleChange } checked={this.state.recipe.difficulty === Difficulty.HARD} />
+							<div className="radio-button-label">Hard</div>
+						</div>
+					</div>
+				</div>
+				<div className="food-type-input recipe-form-input">
+					<FormLabel component="legend">Food Type</FormLabel>
+					<div className="radio-group-options">
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="foodType" value={FoodType.BREAKFAST} onChange = { this.handleChange } checked= {this.state.recipe.foodType === FoodType.BREAKFAST} />
+							<div className="radio-button-label">Breakfast</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="foodType" value={FoodType.LUNCH} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.LUNCH} />
+							<div className="radio-button-label">Lunch</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="foodType" value={FoodType.DINNER} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DINNER} />
+							<div className="radio-button-label">Dinner</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="foodType" value={FoodType.SNACK} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.SNACK} />
+							<div className="radio-button-label">Snack</div>
+						</div>
+						<div className="radio-button-option">
+							<RadioButton color='primary' name="foodType" value={FoodType.DESSERT} onChange = { this.handleChange } checked={this.state.recipe.foodType === FoodType.DESSERT} />
+							<div className="radio-button-label">Dessert</div>
+						</div>
+					</div>
+				</div>
+				<div className="time-and-cuisine">
+					<div className="time-input recipe-form-input text-input">
+						<FormLabel component="legend">Time Needed (Minutes)</FormLabel>
+						<TextValidator className="recipe-input-text-box"
+													validators={['required', 'isNumber', 'minNumber:1']}
+													errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute']}
+													name="time"
+													onChange = { this.handleChange }
+													value={this.state.recipe.time}
+													fullWidth
+													variant="outlined"/>
+					</div>
+					<div className="cuisine-input recipe-form-input text-input">
+						<FormLabel component="legend">Cuisine</FormLabel>
+						<TextValidator className="recipe-input-text-box"
+													validators={['required']}
+													errorMessages={['Required']}
+													name="cuisine"
+													onChange={ this.handleChange }
+													value = { this.state.recipe.cuisine }
+													fullWidth
+													variant="outlined"/>
+					</div>
+				</div>
+				<div className="imgUrl-input recipe-form-input text-input">
+					<FormLabel component="legend">Image URL</FormLabel>
+					<TextValidator className="recipe-input-text-box"
+												name="imgUrl"
+												validators={['matchRegexp:(http)?s?:?(\/\/[^"\']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$'] }
+												errorMessages={['Enter valid image URL']}
+												placeholder='Accepted extensions:  .gif, .png, .bmp, .jpg, .jpeg'
+												onChange = {this.handleChange}
+												value = {this.state.recipe.imgUrl === NO_IMAGE_URL? '' : this.state.recipe.imgUrl }
+												fullWidth
+												variant="outlined"/>
+				</div>
+				<div className="ingredients-input recipe-form-input">
+					<FormLabel component="legend">Ingredients</FormLabel>
+					<div className="input-container">
+						<IngredientInputs ingredients={this.state.recipe.ingredients} handleChange = {this.handleChange} addNewIngredient={this.addNewIngredient} removeIngredient={this.removeIngredient}/>
+						<Button type='button' color='primary' onClick={this.addNewIngredient}>+ Add Ingredient</Button>
+					</div>
+				</div>
+				<div className="instructions-input recipe-form-input">
+					<FormLabel component="legend">Procedure</FormLabel>
+					<div className="input-container">
+						<StepsInput procedure = {this.state.recipe.procedure} handleChange = {this.handleChange} removeStep = {this.removeStep}/>
+						<Button type='button' color='primary' onClick={this.addNewStep}>+ Add Step</Button>
+					</div>
+				</div>
 				<Button type="submit" className="bt_submit">Submit</Button>
-
 			</ValidatorForm>
 			:
 			<div>

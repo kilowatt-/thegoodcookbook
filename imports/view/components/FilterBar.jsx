@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
 import Button from '@material-ui/core/Button';
+import '../style/SearchFilterBar.css';
 
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
@@ -36,9 +37,6 @@ const styles = {
         marginLeft: 4,
         marginRight: 4
     },
-    dense: {
-        marginTop: 8,
-    },
     menu: {
         width: 200,
     },
@@ -53,7 +51,7 @@ class FilterBar extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="filter-section">
                 {this.FilterFields()}
             </div>);
     }
