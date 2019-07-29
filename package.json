@@ -28,8 +28,7 @@
     "mainModule": {
       "client": "client/main.jsx",
       "server": "server/main.js"
-    },
-    "testModule": "tests/main.js"
+    }
   },
   "devDependencies": {
     "@material-ui/core": "^4.1.3"

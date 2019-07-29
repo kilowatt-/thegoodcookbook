@@ -57,6 +57,9 @@ export function findNearestNeighbours(recipe) {
             similarityArray.push(similarityHeap.pop());
         }
     }
+
+    Recipes.update({_id: recipe._id}, {$set: {nearestNeighbours: similarityArray}});
+
     return similarityArray;
 }
 
@@ -175,9 +178,12 @@ function rateSimilarity(newRecipe, existingRecipe) {
 }
 
 
-export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
+function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
     let nearestNeighbours = existingRecipe.nearestNeighbours;
+
+    if (!nearestNeighbours)
+        nearestNeighbours = [];
 
     let indexInNN = nearestNeighbours.findIndex((elem) => {
         return elem.recipeID === newRecipeId;
@@ -205,8 +211,6 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
             nearestNeighbours.pop();
 
         nearestNeighbours.splice(insertionIndex, 0, recipeMap);
-
-        Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
     }
 
     else if (indexInNN > -1) {
@@ -225,6 +229,8 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
                 nearestNeighbours.splice(partitionIndex, 1, recipeMap);
         }
     }
+
+    Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
 
 }
 

@@ -21,11 +21,10 @@ Meteor.methods({
     Recipes.update(recipeID, { $inc: { numRatings: 1}});
   },
   'recipes.updateRecipe'(recipeID, newRecipe) {
-    Recipes.update(recipeID, newRecipe, (err) => {
+    Recipes.update(recipeID, {$set: newRecipe}, (err) => {
       if (err) {
         throw err;
       }
-
       Meteor.call('findNearestNeighbours', newRecipe);
     });
   },
