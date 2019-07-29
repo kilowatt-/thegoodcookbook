@@ -1,20 +1,34 @@
-import { TOGGLE_FAVOURITES } from '../actions/favourites.js';
+import { GET_FAVOURITES_BEGIN, GET_FAVOURITES_SUCCESS, GET_FAVOURITES_ERROR } from "../actions/favourites";
 
 const INITIAL_STATE = {
-	selected: false
+	loading: false,
+	error: null
 };
 
 export const favouritesReducer  = (state = INITIAL_STATE, action) => {
 
-	if (action.type === TOGGLE_FAVOURITES) {
-		let select = state.selected;
-	
-		select = !select;
-		return {
-			...state,
-			selected: select
-		};
+	switch (action.type) {
+		case GET_FAVOURITES_BEGIN:
+			return {
+				loading: true,
+				error: null
+			};
+			break;
+		case GET_FAVOURITES_SUCCESS:
+			return {
+				loading: false,
+				error: null
+			};
+			break;
+		case GET_FAVOURITES_ERROR:
+			return {
+				loading: false,
+				error: action.payload
+			};
+			break;
+		default:
+			return state;
+			break;
 	}
-	else
-		return state;
-}
+
+};

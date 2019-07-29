@@ -18,24 +18,32 @@ class LoginForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      loggingIn: false
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      loggingIn: true,
+      error: ''
+    });
+
     Meteor.loginWithPassword(this.state.email, this.state.password,
     (err) => {
       if (err) {
         this.setState({
-          error: err.reason
+          error: err.reason,
+          loggingIn: false
         })
       }
       else {
         this.setState({
           email: '',
           password: '',
-          error: ''
+          error: '',
+          loggingIn: false
         });
         this.props.closeLoginDialog();
       }
@@ -57,14 +65,15 @@ class LoginForm extends React.Component {
         <ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
           <div className="account-input">
             <FormLabel component="legend">Email</FormLabel>
-            <TextValidator className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} fullWidth variant="outlined"/>
+            <TextValidator disabled={this.state.loggingIn} className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} fullWidth variant="outlined"/>
           </div>
           <div className="account-input">
             <FormLabel component="legend">Password</FormLabel>
-            <TextValidator className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} fullWidth variant="outlined" />
+            <TextValidator disabled={this.state.loggingIn} className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} fullWidth variant="outlined" />
           </div>
-          <Button type="submit" className="bt_login">Log In</Button><br />
+          <Button disabled={this.state.loggingIn} type="submit" className="bt_login">Log In</Button><br />
           <span style={{color:"red"}}>{this.state.error}</span>
+          <span>{this.state.loggingIn ? "Logging in..." : null}</span>
         </ValidatorForm>
       </div>
     );

@@ -7,9 +7,8 @@ import Ingredient from '../imports/model/Ingredient.js';
 import {UOM} from '../imports/model/UnitOfMeasurement.js';
 import {Difficulty} from '../imports/model/Difficulty.js';
 import {FoodType} from '../imports/model/FoodType.js';
-import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.js'
-import { AccountsServer } from 'meteor/accounts-base';
-import publish from './publish'
+import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.js';
+import publish from './publish';
 
 function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);
@@ -24,18 +23,16 @@ Meteor.startup(() => {
       let favList = {
           _id: user._id,
           favourites: []
-      }
+      };
 
       Favourites.insert(favList);
 
       user['name'] = options.name;
 
         return user;
-      })
+      });
 
-  if(Reviews.find().count() === 0) {
-    Reviews.insert({});
-  }
+
 
   if (Recipes.find().count() === 0) {
 
@@ -56,7 +53,7 @@ Meteor.startup(() => {
     let sausage = new Ingredient('Sausage', UOM.PIECES);
 
     let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)],
-    "blah blah blah", Difficulty.EASY, 15, FoodType.DINNER, "Asian", "https://www.evolvingtable.com/wp-content/uploads/2016/04/Chicken-Fried-Rice-4.jpg");
+    ["blah blah blah"], Difficulty.EASY, 15, FoodType.DINNER, "Asian", "https://www.evolvingtable.com/wp-content/uploads/2016/04/Chicken-Fried-Rice-4.jpg");
 
     Recipes.insert(friedRice);
 

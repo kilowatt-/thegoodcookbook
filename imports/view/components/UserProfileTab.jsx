@@ -1,5 +1,4 @@
 import React from 'react';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Button from '@material-ui/core/Button';
 import { Meteor } from 'meteor/meteor';
 import '../style/Login.css';
@@ -17,6 +16,11 @@ class UserProfileTab extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			loggingOut: false
+		};
+
 		this.openRegistrationForm = this.openRegistrationForm.bind(this);
 		this.openLoginForm = this.openLoginForm.bind(this);
 		this.closeRegistrationForm = this.closeRegistrationForm.bind(this);
@@ -45,21 +49,30 @@ class UserProfileTab extends React.Component {
 	}
 
 	logout(event) {
-    event.preventDefault();
-    Meteor.logout();
-		this.props.browseAll();
-  }
+		event.preventDefault();
+		this.setState({
+			loggingOut: true
+		});
+		Meteor.logout( () => {
+			this.setState({
+				loggingOut: false
+			});
+			this.props.browseAll();
+		}
+		);
+
+  	}
 
 	render() {
 
 		return (
 			<div className="login">
-				{this.props.user ?
+				{Meteor.user() ?
 					<div className="user-profile">
 						<Icon>person</Icon>
 						<div className="username">
 							{Meteor.user().name}
-							<div className="logout-button">(<a href="#" onClick={this.logout}>Logout</a>)</div>
+							<div className="logout-button">({this.state.loggingOut ? <span>Logging out...</span> : <a href="#" onClick={this.logout}>Logout</a>})</div>
 						</div>
 					</div> :
 					<div className="login-signup">
@@ -79,7 +92,7 @@ const mapStateToProps = (state) => {
 		loginDialogOpen: state.loginDialogOpened,
 		signupDialogOpen: state.signupDialogOpened
 	}
-}
+};
 
 
 export default compose(
@@ -87,4 +100,4 @@ export default compose(
 		return {
 			user: Meteor.user()
 		};
-}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll }))(UserProfileTab);
+	}), connect(mapStateToProps, { openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog, browseAll }))(UserProfileTab);

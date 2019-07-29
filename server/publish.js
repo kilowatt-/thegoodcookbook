@@ -1,4 +1,5 @@
 import {Meteor} from 'meteor/meteor';
+import {findNearestNeighbours, getRecommendedForUser, updateNearestNeighboursForRecipe} from "./util/Recommender";
 
 function publish() {
 	Meteor.publish('recipes', () => {
@@ -25,6 +26,36 @@ function publish() {
 		else 
 			return this.ready();
 	});
+
+	Meteor.methods({
+		getRecommended() {
+			if (this.userId)
+				return getRecommendedForUser();
+
+			return [];
+		}
+	});
+
+	Meteor.methods( {
+		findNearestNeighbours(recipe) {
+			if (recipe) {
+				let arr = findNearestNeighbours(recipe);
+				Recipes.update({_id: recipe._id}, {$set: {nearestNeighbours: arr}}, (err) => {
+					if (err) {
+						throw err;
+					}
+
+					else {
+						arr.forEach((map) => {
+							updateNearestNeighboursForRecipe(recipe._id, map.similarity, map.recipeID);
+						})
+					}
+				});
+			}
+			else
+				throw "Passed null recipe"
+		}
+	})
 }
 
 export default publish;

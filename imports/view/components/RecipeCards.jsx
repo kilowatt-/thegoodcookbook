@@ -98,9 +98,15 @@ class RecipeCards extends Component {
                   }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
                 </CardActions>
               </Card>
+
             </div>
           ))}
-        <Button onClick={()=>this.moreRecipes()} >More</Button>
+          {this.props.recipeLoadingState.loading ? <div className="spinner">
+              <div className="bounce1"></div>
+              <div className="bounce2"></div>
+              <div className="bounce3"></div>
+          </div> : null}
+          {this.props.recommended ? null : <Button onClick={()=>this.moreRecipes()} >More</Button>}
         <RecipeDetails
           dialogOpen={this.props.dialogOpen}
           closeDialog={this.closeRecipeDetails}
@@ -110,7 +116,9 @@ class RecipeCards extends Component {
   }
 
   isInFavourites(item) {
-    return this.props.favourites.favourites.includes(item._id);
+      if (this.props.favourites)
+          return this.props.favourites.favourites.includes(item._id);
+      return false;
   }
 
   addToFavourites(id) {
@@ -161,7 +169,9 @@ const mapStateToProps = (state) => {
   Session.set('addedOnly', state.currentTab === NavBarTabs.ADDED)
   return {
           dialogOpen: state.detailedViewOpened,
-          currentTab: state.currentTab
+          currentTab: state.currentTab,
+          recipeLoadingState: state.loadRecipe,
+          favouritesLoadingState: state.favourites
         };
 };
 
