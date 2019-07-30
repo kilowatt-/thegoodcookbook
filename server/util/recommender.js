@@ -240,17 +240,17 @@ export function getRecommendedForUser() {
 
     if (favourites.length > 0) {
         let recipes = Recipes.find({_id: {$in: favourites}}).fetch();
-        let allRecommendations = [];
+        let allRecommendations = new Set();
 
         for (i = 0; i < recipes.length; i++) {
             let nearestNeighbours = recipes[i].nearestNeighbours;
 
             nearestNeighbours.forEach((map) => {
-                allRecommendations.push(map.recipeID);
+                allRecommendations.add(map.recipeID);
             });
         }
 
-        let recommendedRecipes = (allRecommendations.length > 0 ? Recipes.find({$and: [{_id: {$in: allRecommendations}},{_id: {$nin: favourites}}]})
+        let recommendedRecipes = (allRecommendations.length > 0 ? Recipes.find({$and: [{_id: {$in: Array.from(allRecommendations)}},{_id: {$nin: favourites}}]})
             .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
             sort: {"avgRating": -1, "numRatings": -1}}).fetch());
 
