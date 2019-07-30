@@ -188,6 +188,4 @@ describe("Recommender tests", function() {
         assert.notDeepEqual(updatedSimilarity1, initialSimilarity1);
         assert.notDeepEqual(updatedSimilarity2, initialSimilarity2);
     });
-
-
 });

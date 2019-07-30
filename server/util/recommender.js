@@ -237,6 +237,7 @@ function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existin
 export function getRecommendedForUser() {
 
     let favourites = Favourites.findOne({_id: Meteor.userId()}).favourites;
+    console.log("favourites length: " + favourites.length);
 
     if (favourites.length > 0) {
         let recipes = Recipes.find({_id: {$in: favourites}}).fetch();
@@ -250,15 +251,36 @@ export function getRecommendedForUser() {
             });
         }
 
-        let recommendedRecipes = (allRecommendations.length > 0 ? Recipes.find({$and: [{_id: {$in: Array.from(allRecommendations)}},{_id: {$nin: favourites}}]})
-            .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
-            sort: {"avgRating": -1, "numRatings": -1}}).fetch());
+        let allRecommendationsArray = Array.from(allRecommendations);
+        let randomizedRecommendations = [];
 
-        return recommendedRecipes;
+        if (allRecommendationsArray.length > LIMIT) {
+
+            for (let i = 0; i < LIMIT; i++) {
+                if (allRecommendationsArray.length === 0)
+                    break;
+
+                let random = Math.floor(Math.random() * allRecommendationsArray.length);
+
+                randomizedRecommendations.push(allRecommendationsArray.splice(random, 1)[0]);
+
+
+            }
+        }
+
+        else
+            randomizedRecommendations = allRecommendationsArray;
+
+
+        return (allRecommendations.size > 0 ? Recipes.find({$and: [{_id: {$in: randomizedRecommendations}}, {_id: {$nin: favourites}}]})
+            .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {
+            limit: 5,
+            sort: {"avgRating": -1, "numRatings": -1}
+        }).fetch());
 
     }
     else {
-        return Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
+        return Recipes.find({"numRatings": {$gt: 0}}, {limit: LIMIT,
             sort: {"avgRating": -1, "numRatings": -1}}).fetch();
     }
 
