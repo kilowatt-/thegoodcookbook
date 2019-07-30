@@ -10,13 +10,15 @@ import {findNearestNeighbours, updateNearestNeighboursForRecipe} from "./util/re
 
 const TESTING_MODE = process.env.TESTING_MODE;
 
-let benedict, benedict2, benedict3, bird;
+let benedict, benedict2, benedict3, bird, benedict4;
 
 function initializeRecipes() {
     let muffin = new Ingredient("English Muffin", UOM.PIECES);
     let cheese = new Ingredient("Cheese", UOM.GRAM);
     let ham = new Ingredient("Ham", UOM.GRAM);
     let eggs = new Ingredient("eggs", UOM.GRAM);
+    let testIngredient1 = new Ingredient("test ingredient 1", UOM.DASH);
+    let testIngredient2 = new Ingredient("koel", UOM.PIECES);
 
     benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
@@ -26,8 +28,8 @@ function initializeRecipes() {
     benedict3 = new Recipe("Benedict 3", [newMap(15,muffin), newMap(10,eggs)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.SNACK, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
-    let testIngredient1 = new Ingredient("test ingredient 1", UOM.DASH);
-    let testIngredient2 = new Ingredient("koel", UOM.PIECES);
+    benedict4 = new Recipe("Benedict 4", [newMap(10,ham), newMap(12, testIngredient2)],
+        ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
     bird = new Recipe("Koel", [newMap(10, testIngredient1), newMap(50, testIngredient2)], ["bleh bleh bleh"], Difficulty.EASY, 50, FoodType.DINNER, "Japanese", '');
 
@@ -151,7 +153,7 @@ describe("Recommender tests", function() {
         assert.equal(updatedSimilarity2[0].recipeID, benedict1Id);
     });
 
-    it("updating recipe so that they are so dissimilar removes items on both ends", function() {
+    it("updating recipe so that they are so dissimilar removes similarity rating on both ends", function() {
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);
 
@@ -185,11 +187,7 @@ describe("Recommender tests", function() {
 
         assert.notDeepEqual(updatedSimilarity1, initialSimilarity1);
         assert.notDeepEqual(updatedSimilarity2, initialSimilarity2);
-
-
     });
-
-
 
 
 });
