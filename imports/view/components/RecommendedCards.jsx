@@ -8,6 +8,8 @@ import {closeDetailedView, openDetailedView} from "../../controller/actions/deta
 import React from "react";
 import '../style/RecipeCards.css';
 import Favourites from "../../api/favourites";
+import {Session} from "meteor/session";
+import {NavBarTabs} from "../../model/NavBarTabs";
 
 class RecommendedCards extends React.Component {
     constructor(props) {
@@ -54,7 +56,7 @@ class RecommendedCards extends React.Component {
     }
 
     render() {
-        if (this.props.user) {
+        if (this.props.user && this.props.currentTab === NavBarTabs.ALL) {
             if (!this.state.loading) {
                 return (
                     <div>
@@ -80,11 +82,18 @@ class RecommendedCards extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        currentTab: state.currentTab
+    }
+}
+
 export default compose(
     withTracker(() => {
         return {
             user: Meteor.user(),
-            favourites: Favourites.findOne({_id: Meteor.userId()})
+            favourites: Favourites.findOne({_id: Meteor.userId()}),
+
         }
 
-    }),connect(null, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);
+    }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecommendedCards);

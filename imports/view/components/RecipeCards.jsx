@@ -58,61 +58,61 @@ class RecipeCards extends Component {
 
     let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
 
-    return (
-      <div className="card-container">
-          {recipes.map(recipe => (
-            <div className="card" key={recipe._id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  src={recipe.imgUrl}
-                  style={{height: "50%"}}
+        return (
+            <div className="card-container">
+                {recipes.map(recipe => (
+                    <div className="card" key={recipe._id}>
+                        <Card>
+                            <CardMedia
+                                component="img"
+                                src={recipe.imgUrl}
+                                style={{height: "50%"}}
+                            />
+                            <CardContent>
+                                <div className="card-title-text">
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        {recipe.recipeName}
+                                    </Typography>
+                                </div>
+                                <div className="card-rating-stars">
+                                    {this.getStars(Number(recipe.avgRating))}
+                                </div>
+                                <div className="card-summary-info">
+                                    <div className="card-summary-info-item">
+                                        <Typography>{recipe.difficulty}</Typography>
+                                    </div>
+                                    <div className="card-summary-info-item">
+                                        <Icon>access_time</Icon>
+                                        <Typography>{recipe.time + " mins"}</Typography>
+                                    </div>
+                                </div>
+                            </CardContent>
+                            <CardActions>
+                                <Button onClick={() => this.openDetailedView(recipe)} size="small">
+                                    See Recipe
+                                </Button>
+
+                                {this.props.user ? <Button size="small" onClick={() => {
+                                    this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
+                                        this.addToFavourites(recipe._id)
+                                }}>{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
+                            </CardActions>
+                        </Card>
+
+                    </div>
+                ))}
+                {this.props.recipeLoadingState.loading ? <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div> : null}
+                {this.props.recommended ? null : <Button onClick={() => this.moreRecipes()}>More</Button>}
+                <RecipeDetails
+                    dialogOpen={this.props.dialogOpen}
+                    closeDialog={this.closeRecipeDetails}
                 />
-                <CardContent>
-                  <div className="card-title-text">
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {recipe.recipeName}
-                    </Typography>
-                  </div>
-                  <div className="card-rating-stars">
-                    {this.getStars(Number(recipe.avgRating))}
-                  </div>
-                  <div className="card-summary-info">
-                    <div className="card-summary-info-item">
-                      <Typography>{recipe.difficulty}</Typography>
-                    </div>
-                    <div className="card-summary-info-item">
-                      <Icon>access_time</Icon>
-                      <Typography>{recipe.time + " mins"}</Typography>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardActions>
-                  <Button onClick={()=>this.openDetailedView(recipe)} size="small">
-                    See Recipe
-                  </Button>
-
-                  {this.props.user ? <Button size="small" onClick={() =>
-                    {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
-                    this.addToFavourites(recipe._id)
-                  }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
-                </CardActions>
-              </Card>
-
             </div>
-          ))}
-          {this.props.recipeLoadingState.loading ? <div className="spinner">
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-              <div className="bounce3"></div>
-          </div> : null}
-          {this.props.recommended ? null : <Button onClick={()=>this.moreRecipes()} >More</Button>}
-        <RecipeDetails
-          dialogOpen={this.props.dialogOpen}
-          closeDialog={this.closeRecipeDetails}
-        />
-      </div>
-    );
+        );
   }
 
   isInFavourites(item) {
