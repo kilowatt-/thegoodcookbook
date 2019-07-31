@@ -57,6 +57,9 @@ export function findNearestNeighbours(recipe) {
             similarityArray.push(similarityHeap.pop());
         }
     }
+
+    Recipes.update({_id: recipe._id}, {$set: {nearestNeighbours: similarityArray}});
+
     return similarityArray;
 }
 
@@ -175,9 +178,12 @@ function rateSimilarity(newRecipe, existingRecipe) {
 }
 
 
-export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
+function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
     let nearestNeighbours = existingRecipe.nearestNeighbours;
+
+    if (!nearestNeighbours)
+        nearestNeighbours = [];
 
     let indexInNN = nearestNeighbours.findIndex((elem) => {
         return elem.recipeID === newRecipeId;
@@ -205,8 +211,6 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
             nearestNeighbours.pop();
 
         nearestNeighbours.splice(insertionIndex, 0, recipeMap);
-
-        Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
     }
 
     else if (indexInNN > -1) {
@@ -226,33 +230,57 @@ export function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, 
         }
     }
 
+    Recipes.update({_id: existingRecipeId}, {$set: {nearestNeighbours: nearestNeighbours}});
+
 }
 
 export function getRecommendedForUser() {
 
     let favourites = Favourites.findOne({_id: Meteor.userId()}).favourites;
+    console.log("favourites length: " + favourites.length);
 
     if (favourites.length > 0) {
         let recipes = Recipes.find({_id: {$in: favourites}}).fetch();
-        let allRecommendations = [];
+        let allRecommendations = new Set();
 
         for (i = 0; i < recipes.length; i++) {
             let nearestNeighbours = recipes[i].nearestNeighbours;
 
             nearestNeighbours.forEach((map) => {
-                allRecommendations.push(map.recipeID);
+                allRecommendations.add(map.recipeID);
             });
         }
 
-        let recommendedRecipes = (allRecommendations.length > 0 ? Recipes.find({$and: [{_id: {$in: allRecommendations}},{_id: {$nin: favourites}}]})
-            .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
-            sort: {"avgRating": -1, "numRatings": -1}}).fetch());
+        let allRecommendationsArray = Array.from(allRecommendations);
+        let randomizedRecommendations = [];
 
-        return recommendedRecipes;
+        if (allRecommendationsArray.length > LIMIT) {
+
+            for (let i = 0; i < LIMIT; i++) {
+                if (allRecommendationsArray.length === 0)
+                    break;
+
+                let random = Math.floor(Math.random() * allRecommendationsArray.length);
+
+                randomizedRecommendations.push(allRecommendationsArray.splice(random, 1)[0]);
+
+
+            }
+        }
+
+        else
+            randomizedRecommendations = allRecommendationsArray;
+
+
+        return (allRecommendations.size > 0 ? Recipes.find({$and: [{_id: {$in: randomizedRecommendations}}, {_id: {$nin: favourites}}]})
+            .fetch() : Recipes.find({"numRatings": {$gt: 0}}, {
+            limit: 5,
+            sort: {"avgRating": -1, "numRatings": -1}
+        }).fetch());
 
     }
     else {
-        return Recipes.find({"numRatings": {$gt: 0}}, {limit: 5,
+        return Recipes.find({"numRatings": {$gt: 0}}, {limit: LIMIT,
             sort: {"avgRating": -1, "numRatings": -1}}).fetch();
     }
 
