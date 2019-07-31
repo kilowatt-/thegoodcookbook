@@ -21,7 +21,8 @@ class RegistrationForm extends React.Component {
 			password_verify: '',
 			email: '',
 			error: '',
-			signingUp: false
+			signingUp: false,
+			loggingIn: false
 		}
 	}
 
@@ -59,7 +60,10 @@ class RegistrationForm extends React.Component {
 			}
 
 			else {
-
+				this.setState({
+					signingUp: false,
+					loggingIn: true
+				})
 				Meteor.loginWithPassword(this.state.email, this.state.password);
 				this.props.callback();
 				this.props.closeSignupDialog();
@@ -77,27 +81,40 @@ class RegistrationForm extends React.Component {
 
 	render() {
 		return (
-			<div className="account-form-container">
-			<Icon className="account-icon">account_circle</Icon>
-			<ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
-				<div className="account-input">
-					<FormLabel component="legend">Name</FormLabel>
-					<TextValidator disabled={this.state.signingUp} className="tf_name" validators={['required']} errorMessages={['Required']} id="name" name="name"  value={this.state.name} onChange={this.handleChange} fullWidth variant="outlined"/>
-				</div>
-				<div className="account-input">
-					<FormLabel component="legend">Email</FormLabel>
-					<TextValidator disabled={this.state.signingUp} className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Valid email address required']} id="email" name="email" value={this.state.email} onChange={this.handleChange} fullWidth variant="outlined"/>
-				</div>
-				<div className="account-input">
-					<FormLabel component="legend">Password</FormLabel>
-					<TextValidator disabled={this.state.signingUp} className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} fullWidth variant="outlined"/>
-				</div>
-				<Button disabled={this.state.signingUp} type="submit" className="bt_login">Sign Up</Button><br />
-				<span style={{color:"red"}}>{this.state.error}</span>
-				<span>{this.state.signingUp ? "Signup in progress..." : null}</span>
-			</ValidatorForm>
+			<div> {
+				this.state.loggingIn || this.state.signingUp?
+	        <div className="login-text-and-spinner">
+	          <div className="log-in-text">{this.state.loggingIn? "Logging In" : "Registering Account"}</div>
+	          <div className="login-spinner">
+	              <div className="bounce1"></div>
+	              <div className="bounce2"></div>
+	              <div className="bounce3"></div>
+	          </div>
+	        </div>
+					:
+					<div className="account-form-container">
+						<Icon className="account-icon">account_circle</Icon>
+						<ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
+							<div className="account-input">
+								<FormLabel component="legend">Name</FormLabel>
+								<TextValidator disabled={this.state.signingUp} className="tf_name" validators={['required']} errorMessages={['Required']} id="name" name="name"  value={this.state.name} onChange={this.handleChange} fullWidth variant="outlined"/>
+							</div>
+							<div className="account-input">
+								<FormLabel component="legend">Email</FormLabel>
+								<TextValidator disabled={this.state.signingUp} className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Valid email address required']} id="email" name="email" value={this.state.email} onChange={this.handleChange} fullWidth variant="outlined"/>
+							</div>
+							<div className="account-input">
+								<FormLabel component="legend">Password</FormLabel>
+								<TextValidator disabled={this.state.signingUp} className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} fullWidth variant="outlined"/>
+							</div>
+							<Button disabled={this.state.signingUp} type="submit" className="bt_login">Sign Up</Button><br />
+							<span style={{color:"red"}}>{this.state.error}</span>
+							<span>{this.state.signingUp ? "Signup in progress..." : null}</span>
+						</ValidatorForm>
+					</div>
+				}
 			</div>
-			);
+		);
 	}
 }
 

@@ -20,4 +20,9 @@
 
 .ratings-stars {
   padding: 5px;
+  margin-top: 8px;
+}
+
+.MuiCardMedia-media.recipe-details-image {
+  max-height: 100%;
 }

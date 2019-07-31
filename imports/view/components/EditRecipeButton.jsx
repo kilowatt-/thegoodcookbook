@@ -6,6 +6,8 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from "react-redux";
 import { compose } from 'redux';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class EditRecipeButton extends React.Component {
 
@@ -63,13 +65,19 @@ class EditRecipeButton extends React.Component {
 			<div className="edit_recipe">
 			{this.props.user && Meteor.userId() === this.props.recipe.createdBy ?
 			<div>
-			<Button onClick= { this.handleClick }>Edit Recipe</Button>
-			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Edit Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent= 
+
+			<Tooltip title="Edit">
+				<Button onClick= { this.handleClick }>
+						<Icon className="icon-edit">edit</Icon>
+				</Button>
+			</Tooltip>
+
+			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Edit Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent=
 			{<RecipeForm callback={this.callback} closing={this.state.closing}
 			cancelCloseDialog = {this.cancelCloseDialog} editing={true} recipe={this.props.recipe} />}/>
 			</div> : null }
 			</div>
-			
+
 			)
 	}
 }

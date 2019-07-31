@@ -7,5 +7,9 @@ export default Reviews = new Mongo.Collection('reviews');
 Meteor.methods({
   'reviews.insert'(review) {
     Reviews.insert(review);
+  },
+
+  'reviews.remove'(reviewId) {
+    Reviews.remove(reviewId);
   }
 })

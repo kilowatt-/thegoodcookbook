@@ -69,30 +69,31 @@ class RecipeCards extends Component {
                   style={{height: "50%"}}
                 />
                 <CardContent>
-                  <div className="card-title-text">
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {recipe.recipeName}
-                    </Typography>
-                  </div>
-                  <div className="card-rating-stars">
-                    {this.getStars(Number(recipe.avgRating))}
-                  </div>
-                  <div className="card-summary-info">
-                    <div className="card-summary-info-item">
-                      <Typography>{recipe.difficulty}</Typography>
+                    <div className="card-title-text">
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {recipe.recipeName}
+                      </Typography>
                     </div>
-                    <div className="card-summary-info-item">
-                      <Icon>access_time</Icon>
-                      <Typography>{recipe.time + " mins"}</Typography>
+                    <div className="card-body-section">
+                      <div className="card-rating-stars">
+                        {this.getStars(Number(recipe.avgRating))}
+                      </div>
+                      <div className="card-summary-info">
+                        <div className="card-summary-info-item">
+                          <Typography>{recipe.difficulty}</Typography>
+                        </div>
+                        <div className="card-summary-info-item">
+                          <Icon>access_time</Icon>
+                          <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
+                        </div>
+                      </div>
                     </div>
-                  </div>
                 </CardContent>
                 <CardActions>
                   <Button onClick={()=>this.openDetailedView(recipe)} size="small">
                     See Recipe
                   </Button>
-
-                  {this.props.user ? <Button size="small" onClick={() =>
+                  {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>
                     {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
                     this.addToFavourites(recipe._id)
                   }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
@@ -148,11 +149,13 @@ class RecipeCards extends Component {
   }
 
   getStars(rating) {
+    let numStars = 0;
     let stars = [];
     for(let i = 0; i < rating; i++) {
       stars.push(<Icon color="primary">star</Icon>);
+      numStars++;
     }
-    for(let i = rating; i < 5; i++) {
+    for(let i = numStars; i < 5; i++) {
       stars.push(<Icon color="disabled">star</Icon>)
     }
     return stars;

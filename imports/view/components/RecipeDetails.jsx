@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import CommonDialog from './CommonDialog'
 import Button from '@material-ui/core/Button';
@@ -15,6 +17,7 @@ import '../style/RecipeDetails.css';
 import RecipeReviews from './RecipeReviews';
 import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
+import { Session } from 'meteor/session'
 
 class RecipeDetails extends Component {
   getDialogContent() {
@@ -23,7 +26,7 @@ class RecipeDetails extends Component {
       <EditRecipeButton />
         <div className="recipe-image">
           <Card>
-            <CardMedia
+            <CardMedia className="recipe-details-image"
               component="img"
               src={this.props.recipe.imgUrl}
               style={{height: "50%"}}
@@ -33,7 +36,7 @@ class RecipeDetails extends Component {
         <div className="ratings-stars">
           {this.getStars(this.props.recipe.avgRating)}
         </div>
-        <div className="recipe-details-category-container">
+        <div className="recipe-details-category-container recipe-item">
           <div className="recipe-item">
             <span className="recipe-category-label">Difficulty: </span>
             {this.props.recipe.difficulty}
@@ -74,9 +77,10 @@ class RecipeDetails extends Component {
   }
 
   getIngredientsList(ingredients) {
+    let id=0;
     if (ingredients instanceof Array ) {
       return ingredients.map(ingredient => {
-        return (<li key={ingredient.ingredient.name}>
+        return (<li key={id++}>
                   {ingredient.quantity +
                     " " +
                     ingredient.ingredient.uom +
@@ -109,11 +113,13 @@ class RecipeDetails extends Component {
   }
 
   getStars(rating) {
+    let numStars = 0;
     let stars = [];
     for(let i = 0; i < rating; i++) {
       stars.push(<Icon color="primary" fontSize="large">star</Icon>);
+      numStars++;
     }
-    for(let i = rating; i < 5; i++) {
+    for(let i = numStars; i < 5; i++) {
       stars.push(<Icon color="disabled" fontSize="large">star</Icon>)
     }
     return stars;
