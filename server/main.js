@@ -10,7 +10,7 @@ import {FoodType} from '../imports/model/FoodType.js';
 import QuantityIngredientMap from '../imports/model/QuantityIngredientMap.js';
 import publish from './publish';
 
-function newMap(qty, ingredient) {
+export function newMap(qty, ingredient) {
     return new QuantityIngredientMap(qty, ingredient);
 }
 

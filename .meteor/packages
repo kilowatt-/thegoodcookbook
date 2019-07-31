@@ -19,3 +19,5 @@ react-meteor-data       # React higher-order component for reactively tracking M
 accounts-password
 gadicc:blaze-react-component
 session
+meteortesting:mocha
+xolvio:cleaner

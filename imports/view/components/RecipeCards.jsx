@@ -57,7 +57,7 @@ class RecipeCards extends Component {
   render() {
 
     let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
-
+    
     return (
       <div className="card-container">
           {recipes.map(recipe => (
@@ -98,22 +98,21 @@ class RecipeCards extends Component {
                     this.addToFavourites(recipe._id)
                   }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
                 </CardActions>
-              </Card>
-
+          </Card>
+                    </div>
+                ))}
+                {this.props.recipeLoadingState.loading ? <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div> : null}
+                {this.props.recommended ? null : <Button onClick={() => this.moreRecipes()}>More</Button>}
+                <RecipeDetails
+                    dialogOpen={this.props.dialogOpen}
+                    closeDialog={this.closeRecipeDetails}
+                />
             </div>
-          ))}
-          {this.props.recipeLoadingState.loading ? <div className="spinner">
-              <div className="bounce1"></div>
-              <div className="bounce2"></div>
-              <div className="bounce3"></div>
-          </div> : null}
-          {this.props.recommended ? null : <Button onClick={()=>this.moreRecipes()} >More</Button>}
-        <RecipeDetails
-          dialogOpen={this.props.dialogOpen}
-          closeDialog={this.closeRecipeDetails}
-        />
-      </div>
-    );
+        );
   }
 
   isInFavourites(item) {
