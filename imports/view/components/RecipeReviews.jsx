@@ -16,6 +16,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {Session} from "meteor/session";
+import Recipe from "../../model/Recipe";
 
 class RecipeReviews extends Component {
 
@@ -54,7 +56,7 @@ class RecipeReviews extends Component {
       let recipeToUpdate = this.props.recipe;
       let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
       let numRatings = this.props.recipe.numRatings + 1;
-      let newAvgRating = totalRating/numRatings;
+      let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
       Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
       Meteor.call('recipes.updateNumRatings', this.props.recipe._id, numRatings);
       this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
@@ -81,7 +83,7 @@ class RecipeReviews extends Component {
     let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.numRatings * this.props.recipe.numRatings) - Number(this.state.reviewToDelete.rating);
     let numRatings = this.props.recipe.numRatings - 1;
-    let newAvgRating = totalRating/numRatings;
+    let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
     Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
     Meteor.call('recipes.updateNumRatings', this.props.recipe._id, numRatings);
     this.handleCloseWarningDialog();
@@ -214,16 +216,11 @@ class RecipeReviews extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    recipe: state.detailedRecipe
-  };
-}
-
-export default compose(
+export default
   withTracker(() => {
     return {
       reviews: Reviews.find().fetch(),
-      user: Meteor.user()
+      user: Meteor.user(),
+        recipe: Recipes.findOne({_id: Session.get('recipeID')})
     };
-  }),connect(mapStateToProps))(RecipeReviews);
+  })(RecipeReviews);

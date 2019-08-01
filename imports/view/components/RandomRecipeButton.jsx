@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { setRecipeDetails } from '../../controller/actions/recipe.js';
 import { openDetailedView } from '../../controller/actions/detailedView.js';
 import '../style/RandomRecipeButton.css';
+import {getFilter} from "./RecipeCards";
 
 class RandomRecipeButton extends React.Component {
 
@@ -18,13 +19,12 @@ class RandomRecipeButton extends React.Component {
 		let max = this.props.recipes.length;
 
 		let randomIndex = Math.floor(Math.random() * Math.floor(max));
-		let recipe = this.props.recipes[randomIndex];
+		let recipeID = this.props.recipes[randomIndex]._id;
 
-		this.props.setRecipeDetails(recipe);
+		Session.set('recipeID', recipeID);
+
 		this.props.openDetailedView();
 	}
-
-
 
 	render() {
 		return (
@@ -33,17 +33,15 @@ class RandomRecipeButton extends React.Component {
       </div>
 			);
 	}
-
-
 }
 
 const mapStateToProps = (state) => {
 		return {
 			dialogOpen: state.detailedViewOpened
 		}
-	}
+	};
 
 export default compose(
   withTracker(() => {
-    return {recipes: Recipes.find().fetch(),};
+    return {recipes: Recipes.find(getFilter()).fetch(),};
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView  }))(RandomRecipeButton);

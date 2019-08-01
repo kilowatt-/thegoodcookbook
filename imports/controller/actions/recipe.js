@@ -1,14 +1,7 @@
-export const SET_RECIPE_DETAILS = 'SET_RECIPE_DETAILS';
 export const RECIPE_LOAD_BEGIN = 'RECIPE_LOAD_BEGIN';
 export const RECIPE_LOAD_SUCCESS = 'RECIPE_LOAD_SUCCESS';
 export const RECIPE_LOAD_ERROR = 'RECIPE_LOAD_ERROR';
 
-export const setRecipeDetails = recipe => {
-  return {
-    type: SET_RECIPE_DETAILS,
-    recipe: recipe
-  }
-};
 
 export const recipeLoadBegin = () => {
   return {

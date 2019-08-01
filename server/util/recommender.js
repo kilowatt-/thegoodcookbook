@@ -25,25 +25,13 @@ export function findNearestNeighbours(recipe) {
 
     let similarityArray = [];
 
-    let isUpdating = (recipe.nearestNeighbours !== undefined);
-
-    let nnSet = new Set();
-
-    if (isUpdating) {
-        recipe.nearestNeighbours.forEach((elem) => {
-            nnSet.add(elem.recipeID);
-        })
-    }
-
     for (i = 0; i < recipes.length; i++) {
         let map = {
             recipeID: recipes[i]._id,
             similarity: rateSimilarity(recipe, recipes[i])
         };
 
-        if (isUpdating && nnSet.has(map.recipeID)) {
-            updateNearestNeighboursForRecipe(recipe._id, map.similarity, map.recipeID);
-        }
+        updateNearestNeighboursForRecipe(recipe._id, map.similarity, map.recipeID);
 
         if (map.similarity >= TOO_DISSIMILAR_THRESHOLD && map.similarity <= TOO_SIMILAR_THRESHOLD) {
             similarityHeap.push(map);
@@ -179,6 +167,7 @@ function rateSimilarity(newRecipe, existingRecipe) {
 
 
 function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existingRecipeId) {
+
     let existingRecipe = Recipes.findOne({_id: existingRecipeId});
     let nearestNeighbours = existingRecipe.nearestNeighbours;
 
@@ -237,7 +226,6 @@ function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existin
 export function getRecommendedForUser() {
 
     let favourites = Favourites.findOne({_id: Meteor.userId()}).favourites;
-    console.log("favourites length: " + favourites.length);
 
     if (favourites.length > 0) {
         let recipes = Recipes.find({_id: {$in: favourites}}).fetch();

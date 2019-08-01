@@ -18,6 +18,7 @@ import RecipeReviews from './RecipeReviews';
 import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
+import Recipe from "../../model/Recipe";
 
 class RecipeDetails extends Component {
   constructor(props) {
@@ -179,14 +180,8 @@ class RecipeDetails extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {recipe: state.detailedRecipe};
-}
-
-export default compose(
-  withTracker(() => {
-    return {
-      favourites: Favourites.findOne({_id: Meteor.userId()}),
-      user: Meteor.user()
-    }
-  }),connect(mapStateToProps))(RecipeDetails);
+export default withTracker(() => {
+  return {
+    recipe: (Session.get('recipeID') === '' ? Recipe.constructEmptyRecipe() : Recipes.findOne({_id: Session.get('recipeID')}))
+  }
+})(RecipeDetails);

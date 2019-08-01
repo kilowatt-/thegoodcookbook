@@ -12,7 +12,6 @@ Meteor.methods({
       if (err) {
         throw err;
       }
-
         Meteor.call('findNearestNeighbours', recipe);
     });
   },
@@ -20,6 +19,9 @@ Meteor.methods({
     Recipes.update(recipeID, { $set: { avgRating: newRating}});
   },
   'recipes.updateNumRatings'(recipeID, newNum) {
+    if (newNum < 0)
+      newNum = 0;
+
     Recipes.update(recipeID, { $set: { numRatings: newNum}});
   },
   'recipes.updateRecipe'(recipeID, newRecipe) {
@@ -30,6 +32,7 @@ Meteor.methods({
       Meteor.call('findNearestNeighbours', newRecipe);
     });
   },
+
   'recipes.increaseFavouriteCount'(recipeID) {
     Recipes.update(recipeID, {$inc: {'favouriteCount' : 1}});
   },
