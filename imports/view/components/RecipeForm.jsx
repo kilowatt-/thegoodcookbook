@@ -13,7 +13,6 @@ import StepsInput from './StepsInput'
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {connect} from 'react-redux';
-import {setRecipeDetails} from '../../controller/actions/recipe.js'
 import { Meteor } from 'meteor/meteor';
 import FormLabel from '@material-ui/core/FormLabel';
 
@@ -138,7 +137,6 @@ class RecipeForm extends React.Component {
 			}
 			Meteor.call('recipes.updateRecipe', id, recipeToAdd);
 
-			this.props.setRecipeDetails(this.state.recipe);
 		}
 
 		else {
@@ -324,4 +322,4 @@ class RecipeForm extends React.Component {
 	}
 }
 
-export default connect(null, {setRecipeDetails})(RecipeForm);
+export default RecipeForm;
