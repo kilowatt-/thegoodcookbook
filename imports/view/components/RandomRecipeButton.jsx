@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { setRecipeDetails } from '../../controller/actions/recipe.js';
 import { openDetailedView } from '../../controller/actions/detailedView.js';
 import '../style/RandomRecipeButton.css';
+import {getFilter} from "./RecipeCards";
 
 class RandomRecipeButton extends React.Component {
 
@@ -24,8 +25,6 @@ class RandomRecipeButton extends React.Component {
 		this.props.openDetailedView();
 	}
 
-
-
 	render() {
 		return (
 			<div className="random-recipe-button-container">
@@ -33,17 +32,15 @@ class RandomRecipeButton extends React.Component {
       </div>
 			);
 	}
-
-
 }
 
 const mapStateToProps = (state) => {
 		return {
 			dialogOpen: state.detailedViewOpened
 		}
-	}
+	};
 
 export default compose(
   withTracker(() => {
-    return {recipes: Recipes.find().fetch(),};
+    return {recipes: Recipes.find(getFilter()).fetch(),};
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView  }))(RandomRecipeButton);

@@ -177,7 +177,7 @@ const mapStateToProps = (state) => {
         };
 };
 
-const getFilter = () => {
+export const getFilter = () => {
     let filter = {};
     const difficulty = Session.get('selectedDifficulty');
     const foodType = Session.get('recipeType');
