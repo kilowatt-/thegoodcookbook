@@ -26,3 +26,7 @@
 .MuiCardMedia-media.recipe-details-image {
   max-height: 100%;
 }
+
+.icon-edit {
+  padding-right: 5px;
+}

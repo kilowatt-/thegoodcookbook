@@ -17,13 +17,15 @@ import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
 import { NavBarTabs } from '../../model/NavBarTabs.js';
+import Tooltip from '@material-ui/core/Tooltip';
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 8
 import { Meteor } from 'meteor/meteor';
 
 class RecipeCards extends Component {
   state = {
-    detailDialogOpen: false
+    detailDialogOpen: false,
+    backToTopButton: false
   };
 
   constructor(props) {
@@ -34,6 +36,8 @@ class RecipeCards extends Component {
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
     this.getStars = this.getStars.bind(this);
+    this.backToTop = this.backToTop.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
     Session.set('recipePage', PAGE_SIZE);
   }
 
@@ -45,6 +49,23 @@ class RecipeCards extends Component {
       }
   }
 
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    if ((window.scrollY > screen.height * 4) && !this.state.backToTopButton) {
+      this.setState({backToTopButton: true});
+    }
+    if ((window.scrollY < screen.height * 4) && this.state.backToTopButton) {
+      this.setState({backToTopButton: false});
+    }
+  }
+
   openDetailedView(recipe) {
      this.props.setRecipeDetails(recipe);
      this.props.openDetailedView();
@@ -54,11 +75,18 @@ class RecipeCards extends Component {
     this.props.closeDetailedView();
   };
 
+  backToTop() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
 
     let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
-    
+
     return (
+      <div className="recipe-cards-page">
+      {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
+      {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
       <div className="card-container">
           {recipes.map(recipe => (
             <div className="card" key={recipe._id}>
@@ -68,7 +96,7 @@ class RecipeCards extends Component {
                   src={recipe.imgUrl}
                   style={{height: "50%"}}
                 />
-                <CardContent>
+                <CardContent className="recipe-card-content-container">
                     <div className="card-title-text">
                       <Typography gutterBottom variant="h5" component="h2">
                         {recipe.recipeName}
@@ -106,12 +134,27 @@ class RecipeCards extends Component {
                     <div className="bounce2"></div>
                     <div className="bounce3"></div>
                 </div> : null}
-                {this.props.recommended ? null : <Button onClick={() => this.moreRecipes()}>More</Button>}
                 <RecipeDetails
                     dialogOpen={this.props.dialogOpen}
                     closeDialog={this.closeRecipeDetails}
                 />
             </div>
+            {this.props.recommended || this.props.recipes.length >= this.props.numRecipesTotal? null
+              : <div className="see-more-button">
+                  <Button onClick={() => this.moreRecipes()}>
+                    See More
+                  </Button>
+                </div>}
+
+                {this.state.backToTopButton ?
+                  <div className="back-to-top-button">
+                    <Tooltip title="Back to Top">
+                        <Button className="back-to-top-button" onClick={this.backToTop}>
+                          <Icon>arrow_upward</Icon>
+                        </Button>
+                    </Tooltip>
+                  </div> : null}
+                </div>
         );
   }
 
@@ -222,7 +265,8 @@ export default compose(
 
     return {recipes: Recipes.find(getFilter(),{limit:Session.get('recipePage')}).fetch(),
         user: Meteor.user(),
-        favourites: Favourites.findOne({_id: Meteor.userId()})
+        favourites: Favourites.findOne({_id: Meteor.userId()}),
+        numRecipesTotal: Recipes.find(getFilter()).count()
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
