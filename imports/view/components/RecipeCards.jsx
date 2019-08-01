@@ -54,6 +54,22 @@ class RecipeCards extends Component {
     this.props.closeDetailedView();
   };
 
+  moreIngredientsFlag(recipe) {
+    if (!Session.get('chipSearch') || !Session.get('chipSearch').length){return }
+    if (recipe.intersection_count < recipe.ingredients.length){
+      return (
+        <div className="more-ingredients-flag">
+        You need {recipe.ingredients.length - recipe.intersection_count} more ingredients
+        </div> 
+      )
+    }
+    return (
+      <div className="more-ingredients-flag">
+      You have all the ingredient! 
+      </div> 
+    )
+  }
+
   render() {
 
     let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
@@ -74,6 +90,7 @@ class RecipeCards extends Component {
                         {recipe.recipeName}
                       </Typography>
                     </div>
+                    {this.moreIngredientsFlag(recipe)}
                     <div className="card-body-section">
                       <div className="card-rating-stars">
                         {this.getStars(Number(recipe.avgRating))}
@@ -198,12 +215,6 @@ const getFilter = () => {
     if (searchText){
       filter.recipeName = { $regex: new RegExp(searchText, "i")}
     }
-    if (chipSearch && chipSearch.length){
-      filter["ingredients.ingredient.name"] =
-      {
-              $all: chipSearch
-      }
-    }
     if (favourites) {
         filter._id =
             {
@@ -217,10 +228,39 @@ const getFilter = () => {
     return filter;
 };
 
+const getAddFields = () => {
+  const chipSearch = Session.get('chipSearch');
+  if (chipSearch && chipSearch.length){
+    return {$addFields: { intersection_count: {"$size" : { "$setIntersection": [ "$ingredients.ingredient.name", chipSearch ] } },
+                          intersection: { "$setIntersection": [ "$ingredients.ingredient.name", chipSearch ] }     } }
+  }
+  return null;
+};
+
+const getSort = () => {
+  const chipSearch = Session.get('chipSearch');
+
+  if (chipSearch && chipSearch.length){
+    return {$sort : { intersection_count : -1 } }
+  }
+  return null;
+};
+
+const updateRecipes = () => {
+  Meteor.call('recipes.getRecipes', getFilter(), getAddFields(), getSort(),  Session.get('recipePage'), function(err,data){
+      if(err){
+        console.log("err : " + err);
+      }else{
+        console.log("data : " + data);
+        Session.set('recipes', data)
+      }
+  })
+}
+
 export default compose(
   withTracker(() => {
-
-    return {recipes: Recipes.find(getFilter(),{limit:Session.get('recipePage')}).fetch(),
+    updateRecipes()
+    return {recipes: Session.get('recipes') || [],
         user: Meteor.user(),
         favourites: Favourites.findOne({_id: Meteor.userId()})
     };
