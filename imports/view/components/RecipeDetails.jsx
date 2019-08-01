@@ -142,6 +142,6 @@ class RecipeDetails extends Component {
 
 const mapStateToProps = (state) => {
   return {recipe: state.detailedRecipe};
-}
+};
 
 export default connect(mapStateToProps)(RecipeDetails);

@@ -54,7 +54,7 @@ class RecipeReviews extends Component {
       let recipeToUpdate = this.props.recipe;
       let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
       let numRatings = this.props.recipe.numRatings + 1;
-      let newAvgRating = totalRating/numRatings;
+      let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
       Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
       Meteor.call('recipes.updateNumRatings', this.props.recipe._id, numRatings);
       this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
