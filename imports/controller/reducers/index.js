@@ -7,7 +7,6 @@ import { userReducer, loginDialogReducer, signupDialogReducer } from './userRedu
 import { navBarReducer } from './navBarReducer.js';
 
 const reducers = combineReducers({
-	detailedRecipe: recipeReducer,
 	inputReducer: inputReducer,
 	detailedViewOpened: recipeDetailedViewReducer,
 	user: userReducer,

@@ -19,9 +19,10 @@ class RandomRecipeButton extends React.Component {
 		let max = this.props.recipes.length;
 
 		let randomIndex = Math.floor(Math.random() * Math.floor(max));
-		let recipe = this.props.recipes[randomIndex];
+		let recipeID = this.props.recipes[randomIndex]._id;
 
-		this.props.setRecipeDetails(recipe);
+		Session.set('recipeID', recipeID);
+
 		this.props.openDetailedView();
 	}
 

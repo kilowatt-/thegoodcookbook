@@ -18,6 +18,7 @@ import RecipeReviews from './RecipeReviews';
 import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
+import Recipe from "../../model/Recipe";
 
 class RecipeDetails extends Component {
   getDialogContent() {
@@ -140,8 +141,8 @@ class RecipeDetails extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {recipe: state.detailedRecipe};
-};
-
-export default connect(mapStateToProps)(RecipeDetails);
+export default withTracker(() => {
+  return {
+    recipe: (Session.get('recipeID') === '' ? Recipe.constructEmptyRecipe() : Recipes.findOne({_id: Session.get('recipeID')}))
+  }
+})(RecipeDetails);

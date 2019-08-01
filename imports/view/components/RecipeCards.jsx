@@ -34,7 +34,8 @@ class RecipeCards extends Component {
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
     this.getStars = this.getStars.bind(this);
-    Session.set('recipePage', PAGE_SIZE);
+    Session.setDefault('recipePage', PAGE_SIZE);
+    Session.setDefault('recipeID', '');
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,8 +46,8 @@ class RecipeCards extends Component {
       }
   }
 
-  openDetailedView(recipe) {
-     this.props.setRecipeDetails(recipe);
+  openDetailedView(recipeID) {
+      Session.set('recipeID', recipeID);
      this.props.openDetailedView();
   }
 
@@ -90,7 +91,7 @@ class RecipeCards extends Component {
                     </div>
                 </CardContent>
                 <CardActions>
-                  <Button onClick={()=>this.openDetailedView(recipe)} size="small">
+                  <Button onClick={()=>this.openDetailedView(recipe._id)} size="small">
                     See Recipe
                   </Button>
                   {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>

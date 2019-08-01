@@ -82,10 +82,8 @@ class EditRecipeButton extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-  return {recipe: state.detailedRecipe};
-}
 
-export default compose(withTracker(() => {
-    return {user: Meteor.user()};
-  }), connect(mapStateToProps))(EditRecipeButton);
+export default withTracker(() => {
+    return {user: Meteor.user(),
+    recipe: Recipes.findOne({_id: Session.get('recipeID')})}
+  })(EditRecipeButton);
