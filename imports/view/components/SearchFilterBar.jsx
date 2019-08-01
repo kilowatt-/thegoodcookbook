@@ -10,14 +10,16 @@ import '../style/SearchFilterBar.css';
 class SearchFilterBar extends React.Component {
   render() {
     return (
-      <div className="search-filter-bar">
-        <div className="search-filter-section">
-          <SearchBar />
-          <FilterBar />
+      <div>{this.props.currentTab === NavBarTabs.HOME? null:
+        <div className="search-filter-bar">
+          <div className="search-filter-section">
+            <SearchBar />
+            <FilterBar />
+          </div>
+          {this.props.currentTab === NavBarTabs.ALL? <RandomRecipeButton /> : null}
+          {this.props.currentTab === NavBarTabs.ADDED? <PostRecipeButton /> : null}
         </div>
-        {this.props.currentTab === NavBarTabs.ALL? <RandomRecipeButton /> : null}
-        {this.props.currentTab === NavBarTabs.ADDED? <PostRecipeButton /> : null}
-      </div>
+      }</div>
     )
   }
 }

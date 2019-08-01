@@ -66,11 +66,9 @@ class EditRecipeButton extends React.Component {
 			{this.props.user && Meteor.userId() === this.props.recipe.createdBy ?
 			<div>
 
-			<Tooltip title="Edit">
-				<Button onClick= { this.handleClick }>
-						<Icon className="icon-edit">edit</Icon>
-				</Button>
-			</Tooltip>
+			<Button onClick= { this.handleClick }>
+					<Icon className="icon-edit">edit</Icon> Edit Recipe
+			</Button>
 
 			<CommonDialog dialogOpen = { this.state.dialogOpen } dialogTitle='Edit Recipe' closeDialog={!this.state.closing && this.confirmCloseDialog} dialogContent=
 			{<RecipeForm callback={this.callback} closing={this.state.closing}

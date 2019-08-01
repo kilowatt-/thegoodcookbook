@@ -37,7 +37,7 @@ class NavBar extends React.Component {
         {this.props.user ?
           <div className="nav-bar">
             <div className="nav-bar-buttons">
-              <Button onClick={this.browseAll}>All Recipes</Button>
+              <Button onClick={this.browseAll}>Search Recipes</Button>
               {this.props.currentTab === NavBarTabs.ALL? <hr></hr> : null}
             </div>
             <div className="nav-bar-buttons">

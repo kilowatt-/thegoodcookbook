@@ -5,11 +5,12 @@
   align-items: stretch;
   align-content: flex-start;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .card {
   display: flex;
-  flex-basis: 24%;
+  flex-basis: 24.25%;
   flex-direction: column;
   padding: 4px;
   min-height: 100%;
@@ -21,6 +22,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.MuiCardContent-root.recipe-card-content-container {
+  padding-bottom: 8px;
 }
 
 .MuiButton-root {
@@ -35,27 +40,61 @@
 }
 
 .card-summary-info-item {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 4fr;
 }
 
 .card-rating-stars {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .card-summary-info {
   display: flex;
   flex-direction: row;
   margin-left: 5px;
+  margin-right: 5px;
+  justify-content: space-between;
 }
-.MuiCardMedia-media {
-  min-height: 190px;
-  max-height: 190px;
+.MuiCardMedia-media.recipe-cards-image {
+  min-height: 170px;
+  max-height: 170px;
 }
 
 .recipe-time-text {
   padding-left: 5px;
+}
+
+.recipe-cards-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.see-more-button {
+  width: 25%;
+  margin: 8px;
+  background-color: whitesmoke;
+  border-radius: 4px;
+}
+
+.back-to-top-button {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  border-radius: 5px;
+  padding-top: 10px;
+  display: flex;
+  background-color: whitesmoke;
+  padding-left: 8px;
+}
+
+.MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom {
+  margin-bottom: 0;
+}
+
+.MuiCardActions-root.MuiCardActions-spacing {
+  background-color: whitesmoke;
 }
 /**credit to tobiasahlin.com/spinkit for this CSS spinner**/
 .spinner {
