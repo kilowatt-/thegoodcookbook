@@ -6,6 +6,8 @@ export default Recipes = new Mongo.Collection('recipes');
 
 Meteor.methods({
   'recipes.insert'(recipe) {
+    let currDate = new Date();
+    recipe.dateAdded = Date.parse(currDate);
     Recipes.insert(recipe, (err, id) => {
       if (err) {
         throw err;

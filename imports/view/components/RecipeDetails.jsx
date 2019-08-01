@@ -20,10 +20,49 @@ import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
 
 class RecipeDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.isInFavourites = this.isInFavourites.bind(this);
+    this.addToFavourites = this.addToFavourites.bind(this);
+    this.removeFromFavourites = this.removeFromFavourites.bind(this);
+  }
+
+  isInFavourites(item) {
+      if (this.props.favourites)
+          return this.props.favourites.favourites.includes(item._id);
+      return false;
+  }
+
+  addToFavourites(id) {
+    let array = [...this.props.favourites.favourites];
+
+    array.push(id);
+
+    Meteor.call('favourites.update', Meteor.userId(), array);
+    Meteor.call('recipes.increaseFavouriteCount', id);
+  }
+
+  removeFromFavourites(id) {
+    let array = [...this.props.favourites.favourites];
+
+    let index = array.findIndex((str) => str === id);
+
+    if (index !== -1) {
+      array.splice(index, 1);
+
+      Meteor.call('favourites.update', Meteor.userId(), array);
+      Meteor.call('recipes.decreaseFavouriteCount', id);
+    }
+  }
+
   getDialogContent() {
     return (
       <div className="recipe-details-content">
       <EditRecipeButton />
+      {this.props.user? <Button size="small" onClick={() =>
+        {this.isInFavourites(this.props.recipe) ? this.removeFromFavourites(this.props.recipe._id) :
+        this.addToFavourites(this.props.recipe._id)
+      }} >{this.isInFavourites(this.props.recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
         <div className="recipe-image">
           <Card>
             <CardMedia className="recipe-details-image"
@@ -144,4 +183,10 @@ const mapStateToProps = (state) => {
   return {recipe: state.detailedRecipe};
 }
 
-export default connect(mapStateToProps)(RecipeDetails);
+export default compose(
+  withTracker(() => {
+    return {
+      favourites: Favourites.findOne({_id: Meteor.userId()}),
+      user: Meteor.user()
+    }
+  }),connect(mapStateToProps))(RecipeDetails);
