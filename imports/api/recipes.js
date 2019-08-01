@@ -36,5 +36,14 @@ Meteor.methods({
   },
   'recipes.decreaseFavouriteCount'(recipeID) {
     Recipes.update(recipeID, {$inc: {'favouriteCount': -1}});
+  },
+  async 'recipes.getRecipes'(filter, addFields, sort, limit) {
+    return await Recipes.rawCollection().aggregate(
+      [
+        {$match: filter},
+        addFields,
+        sort
+      ].filter(x => x != null)
+      ).limit(limit || 5).toArray();
   }
 });
