@@ -6,6 +6,7 @@ import { closeLoginDialog } from '../../controller/actions/user.js';
 import { connect } from 'react-redux';
 import Icon from '@material-ui/core/Icon';
 import FormLabel from '@material-ui/core/FormLabel';
+import {goHome} from '../../controller/actions/navBar.js';
 
 class LoginForm extends React.Component {
 
@@ -46,6 +47,7 @@ class LoginForm extends React.Component {
           loggingIn: false
         });
         this.props.closeLoginDialog();
+        this.props.goHome();
       }
     })
   }
@@ -94,4 +96,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default connect(null, { closeLoginDialog })(LoginForm);
+export default connect(null, { closeLoginDialog, goHome })(LoginForm);

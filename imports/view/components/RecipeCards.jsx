@@ -75,104 +75,108 @@ class RecipeCards extends Component {
     this.props.closeDetailedView();
   };
 
-<<<<<<< HEAD
   backToTop() {
     window.scrollTo(0, 0);
-=======
+  }
+
   moreIngredientsFlag(recipe) {
-    if (!Session.get('chipSearch') || !Session.get('chipSearch').length){return }
-    if (recipe.intersection_count < recipe.ingredients.length){
-      return (
-        <div className="more-ingredients-flag">
-        You need {recipe.ingredients.length - recipe.intersection_count} more ingredients
-        </div> 
-      )
-    }
+  if (!Session.get('chipSearch') || !Session.get('chipSearch').length){return }
+  if (recipe.intersection_count < recipe.ingredients.length){
     return (
       <div className="more-ingredients-flag">
-      You have all the ingredient! 
-      </div> 
+      You need {recipe.ingredients.length - recipe.intersection_count} more ingredients
+      </div>
     )
->>>>>>> 982f81a99302859e251daf76f37a875e9e24d8f4
   }
+  return (
+    <div className="more-ingredients-flag">
+    You have all the ingredient!
+    </div>
+  )
+}
 
   render() {
 
     let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
 
     return (
-      <div className="recipe-cards-page">
-      {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
-      {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
-      <div className="card-container">
-          {recipes.map(recipe => (
-            <div className="card" key={recipe._id}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  src={recipe.imgUrl}
-                  style={{height: "50%"}}
-                />
-                <CardContent className="recipe-card-content-container">
-                    <div className="card-title-text">
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {recipe.recipeName}
-                      </Typography>
-                    </div>
-                    {this.moreIngredientsFlag(recipe)}
-                    <div className="card-body-section">
-                      <div className="card-rating-stars">
-                        {this.getStars(Number(recipe.avgRating))}
-                      </div>
-                      <div className="card-summary-info">
-                        <div className="card-summary-info-item">
-                          <Typography>{recipe.difficulty}</Typography>
-                        </div>
-                        <div className="card-summary-info-item">
-                          <Icon>access_time</Icon>
-                          <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
-                        </div>
-                      </div>
-                    </div>
-                </CardContent>
-                <CardActions>
-                  <Button onClick={()=>this.openDetailedView(recipe)} size="small">
-                    See Recipe
-                  </Button>
-                  {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>
-                    {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
-                    this.addToFavourites(recipe._id)
-                  }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
-                </CardActions>
-          </Card>
-                    </div>
-                ))}
-                {this.props.recipeLoadingState.loading ? <div className="spinner">
-                    <div className="bounce1"></div>
-                    <div className="bounce2"></div>
-                    <div className="bounce3"></div>
-                </div> : null}
-                <RecipeDetails
-                    dialogOpen={this.props.dialogOpen}
-                    closeDialog={this.closeRecipeDetails}
-                />
-            </div>
-            {this.props.recommended || this.props.recipes.length >= this.props.numRecipesTotal? null
-              : <div className="see-more-button">
-                  <Button onClick={() => this.moreRecipes()}>
-                    See More
-                  </Button>
-                </div>}
+      <div>
+      {this.props.currentTab === NavBarTabs.HOME ? null :
+        <div className="recipe-cards-page">
 
-                {this.state.backToTopButton ?
-                  <div className="back-to-top-button">
-                    <Tooltip title="Back to Top">
-                        <Button className="back-to-top-button" onClick={this.backToTop}>
-                          <Icon>arrow_upward</Icon>
-                        </Button>
-                    </Tooltip>
+        {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
+        {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
+        <div className="card-container">
+            {recipes.map(recipe => (
+              <div className="card" key={recipe._id}>
+                <Card>
+                  <CardMedia className="recipe-cards-image"
+                    component="img"
+                    src={recipe.imgUrl}
+                    style={{height: "50%"}}
+                  />
+                  <CardContent className="recipe-card-content-container">
+                      <div className="card-title-text">
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {recipe.recipeName}
+                        </Typography>
+                      </div>
+                      {this.moreIngredientsFlag(recipe)}
+                      <div className="card-body-section">
+                        <div className="card-rating-stars">
+                          {this.getStars(Number(recipe.avgRating))}
+                        </div>
+                        <div className="card-summary-info">
+                          <div className="card-summary-info-item">
+                            <Typography>{recipe.difficulty}</Typography>
+                          </div>
+                          <div className="card-summary-info-item">
+                            <Icon>access_time</Icon>
+                            <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
+                          </div>
+                        </div>
+                      </div>
+                  </CardContent>
+                  <CardActions>
+                    <Button onClick={()=>this.openDetailedView(recipe)} size="small">
+                      See Recipe
+                    </Button>
+                    {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>
+                      {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
+                      this.addToFavourites(recipe._id)
+                    }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
+                  </CardActions>
+            </Card>
+                      </div>
+                  ))}
+                  {this.props.recipeLoadingState.loading ? <div className="spinner">
+                      <div className="bounce1"></div>
+                      <div className="bounce2"></div>
+                      <div className="bounce3"></div>
                   </div> : null}
-                </div>
+                  <RecipeDetails
+                      dialogOpen={this.props.dialogOpen}
+                      closeDialog={this.closeRecipeDetails}
+                  />
+              </div>
+              {this.props.recommended || this.props.recipes.length >= this.props.numRecipesTotal? null
+                : <div className="see-more-button">
+                    <Button onClick={() => this.moreRecipes()}>
+                      See More
+                    </Button>
+                  </div>}
+
+                  {this.state.backToTopButton ?
+                    <div className="back-to-top-button">
+                      <Tooltip title="Back to Top">
+                          <Button className="back-to-top-button" onClick={this.backToTop}>
+                            <Icon>arrow_upward</Icon>
+                          </Button>
+                      </Tooltip>
+                    </div> : null}
+                  </div>}
+      </div>
+
         );
   }
 
