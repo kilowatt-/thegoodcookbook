@@ -26,9 +26,10 @@ class RecipeReviews extends Component {
 
     this.state = {
       review: {recipeID: '', name: '', userID:'', rating: '0', comment: ''},
-      userAlreadyReviewedError: false,
       warningDialogOpen: false,
-      reviewToDelete: {}
+      reviewToDelete: {},
+      editing: false,
+      reviewToUpdateRating: '0'
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,36 +38,51 @@ class RecipeReviews extends Component {
     this.deleteCurrReview = this.deleteCurrReview.bind(this);
     this.handleCloseWarningDialog = this.handleCloseWarningDialog.bind(this);
     this.handleDeleteClicked = this.handleDeleteClicked.bind(this);
+    this.updateReview = this.updateReview.bind(this);
+    this.addReview = this.addReview.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
   }
 
   handleSubmit(event) {
-    let reviews = this.props.reviews.filter(review =>
-      review.recipeID === this.props.recipe._id && review.userID === Meteor.userId()
-    )
-    if (reviews.length > 0) {
-      this.setState({userAlreadyReviewedError: true})
+    let newReview = Object.assign({}, this.state.review);
+    newReview["userID"] = Meteor.userId();
+    newReview["name"] = Meteor.user().name;
+    newReview["recipeID"] = this.props.recipe._id;
+    newReview["dateAdded"] = new Date();
+    event.preventDefault();
+    if (this.state.editing) {
+      this.updateReview(newReview);
     } else {
-      let newReview = this.state.review;
-      newReview["userID"] = Meteor.userId();
-      newReview["name"] = Meteor.user().name;
-      newReview["recipeID"] = this.props.recipe._id;
-      newReview["dateAdded"] = new Date();
-      event.preventDefault();
-      Meteor.call('reviews.insert', newReview);
-      let recipeToUpdate = this.props.recipe;
-      let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
-      let numRatings = this.props.recipe.numRatings + 1;
-      let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
-      Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
-      Meteor.call('recipes.updateNumRatings', this.props.recipe._id, numRatings);
-      this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
+      this.addReview(newReview);
     }
   }
 
+  updateReview(newReview) {
+    Meteor.call('reviews.update', newReview._id, newReview);
+    let recipeToUpdate = this.props.recipe;
+    let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) - Number(this.state.reviewToUpdateRating) + Number(this.state.review.rating);
+    let newAvgRating = totalRating/this.props.recipe.numRatings;
+    Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
+    this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}, editing: false});
+
+  }
+
+  addReview(newReview) {
+    Meteor.call('reviews.insert', newReview);
+    let recipeToUpdate = this.props.recipe;
+    let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) + Number(this.state.review.rating);
+    let numRatings = this.props.recipe.numRatings + 1;
+    let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
+    Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
+    Meteor.call('recipes.updateNumRatings', this.props.recipe._id, numRatings);
+    this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}});
+  }
+
   handleChange(event) {
-    let updatedReview = this.state.review;
+    let updatedReview = Object.assign({}, this.state.review);
+
     updatedReview[event.target.name] = event.target.value;
-    this.setState({review: updatedReview, userAlreadyReviewedError: false});
+    this.setState({review: updatedReview});
   }
 
   handleCloseWarningDialog() {
@@ -77,8 +93,11 @@ class RecipeReviews extends Component {
     this.setState({warningDialogOpen: true, reviewToDelete: currReview});
   }
 
+  handleEditClicked(reviewByUser) {
+    this.setState({review: reviewByUser, editing: true, reviewToUpdateRating: reviewByUser.rating})
+  }
+
   deleteCurrReview() {
-    this.setState({userAlreadyReviewedError: false});
     Meteor.call('reviews.remove', this.state.reviewToDelete._id);
     let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.numRatings * this.props.recipe.numRatings) - Number(this.state.reviewToDelete.rating);
@@ -89,24 +108,21 @@ class RecipeReviews extends Component {
     this.handleCloseWarningDialog();
   }
 
+  cancelEdit() {
+    this.setState({editing: false, review: {recipeID: '', name: '', userID:'', rating: '0', comment: ''}});
+  }
+
   render() {
-    let reviews = this.props.reviews.filter(review =>
-      review.recipeID === this.props.recipe._id
-    )
-    let ratings = reviews.map(review => Number(review.rating));
-    let totalRating = ratings.reduce( (a,b) => a + b, 0);
-    let avgRating = ratings.length > 0? totalRating/ratings.length: 0;
-    let avgRatingStars = [];
-    for (let i = 0; i < avgRating; i++) {
-      avgRatingStars.push(<Icon>star</Icon>);
-    }
+    let reviewByUser = this.props.reviews.find(review => {
+      return review.userID === Meteor.userId()
+    });
     let currKey = 0;
     return (
       <div className="review-container recipe-item">
         <div className="recipe-item-label">
           <Typography variant="h6">Reviews:</Typography>
         </div>
-        { this.props.user?
+        { this.props.user && (!reviewByUser || this.state.editing)?
           <div className="add-new-review">
             <ValidatorForm onSubmit={this.handleSubmit}>
               <div className="rating-input">
@@ -151,33 +167,56 @@ class RecipeReviews extends Component {
                               fullWidth
                               placeholder="Write your review..."/>
               </div>
-              <Button type="submit">Submit Review</Button>
-              {this.state.userAlreadyReviewedError?
-                <span style={{color:"red"}}>You have already reviewed this recipe</span> : null}
+              <Button type="submit">{this.state.editing? "Update Review" : "Submit Review"}</Button>
+              {this.state.editing? <Button onClick={this.cancelEdit}>Cancel</Button> : null}
             </ValidatorForm>
           </div>
            : null
         }
-        <div className="list-of-reviews">
-          {reviews.map(review => (
-            <div className="each-review" key={currKey++}>
-              <div className="review-content">
-                <div className="review-rating review-part">
-                {this.getStars(Number(review.rating))}
-                </div>
-                <div className="review-name review-part">
-                  <div>{review.name + " says:"}</div>
-                </div>
-                <div className="review-comment review-part">
-                  <div>{review.comment}</div>
-                </div>
+        { reviewByUser && !this.state.editing?
+          <div className="each-review" key={currKey++}>
+            <div className="review-content">
+              <div className="your-review-title review-part">
+                Your Review
               </div>
-              {review.userID === Meteor.userId()?
-                <div className="delete-review review-part">
-                  <Tooltip title="Delete Review">
-                      <Icon className="icon-delete-review" onClick={() => this.handleDeleteClicked(review)}>delete_outline</Icon>
-                  </Tooltip>
-                </div> : null}
+              <div className="review-rating review-part">
+              {this.getStars(Number(reviewByUser.rating))}
+              </div>
+              <div className="review-comment review-part">
+                <div>{reviewByUser.comment}</div>
+              </div>
+            </div>
+            <div className="review-action-buttons">
+              <div className="delete-review review-part">
+                <Tooltip title="Edit Review">
+                    <Icon className="icon-delete-review" onClick={() => this.handleEditClicked(reviewByUser)}>edit</Icon>
+                </Tooltip>
+              </div>
+              <div className="delete-review review-part">
+                <Tooltip title="Delete Review">
+                    <Icon className="icon-delete-review" onClick={() => this.handleDeleteClicked(reviewByUser)}>delete_outline</Icon>
+                </Tooltip>
+              </div>
+            </div>
+          </div> : null}
+        <div className="list-of-reviews">
+          {this.props.reviews.map(review => (
+            <div>
+              {review.userID === Meteor.userId()? null :
+                <div className="each-review" key={currKey++}>
+                  <div className="review-content">
+                    <div className="review-rating review-part">
+                    {this.getStars(Number(review.rating))}
+                    </div>
+                    <div className="review-name review-part">
+                      <div>{review.name + " says:"}</div>
+                    </div>
+                    <div className="review-comment review-part">
+                      <div>{review.comment}</div>
+                    </div>
+                  </div>
+                </div>
+              }
             </div>
           ))}
         </div>
@@ -219,8 +258,8 @@ class RecipeReviews extends Component {
 export default
   withTracker(() => {
     return {
-      reviews: Reviews.find().fetch(),
+      reviews: Reviews.find({recipeID: Session.get('recipeID')}).fetch(),
       user: Meteor.user(),
-        recipe: Recipes.findOne({_id: Session.get('recipeID')})
+      recipe: Recipes.findOne({_id: Session.get('recipeID')})
     };
   })(RecipeReviews);

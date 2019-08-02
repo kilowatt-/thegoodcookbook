@@ -60,7 +60,7 @@ class RecipeDetails extends Component {
     return (
       <div className="recipe-details-content">
       <EditRecipeButton />
-      {this.props.user? <Button size="small" onClick={() =>
+      {Meteor.user()? <Button size="small" onClick={() =>
         {this.isInFavourites(this.props.recipe) ? this.removeFromFavourites(this.props.recipe._id) :
         this.addToFavourites(this.props.recipe._id)
       }} >{this.isInFavourites(this.props.recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
@@ -146,12 +146,6 @@ class RecipeDetails extends Component {
     }
   }
 
-  getDialogActions() {
-    return (
-      <div></div>
-    );
-  }
-
   getStars(rating) {
     let numStars = 0;
     let stars = [];
@@ -167,14 +161,15 @@ class RecipeDetails extends Component {
 
   render() {
       return (
-        <div>
+        <div> {
+          this.props.recipe?
           <CommonDialog
             closeDialog={this.props.closeDialog}
             dialogOpen={this.props.dialogOpen}
             dialogTitle={this.props.recipe.recipeName}
             dialogContent={this.getDialogContent()}
-            dialogActions={this.getDialogActions()}
-          />
+          /> : null
+        }
       </div>
     );
   }
