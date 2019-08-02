@@ -269,6 +269,9 @@ export const getFilter = () => {
     if (addedOnly) {
       filter.createdBy = Meteor.userId();
     }
+    if (chipSearch && chipSearch.length){
+        filter.intersection_count = {$gt: 0}
+    }
 
     return filter;
 };
@@ -294,9 +297,9 @@ const getSort = () => {
 const updateRecipes = () => {
   Meteor.call('recipes.getRecipes', getFilter(), getAddFields(), getSort(),  Session.get('recipePage'), function(err,data){
       if(err){
-        console.log("err : " + err);
+        //console.log("err : " + err);
       }else{
-        console.log("data : " + data);
+        //console.log("data : " + data);
         Session.set('recipes', data)
       }
   })
