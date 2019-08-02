@@ -71,7 +71,7 @@ class HomePage extends React.Component {
     }
 
     openDetailedView(recipe) {
-      this.props.setRecipeDetails(recipe);
+      Session.set('recipeID', recipe._id);
       this.props.openDetailedView();
       this.setState({inDetailedView: true});
     }
