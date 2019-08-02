@@ -10,7 +10,7 @@ import '../style/SearchFilterBar.css';
 class SearchFilterBar extends React.Component {
   render() {
     return (
-      <div>{this.props.currentTab === NavBarTabs.HOME? null:
+      <div>{(this.props.currentTab === NavBarTabs.HOME) && this.props.user? null:
         <div className="search-filter-bar">
           <div className="search-filter-section">
             <SearchBar />
