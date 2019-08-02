@@ -42,8 +42,8 @@ Meteor.methods({
   async 'recipes.getRecipes'(filter, addFields, sort, limit) {
     return await Recipes.rawCollection().aggregate(
       [
-        {$match: filter},
         addFields,
+        {$match: filter},
         sort
       ].filter(x => x != null)
       ).limit(limit || 5).toArray();
