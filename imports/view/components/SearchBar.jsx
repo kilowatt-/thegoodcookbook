@@ -51,7 +51,7 @@ class SearchBar extends React.Component {
     TextFields() {
         const { classes } = this.props;
         return (
-            <form className={classes.container} noValidate autoComplete="off">
+            <form className={classes.container} action="javascript:void(-1)" noValidate autoComplete="off">
                 <TextField
                     id="outlined-select-search"
                     select
@@ -80,6 +80,7 @@ class SearchBar extends React.Component {
     getSearchBar(){
         const { classes } = this.props;
         if (this.props.searchType == 'Ingredients'){
+            this.props.updateInput(['searchBar', ''])
             return (
                 <ChipInput
                 id="outlined-simple-start-adornment"
@@ -91,6 +92,7 @@ class SearchBar extends React.Component {
                 onChange={chips => this.props.updateInput(['chipSearch', chips])}
                 />)
         }else{
+            this.props.updateInput(['chipSearch', []])
             return (
                 <TextField
                     id="outlined-simple-start-adornment"
