@@ -123,3 +123,7 @@
   margin-top: 8px;
   margin-bottom: 0px;
 }
+
+.review-action-buttons {
+  display: flex;
+}

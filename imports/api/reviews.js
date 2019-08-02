@@ -11,5 +11,9 @@ Meteor.methods({
 
   'reviews.remove'(reviewId) {
     Reviews.remove(reviewId);
+  },
+
+  'reviews.update'(reviewId, newReview) {
+    Reviews.update(reviewId, {$set: newReview});
   }
 })
