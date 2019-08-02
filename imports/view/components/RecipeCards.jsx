@@ -101,7 +101,7 @@ class RecipeCards extends Component {
         let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
         return (
             <div>
-                {this.props.currentTab === NavBarTabs.HOME ? null :
+                {this.props.currentTab === NavBarTabs.HOME && this.props.user? null :
                     <div className="recipe-cards-page">
                         {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
                         {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
