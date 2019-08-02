@@ -80,6 +80,7 @@ class SearchBar extends React.Component {
     getSearchBar(){
         const { classes } = this.props;
         if (this.props.searchType == 'Ingredients'){
+            this.props.updateInput(['searchBar', ''])
             return (
                 <ChipInput
                 id="outlined-simple-start-adornment"
@@ -91,6 +92,7 @@ class SearchBar extends React.Component {
                 onChange={chips => this.props.updateInput(['chipSearch', chips])}
                 />)
         }else{
+            this.props.updateInput(['chipSearch', []])
             return (
                 <TextField
                     id="outlined-simple-start-adornment"
