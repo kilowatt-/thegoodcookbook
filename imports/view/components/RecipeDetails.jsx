@@ -19,6 +19,7 @@ import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
 import { Session } from 'meteor/session'
 import Recipe from "../../model/Recipe";
+import Tooltip from '@material-ui/core/Tooltip';
 
 class RecipeDetails extends Component {
   constructor(props) {
@@ -59,11 +60,7 @@ class RecipeDetails extends Component {
   getDialogContent() {
     return (
       <div className="recipe-details-content">
-      <EditRecipeButton />
-      {Meteor.user()? <Button size="small" onClick={() =>
-        {this.isInFavourites(this.props.recipe) ? this.removeFromFavourites(this.props.recipe._id) :
-        this.addToFavourites(this.props.recipe._id)
-      }} >{this.isInFavourites(this.props.recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
+        <EditRecipeButton/>
         <div className="recipe-image">
           <Card>
             <CardMedia className="recipe-details-image"
@@ -73,8 +70,23 @@ class RecipeDetails extends Component {
             />
           </Card>
         </div>
-        <div className="ratings-stars">
-          {this.getStars(this.props.recipe.avgRating)}
+        <div className="stars-hearts">
+          <div className="ratings-stars">
+            {this.getStars(this.props.recipe.avgRating)}
+          </div>
+          <div className="title-favourite-button">
+            {this.isInFavourites(this.props.recipe) ?
+              <Tooltip title="Unfavorite">
+                <Button onClick={() => this.removeFromFavourites(this.props.recipe._id)}>
+                  <Icon className="icon-favourited-review favorite-icon">favorite</Icon>
+                </Button>
+              </Tooltip> :
+              <Tooltip title="Favorite">
+                <Button onClick={() =>this.addToFavourites(this.props.recipe._id)}>
+                  <Icon className="icon-not-favourited-review favorite-icon">favorite_border</Icon>
+                </Button>
+              </Tooltip>}
+          </div>
         </div>
         <div className="recipe-details-category-container recipe-item">
           <div className="recipe-item">
@@ -106,9 +118,9 @@ class RecipeDetails extends Component {
           <div className="recipe-item-label">
             <Typography variant="h6">Procedure:</Typography>
           </div>
-          <ul>
+          <ol>
             {this.getProcedureList(this.props.recipe.procedure)}
-          </ul>
+          </ol>
         </div>
 
         <RecipeReviews />
@@ -177,6 +189,7 @@ class RecipeDetails extends Component {
 
 export default withTracker(() => {
   return {
-    recipe: (Session.get('recipeID') === '' ? Recipe.constructEmptyRecipe() : Recipes.findOne({_id: Session.get('recipeID')}))
+    recipe: (Session.get('recipeID') === '' ? Recipe.constructEmptyRecipe() : Recipes.findOne({_id: Session.get('recipeID')})),
+    favourites: Favourites.findOne({_id: Meteor.userId()})
   }
 })(RecipeDetails);

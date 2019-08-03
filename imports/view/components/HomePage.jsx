@@ -128,7 +128,7 @@ class HomePage extends React.Component {
                                   <CardMedia
                                     component="img"
                                     src={recipe.imgUrl}
-                                    style={{height: "50%"}}
+                                    style={{height: "100%"}}
                                   />
                                 </Card>
                               </div>
@@ -147,7 +147,7 @@ class HomePage extends React.Component {
                                   <CardMedia
                                     component="img"
                                     src={recipe.imgUrl}
-                                    style={{height: "50%"}}
+                                    style={{height: "100%"}}
                                   />
                                 </Card>
                               </div>

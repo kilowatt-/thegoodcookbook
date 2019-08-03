@@ -33,11 +33,11 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div className="nav-bar-container">
+      <div className={this.props.currentTab === NavBarTabs.HOME? "nav-bar-container home-nav-bar-container" : "nav-bar-container"}>
         {this.props.user ?
           <div className="nav-bar">
             <div className="nav-bar-buttons">
-              <Button onClick={this.browseAll}>Search Recipes</Button>
+              <Button onClick={this.browseAll}>All Recipes</Button>
               {this.props.currentTab === NavBarTabs.ALL? <hr></hr> : null}
             </div>
             <div className="nav-bar-buttons">

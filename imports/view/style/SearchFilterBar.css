@@ -24,6 +24,8 @@
   grid-template-columns: 3fr 2fr 1fr;
   grid-template-rows: 1fr;
   background-color: #d9cebf;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .search-filter-section {
