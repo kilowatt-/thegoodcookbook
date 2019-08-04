@@ -278,10 +278,27 @@ export const getFilter = () => {
 };
 
 const getAddFields = () => {
-  const chipSearch = Session.get('chipSearch');
-  if (chipSearch && chipSearch.length){
-    return {$addFields: { intersection_count: {"$size" : { "$setIntersection": [ "$ingredients.ingredient.name", chipSearch ] } },
-                          intersection: { "$setIntersection": [ "$ingredients.ingredient.name", chipSearch ] }     } }
+  const chipSearch = Session.get("chipSearch");
+  if (chipSearch && chipSearch.length) {
+    return {
+      $addFields: {
+        intersection_count: {
+          $size: {
+            $setIntersection: [
+              {
+                $map: {
+                  input: "$ingredients.ingredient.name",
+                  in: { $toLower: "$$this" }
+                }
+              },
+              chipSearch.map(function(x) {
+                return x.toLowerCase();
+              })
+            ]
+          }
+        }
+      }
+    };
   }
   return null;
 };
