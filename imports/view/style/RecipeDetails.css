@@ -18,15 +18,24 @@
   padding-bottom: 8px;
 }
 
-.ratings-stars {
-  padding: 5px;
-  margin-top: 8px;
-}
-
 .MuiCardMedia-media.recipe-details-image {
   max-height: 100%;
 }
 
 .icon-edit {
   padding-right: 5px;
+}
+
+.stars-hearts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin-top: 8px;
+}
+
+.material-icons.MuiIcon-root.favorite-icon {
+  font-size: 2.2rem;
+  color: rosybrown;
 }

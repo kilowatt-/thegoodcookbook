@@ -2,6 +2,11 @@
     background-color: whitesmoke;
     display: flex;
     padding-left: 10px;
+    padding-top: 16px;
+}
+
+.nav-bar-container.home-nav-bar-container {
+  padding-top: 0;
 }
 
 .nav-bar {
@@ -17,6 +22,4 @@
 
 .nav-bar-buttons {
   width: 100%;
-  padding-top: 5px;
-  margin-top: 10px;
 }
