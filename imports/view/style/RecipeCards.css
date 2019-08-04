@@ -10,9 +10,9 @@
 
 .card {
   display: flex;
-  flex-basis: 24.25%;
+  flex-basis: 23.6%;
   flex-direction: column;
-  padding: 4px;
+  padding: 6px;
   min-height: 100%;
 }
 
@@ -69,6 +69,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .see-more-button {
@@ -137,4 +139,8 @@
       -webkit-transform: scale(1.0);
       transform: scale(1.0);
     }
+}
+
+.edit_recipe {
+  width: 100%;
 }

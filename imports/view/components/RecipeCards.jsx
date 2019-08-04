@@ -105,6 +105,7 @@ class RecipeCards extends Component {
                     <div className="recipe-cards-page">
                         {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
                         {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
+                        {!Session.get('favourites') && !Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">No recipes match your criteria</div>: null}
                         <div className="card-container">
                             {recipes.map(recipe => (
                                 <div className="card" key={recipe._id}>
