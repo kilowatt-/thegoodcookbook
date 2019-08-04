@@ -52,6 +52,7 @@ export default class CommonDialog extends Component {
     return (
       <div>
         <Dialog
+          id="printable-section"
           fullWidth
           onClose={()=>this.props.closeDialog}
           aria-labelledby="customized-dialog-title"
