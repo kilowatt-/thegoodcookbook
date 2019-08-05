@@ -12,6 +12,9 @@ Meteor.methods({
       if (err) {
         throw err;
       }
+
+      recipe._id = id;
+
         Meteor.call('findNearestNeighbours', recipe);
     });
   },
@@ -41,6 +44,7 @@ Meteor.methods({
   },
   async 'recipes.getRecipes'(filter, addFields, sort, limit) {
     return await Recipes.rawCollection().aggregate(
+        
       [
         addFields,
         {$match: filter},

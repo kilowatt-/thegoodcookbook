@@ -60,6 +60,15 @@ class RecipeForm extends React.Component {
 
 	}
 
+	componentWillMount() {
+		ValidatorForm.addValidationRule('gtZero', (value) => {
+			if (!isNaN(value) && value > 0) {
+				return true;
+			}
+			return false;
+		});
+	}
+
 	addNewStep() {
 		event.preventDefault();
 

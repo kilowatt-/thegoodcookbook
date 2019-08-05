@@ -3,7 +3,7 @@ import RecipeCards from './components/RecipeCards.jsx';
 import Header from './components/Header.jsx';
 import SearchFilterBar from "./components/SearchFilterBar";
 import HomePage from "./components/HomePage";
-import Button from "@material-ui/core/Button";
+import RecipeImporter from "./components/RecipeImporter";
 
 const App = () => (
     <div className="wrapper">
@@ -12,7 +12,6 @@ const App = () => (
         <div id="content">
             <RecipeCards />
             <HomePage />
-
         </div>
     </div>
 );

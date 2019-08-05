@@ -57,8 +57,8 @@ class IngredientInputs extends React.Component {
 				<div key={index} className="single-ingredient">
 					<div className="amount-input">
 						<TextValidator className="ingredient-amount-input"
-													validators={['required', 'isNumber']}
-													errorMessages={['Required', 'Must be a number']}
+													validators={['required', 'gtZero']}
+													errorMessages={['Required', 'Must be greater than zero']}
 													key={qtyId}
 													name={qtyId}
 													onChange={this.props.handleChange}
