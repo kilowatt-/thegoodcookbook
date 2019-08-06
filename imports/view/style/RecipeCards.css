@@ -49,6 +49,10 @@
   margin-bottom: 4px;
 }
 
+.missing-ingredients-card-container {
+  width: 100%;
+}
+
 .card-summary-info {
   display: flex;
   flex-direction: row;
