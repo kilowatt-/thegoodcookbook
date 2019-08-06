@@ -193,8 +193,8 @@ export default compose(
         return {
             user: Meteor.user(),
             favourites: Favourites.findOne({_id: Meteor.userId()}),
-            topRated: Recipes.find({}, {sort: {avgRating: -1}, limit: NUM_RECIPES}).fetch(),
-            mostRecent: Recipes.find({}, {sort: {dateAdded: -1}, limit: NUM_RECIPES}).fetch()
+            topRated: Recipes.find({}, {sort: {avgRating: -1, "numRatings": -1}, limit: NUM_RECIPES, nearestNeighbours: 0}).fetch(),
+            mostRecent: Recipes.find({}, {sort: {dateAdded: -1}, limit: NUM_RECIPES, nearestNeighbours: 0}).fetch()
         }
 
     }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(HomePage);
