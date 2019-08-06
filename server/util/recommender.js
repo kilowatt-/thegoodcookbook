@@ -46,8 +46,6 @@ export function findNearestNeighbours(recipe) {
         }
     }
 
-    console.log("Similarity array for " + recipe.recipeName + ": " + JSON.stringify(similarityArray));
-
     Recipes.update({_id: recipe._id}, {$set: {nearestNeighbours: similarityArray}});
 
     return similarityArray;
