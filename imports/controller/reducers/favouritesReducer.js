@@ -1,4 +1,4 @@
-import { GET_FAVOURITES_BEGIN, GET_FAVOURITES_SUCCESS, GET_FAVOURITES_ERROR } from "../actions/favourites";
+import {GET_FAVOURITES_BEGIN, GET_FAVOURITES_ERROR, GET_FAVOURITES_SUCCESS} from "../actions/favourites";
 
 const INITIAL_STATE = {
 	loading: false,

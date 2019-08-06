@@ -1,4 +1,4 @@
-import {OPEN_LOGIN, CLOSE_LOGIN, OPEN_SIGNUP, CLOSE_SIGNUP} from '../actions/user.js';
+import {CLOSE_LOGIN, CLOSE_SIGNUP, OPEN_LOGIN, OPEN_SIGNUP} from '../actions/user.js';
 
 export const loginDialogReducer = (isOpen = false, action) => {
 	if (action.type === OPEN_LOGIN) {

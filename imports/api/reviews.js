@@ -1,6 +1,5 @@
-import { Mongo } from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import {Mongo} from 'meteor/mongo';
+import {Meteor} from 'meteor/meteor';
 
 export default Reviews = new Mongo.Collection('reviews');
 
@@ -16,4 +15,4 @@ Meteor.methods({
   'reviews.update'(reviewId, newReview) {
     Reviews.update(reviewId, {$set: newReview});
   }
-})
+});

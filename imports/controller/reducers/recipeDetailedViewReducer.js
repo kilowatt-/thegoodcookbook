@@ -1,4 +1,4 @@
-import {OPEN_DETAILED_VIEW, CLOSE_DETAILED_VIEW} from '../actions/detailedView.js'
+import {CLOSE_DETAILED_VIEW, OPEN_DETAILED_VIEW} from '../actions/detailedView.js'
 
 export const recipeDetailedViewReducer = (isOpen = false, action) => {
 	if (action.type === OPEN_DETAILED_VIEW) {

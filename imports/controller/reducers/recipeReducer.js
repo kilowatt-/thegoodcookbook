@@ -1,4 +1,4 @@
-import { RECIPE_LOAD_SUCCESS, RECIPE_LOAD_BEGIN, RECIPE_LOAD_ERROR} from "../../controller/actions/recipe";
+import {RECIPE_LOAD_BEGIN, RECIPE_LOAD_ERROR, RECIPE_LOAD_SUCCESS} from "../../controller/actions/recipe";
 
 const INITIAL_LOADING_STATE = {
 	loading: false,
