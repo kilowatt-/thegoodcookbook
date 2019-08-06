@@ -128,10 +128,9 @@ getRecipeCard(recipe) {
                     <Typography gutterBottom variant="h5" component="h2">
                         {recipe.recipeName}
                     </Typography>
+                    {this.moreIngredientsFlag(recipe)}
                 </div>
                 <div className="card-body-section">
-                    {this.moreIngredientsFlag(recipe)}
-                    <div className="card-body-bottom-section">
                       <div className="card-rating-stars">
                           {getStars(Number(recipe.avgRating), "recipeCards")}
                       </div>
@@ -144,7 +143,6 @@ getRecipeCard(recipe) {
                               <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
                           </div>
                       </div>
-                    </div>
                 </div>
             </CardContent>
             <CardActions>
