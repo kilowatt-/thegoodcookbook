@@ -18,6 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Session} from "meteor/session";
 import Recipe from "../../model/Recipe";
+import getStars from "../stars";
 
 class RecipeReviews extends Component {
 
@@ -30,11 +31,10 @@ class RecipeReviews extends Component {
       reviewToDelete: {},
       editing: false,
       reviewToUpdateRating: '0'
-    }
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.getStars = this.getStars.bind(this);
     this.deleteCurrReview = this.deleteCurrReview.bind(this);
     this.handleCloseWarningDialog = this.handleCloseWarningDialog.bind(this);
     this.handleDeleteClicked = this.handleDeleteClicked.bind(this);
@@ -59,9 +59,8 @@ class RecipeReviews extends Component {
 
   updateReview(newReview) {
     Meteor.call('reviews.update', newReview._id, newReview);
-    let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) - Number(this.state.reviewToUpdateRating) + Number(this.state.review.rating);
-    let newAvgRating = totalRating/this.props.recipe.numRatings;
+    let newAvgRating = (this.props.recipe.numRatings > 0 ? totalRating/this.props.recipe.numRatings : 0);
     Meteor.call('recipes.updateAvgRating', this.props.recipe._id, newAvgRating);
     this.setState({review: {recipeID: '', name: '', rating: '0', comment: ''}, editing: false});
 
@@ -99,7 +98,6 @@ class RecipeReviews extends Component {
 
   deleteCurrReview() {
     Meteor.call('reviews.remove', this.state.reviewToDelete._id);
-    let recipeToUpdate = this.props.recipe;
     let totalRating = (this.props.recipe.numRatings * this.props.recipe.numRatings) - Number(this.state.reviewToDelete.rating);
     let numRatings = this.props.recipe.numRatings - 1;
     let newAvgRating = (numRatings > 0 ? totalRating/numRatings : 0);
@@ -180,7 +178,7 @@ class RecipeReviews extends Component {
                 Your Review
               </div>
               <div className="review-rating review-part">
-              {this.getStars(Number(reviewByUser.rating))}
+              {getStars(Number(reviewByUser.rating), "userReview")}
               </div>
               <div className="review-comment review-part">
                 <div>{reviewByUser.comment}</div>
@@ -206,7 +204,7 @@ class RecipeReviews extends Component {
                 <div className="each-review" key={currKey++}>
                   <div className="review-content">
                     <div className="review-rating review-part">
-                    {this.getStars(Number(review.rating))}
+                    {getStars(Number(review.rating), "review_" + review.name)}
                     </div>
                     <div className="review-name review-part">
                       <div>{review.name + " says:"}</div>
@@ -243,16 +241,6 @@ class RecipeReviews extends Component {
     )
   }
 
- getStars(rating) {
-    let stars = [];
-    for(let i = 0; i < rating; i++) {
-      stars.push(<Icon color="primary">star</Icon>);
-    }
-    for(let i = rating; i < 5; i++) {
-      stars.push(<Icon color="disabled">star</Icon>)
-    }
-    return stars;
-  }
 }
 
 export default

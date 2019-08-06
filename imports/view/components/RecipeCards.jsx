@@ -21,6 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const PAGE_SIZE = 8
 import { Meteor } from 'meteor/meteor';
+import getStars from "../stars";
 
 class RecipeCards extends Component {
   state = {
@@ -35,7 +36,6 @@ class RecipeCards extends Component {
     this.isInFavourites = this.isInFavourites.bind(this);
     this.addToFavourites = this.addToFavourites.bind(this);
     this.removeFromFavourites = this.removeFromFavourites.bind(this);
-    this.getStars = this.getStars.bind(this);
     Session.setDefault('recipePage', PAGE_SIZE);
     Session.setDefault('recipeID', '');
     this.backToTop = this.backToTop.bind(this);
@@ -108,7 +108,7 @@ class RecipeCards extends Component {
                         {!Session.get('favourites') && !Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">No recipes match your criteria</div>: null}
                         <div className="card-container">
                             {recipes.map(recipe => (
-                                <div className="card" key={recipe._id}>
+                                <div className="card" id={recipe._id} key={recipe._id}>
                                     <Card>
                                         <CardMedia className="recipe-cards-image"
                                                    component="img"
@@ -124,7 +124,7 @@ class RecipeCards extends Component {
                                             {this.moreIngredientsFlag(recipe)}
                                             <div className="card-body-section">
                                                 <div className="card-rating-stars">
-                                                    {this.getStars(Number(recipe.avgRating))}
+                                                    {getStars(Number(recipe.avgRating), "recipeCards")}
                                                 </div>
                                                 <div className="card-summary-info">
                                                     <div className="card-summary-info-item">
@@ -209,20 +209,8 @@ class RecipeCards extends Component {
   moreRecipes() {
     Session.set('recipePage', Session.get('recipePage') + PAGE_SIZE)
   }
-
-  getStars(rating) {
-    let numStars = 0;
-    let stars = [];
-    for(let i = 0; i < rating; i++) {
-      stars.push(<Icon color="primary">star</Icon>);
-      numStars++;
-    }
-    for(let i = numStars; i < 5; i++) {
-      stars.push(<Icon color="disabled">star</Icon>)
-    }
-    return stars;
-  }
 }
+
 
 const mapStateToProps = (state) => {
   Session.set('selectedDifficulty', state.inputReducer.selectedDifficulty);
@@ -315,17 +303,16 @@ const getSort = () => {
 const updateRecipes = () => {
   Meteor.call('recipes.getRecipes', getFilter(), getAddFields(), getSort(),  Session.get('recipePage'), function(err,data){
       if(err){
-        //console.log("err : " + err);
+        throw(err);
       }else{
-        //console.log("data : " + data);
         Session.set('recipes', data)
       }
   })
-}
+};
 
 export default compose(
   withTracker(() => {
-    updateRecipes()
+    updateRecipes();
     return {recipes: Session.get('recipes') || [],
         user: Meteor.user(),
         favourites: Favourites.findOne({_id: Meteor.userId()}),
@@ -333,3 +320,4 @@ export default compose(
     };
 
   }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
+
