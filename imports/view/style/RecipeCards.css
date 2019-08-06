@@ -56,6 +56,14 @@
   margin-right: 5px;
   justify-content: space-between;
 }
+
+.card-body-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%
+}
+
 .MuiCardMedia-media.recipe-cards-image {
   min-height: 170px;
   max-height: 170px;
@@ -89,6 +97,17 @@
   display: flex;
   background-color: whitesmoke;
   padding-left: 8px;
+}
+
+.missing-ingredients-title {
+  padding: 6px;
+  font-size: 20px;
+}
+
+.more-ingredients-flag {
+  padding: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom {

@@ -12,8 +12,8 @@
 .nav-bar {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
+  grid-template-columns: 2fr 3fr 3fr;
+  padding-left: 12px;
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-text {

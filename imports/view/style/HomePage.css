@@ -26,6 +26,8 @@
 .trra-subcontainer {
   display: flex;
   flex-direction: column;
+  max-width: 60%;
+  min-width: 40%;
 }
 
 .home-recipe-title {

@@ -84,96 +84,131 @@ class RecipeCards extends Component {
   moreIngredientsFlag(recipe) {
   if (!Session.get('chipSearch') || !Session.get('chipSearch').length){return }
   if (recipe.intersection_count < recipe.ingredients.length){
+    let numMissingIngredients = recipe.ingredients.length - recipe.intersection_count
+    let missingIngredients = recipe.ingredients.filter(ingredient => {
+      let i = ingredient.ingredient.name.toLowerCase();
+      return !Session.get('chipSearch').includes(i);
+    }).map(ingredient => ingredient.ingredient.name);
     return (
       <div className="more-ingredients-flag">
-      You need {recipe.ingredients.length - recipe.intersection_count} more ingredients
+        <div className="more-ingredients-flag-label">
+          {numMissingIngredients} additional {numMissingIngredients > 1? <span>ingredients</span>: <span>ingredient</span>} needed:
+        </div>
+        <div className="more-ingredients-flag-ingredients">
+          {missingIngredients.map(ingredient => <span>{missingIngredients.findIndex(i => i === ingredient) === 0? '' : ', '}<span>{ingredient}</span></span>)}
+        </div>
       </div>
     )
+  } else {
+    return
   }
+}
+
+getMissingIngredientsRecipes() {
+  if (!Session.get('chipSearch') || !Session.get('chipSearch').length) {
+    return [];
+  } else {
+    return this.props.recipes.filter(recipe =>
+      recipe.intersection_count < recipe.ingredients.length
+    )
+  }
+}
+
+getRecipeCard(recipe) {
   return (
-    <div className="more-ingredients-flag">
-    You have all the ingredient!
+    <div className="card" id={recipe._id} key={recipe._id}>
+        <Card>
+            <CardMedia className="recipe-cards-image"
+                       component="img"
+                       src={recipe.imgUrl}
+                       style={{height: "50%"}}
+            />
+            <CardContent className="recipe-card-content-container">
+                <div className="card-title-text">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {recipe.recipeName}
+                    </Typography>
+                </div>
+                <div className="card-body-section">
+                    {this.moreIngredientsFlag(recipe)}
+                    <div className="card-body-bottom-section">
+                      <div className="card-rating-stars">
+                          {getStars(Number(recipe.avgRating), "recipeCards")}
+                      </div>
+                      <div className="card-summary-info">
+                          <div className="card-summary-info-item">
+                              <Typography>{recipe.difficulty}</Typography>
+                          </div>
+                          <div className="card-summary-info-item">
+                              <Icon>access_time</Icon>
+                              <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </CardContent>
+            <CardActions>
+                <Button onClick={()=>this.openDetailedView(recipe._id)} size="small">
+                    See Recipe
+                </Button>
+                {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>
+                {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
+                    this.addToFavourites(recipe._id)
+                }} >{this.isInFavourites(recipe) ? "Unsave" : "Save"}</Button> : null}
+            </CardActions>
+        </Card>
     </div>
   )
 }
 
     render() {
-        let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
+      let missingIngredientsRecipes = this.getMissingIngredientsRecipes();
+      let recipes = (this.props.recommended ? this.props.recommended :this.props.recipes);
+
         return (
             <div>
                 {this.props.currentTab === NavBarTabs.HOME && this.props.user? null :
-                    <div className="recipe-cards-page">
-                        {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not favorited anything</div> : null}
-                        {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
-                        {!Session.get('favourites') && !Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">No recipes match your criteria</div>: null}
+                  <div>
+                  {this.props.recipeLoadingState.loading ? <div className="spinner">
+                      <div className="bounce1"></div>
+                      <div className="bounce2"></div>
+                      <div className="bounce3"></div>
+                  </div> : <div className="recipe-cards-page">
+                      {Session.get('favourites') && recipes.length < 1? <div className="no-cards-message">You have not saved any recipes</div> : null}
+                      {Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">You have not added any recipes</div> : null}
+                      {!Session.get('favourites') && !Session.get('addedOnly') && recipes.length < 1? <div className="no-cards-message">No recipes match your criteria</div>: null}
+                      <div className="card-container">
+                          {recipes.filter(recipe => !missingIngredientsRecipes.includes(recipe)).map(recipe => (
+                            this.getRecipeCard(recipe)
+                          ))}
+                      </div>
+                      {missingIngredientsRecipes.length > 0? <div className="missing-ingredients-card-container">
+                        <div className="missing-ingredients-title">Recipes That Need Additional Ingredients</div>
                         <div className="card-container">
-                            {recipes.map(recipe => (
-                                <div className="card" id={recipe._id} key={recipe._id}>
-                                    <Card>
-                                        <CardMedia className="recipe-cards-image"
-                                                   component="img"
-                                                   src={recipe.imgUrl}
-                                                   style={{height: "50%"}}
-                                        />
-                                        <CardContent className="recipe-card-content-container">
-                                            <div className="card-title-text">
-                                                <Typography gutterBottom variant="h5" component="h2">
-                                                    {recipe.recipeName}
-                                                </Typography>
-                                            </div>
-                                            {this.moreIngredientsFlag(recipe)}
-                                            <div className="card-body-section">
-                                                <div className="card-rating-stars">
-                                                    {getStars(Number(recipe.avgRating), "recipeCards")}
-                                                </div>
-                                                <div className="card-summary-info">
-                                                    <div className="card-summary-info-item">
-                                                        <Typography>{recipe.difficulty}</Typography>
-                                                    </div>
-                                                    <div className="card-summary-info-item">
-                                                        <Icon>access_time</Icon>
-                                                        <Typography className="recipe-time-text">{recipe.time + " mins"}</Typography>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button onClick={()=>this.openDetailedView(recipe._id)} size="small">
-                                                See Recipe
-                                            </Button>
-                                            {this.props.user && !Session.get('addedOnly')? <Button size="small" onClick={() =>
-                                            {this.isInFavourites(recipe) ? this.removeFromFavourites(recipe._id) :
-                                                this.addToFavourites(recipe._id)
-                                            }} >{this.isInFavourites(recipe) ? "Unfavourite" : "Favourite"}</Button> : null}
-                                        </CardActions>
-                                    </Card>
-                                </div>
-                            ))}
-                            {this.props.recipeLoadingState.loading ? <div className="spinner">
-                                <div className="bounce1"></div>
-                                <div className="bounce2"></div>
-                                <div className="bounce3"></div>
-                            </div> : null}
-                            <RecipeDetails
-                                dialogOpen={this.props.dialogOpen}
-                                closeDialog={this.closeRecipeDetails}
-                            />
+                          {missingIngredientsRecipes.map(recipe => (this.getRecipeCard(recipe)))}
                         </div>
-                        {this.props.recommended || this.props.recipes.length >= this.props.numRecipesTotal? null
-                            : <div className="see-more-button">
-                                <Button onClick={() => this.moreRecipes()}>
-                                    See More
-                                </Button>
-                            </div>}
-                        {this.state.backToTopButton ?
-                            <div className="back-to-top-button">
-                                <Tooltip title="Back to Top">
-                                    <Button className="back-to-top-button" onClick={this.backToTop}>
-                                        <Icon>arrow_upward</Icon>
-                                    </Button>
-                                </Tooltip>
-                            </div> : null}
-                    </div>}
+                      </div>: null}
+                      {this.props.recommended || this.props.recipes.length >= this.props.numRecipesTotal? null
+                          : <div className="see-more-button">
+                              <Button onClick={() => this.moreRecipes()}>
+                                  See More
+                              </Button>
+                          </div>}
+                      {this.state.backToTopButton ?
+                          <div className="back-to-top-button">
+                              <Tooltip title="Back to Top">
+                                  <Button className="back-to-top-button" onClick={this.backToTop}>
+                                      <Icon>arrow_upward</Icon>
+                                  </Button>
+                              </Tooltip>
+                          </div> : null}
+                          <RecipeDetails
+                              dialogOpen={this.props.dialogOpen}
+                              closeDialog={this.closeRecipeDetails}
+                          />
+                  </div>}
+                  </div>
+                    }
             </div>
         );
     }
@@ -320,4 +355,3 @@ export default compose(
     };
 
   }),connect(mapStateToProps, { openDetailedView, closeDetailedView }))(RecipeCards);
-
