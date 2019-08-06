@@ -1,14 +1,13 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { compose } from 'redux';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {connect} from "react-redux";
+import {compose} from 'redux';
+import {withStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import { updateInput } from "../../controller/actions/input.js";
+import {updateInput} from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
-import Button from '@material-ui/core/Button';
 import '../style/SearchFilterBar.css';
 
 

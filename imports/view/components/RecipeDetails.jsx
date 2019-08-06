@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
+import React, {Component} from 'react';
+import {withTracker} from 'meteor/react-meteor-data';
 import CommonDialog from './CommonDialog'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,7 @@ import '../style/RecipeDetails.css';
 import RecipeReviews from './RecipeReviews';
 import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
-import { Session } from 'meteor/session'
+import {Session} from 'meteor/session'
 import Recipe from "../../model/Recipe";
 import Tooltip from '@material-ui/core/Tooltip';
 import getStars from "../stars";

@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import React, {Component} from 'react';
+import {withTracker} from 'meteor/react-meteor-data';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 import Recipes from '../../api/recipes';
-import { Grid, Paper, Typography } from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import { openDetailedView, closeDetailedView } from '../../controller/actions/detailedView.js';
-import { setRecipeDetails } from '../../controller/actions/recipe.js';
+import {closeDetailedView, openDetailedView} from '../../controller/actions/detailedView.js';
 import RecipeDetails from './RecipeDetails';
 import '../style/RecipeCards.css';
 import Favourites from '../../api/favourites';
 import Icon from '@material-ui/core/Icon';
-import { Session } from 'meteor/session'
-import { NavBarTabs } from '../../model/NavBarTabs.js';
+import {Session} from 'meteor/session'
+import {NavBarTabs} from '../../model/NavBarTabs.js';
 import Tooltip from '@material-ui/core/Tooltip';
+import {Meteor} from 'meteor/meteor';
+import getStars from "../stars";
 
 const PAGE_SIZE = 8
-import { Meteor } from 'meteor/meteor';
-import getStars from "../stars";
 
 class RecipeCards extends Component {
   state = {
@@ -319,5 +318,5 @@ export default compose(
         numRecipesTotal: Recipes.find(getFilter()).count()
     };
 
-  }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(RecipeCards);
+  }),connect(mapStateToProps, { openDetailedView, closeDetailedView }))(RecipeCards);
 

@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { TextValidator} from 'react-material-ui-form-validator';
-import FormLabel from '@material-ui/core/FormLabel';
+import {TextValidator} from 'react-material-ui-form-validator';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import '../style/RecipeForm.css';

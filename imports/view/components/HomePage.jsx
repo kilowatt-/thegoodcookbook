@@ -1,4 +1,3 @@
-import RecipeCards from './RecipeCards'
 import {compose} from "redux";
 import {withTracker} from "meteor/react-meteor-data";
 import {Meteor} from "meteor/meteor";

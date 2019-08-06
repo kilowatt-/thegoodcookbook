@@ -1,6 +1,5 @@
 import { RECIPE_LOAD_SUCCESS, RECIPE_LOAD_BEGIN, RECIPE_LOAD_ERROR} from "../../controller/actions/recipe";
 
-
 const INITIAL_LOADING_STATE = {
 	loading: false,
 	err: null

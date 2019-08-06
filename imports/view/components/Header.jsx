@@ -3,7 +3,7 @@ import UserProfileTab from './UserProfileTab.jsx';
 import '../style/header.css';
 import NavBar from './NavBar.jsx';
 import {goHome} from '../../controller/actions/navBar.js';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 class Header extends React.Component {
 	constructor(props) {

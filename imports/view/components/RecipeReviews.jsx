@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import React, {Component} from 'react';
+import {withTracker} from 'meteor/react-meteor-data';
 import Button from '@material-ui/core/Button';
-import RadioButton from '@material-ui/core/Radio';
 import Typography from '@material-ui/core/Typography';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import '../style/RecipeReviews.css';
 import Reviews from '../../api/reviews';
 import Icon from '@material-ui/core/Icon';
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import Tooltip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {Session} from "meteor/session";
-import Recipe from "../../model/Recipe";
 import getStars from "../stars";
 
 class RecipeReviews extends Component {

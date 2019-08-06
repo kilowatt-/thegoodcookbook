@@ -6,7 +6,7 @@ import {UOM} from "../imports/model/UnitOfMeasurement";
 import {Difficulty} from "../imports/model/Difficulty";
 import {FoodType} from "../imports/model/FoodType";
 import {newMap} from "./main";
-import {findNearestNeighbours, updateNearestNeighboursForRecipe} from "./util/recommender";
+import {findNearestNeighbours} from "./util/recommender";
 
 const TESTING_MODE = process.env.TESTING_MODE;
 

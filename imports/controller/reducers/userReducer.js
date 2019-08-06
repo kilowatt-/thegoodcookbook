@@ -1,23 +1,4 @@
-import {LOAD_USER, OPEN_LOGIN, CLOSE_LOGIN, OPEN_SIGNUP, CLOSE_SIGNUP} from '../actions/user.js';
-
-const INITIAL_USER = {
-	username: '',
-	userid: '',
-	email: ''
-}
-
-export const userReducer = (user = INITIAL_USER, action) => {
-	if (action.type === LOAD_USER) {
-		return {
-			username: action.data.username,
-			userid: action.data._id,
-			email: action.data.emails[0].address
-		}
-	}
-
-	else
-		return user;
-}
+import {OPEN_LOGIN, CLOSE_LOGIN, OPEN_SIGNUP, CLOSE_SIGNUP} from '../actions/user.js';
 
 export const loginDialogReducer = (isOpen = false, action) => {
 	if (action.type === OPEN_LOGIN) {
