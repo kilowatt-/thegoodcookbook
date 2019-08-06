@@ -12,20 +12,17 @@ export const loadRecipeReducer = (loading = INITIAL_LOADING_STATE, action) => {
 				...loading,
 				loading: true
 			};
-			break;
 		case RECIPE_LOAD_SUCCESS:
 			return {
 				...loading,
 				loading: false
 			};
-			break;
 		case RECIPE_LOAD_ERROR:
 			return {
 				...loading,
 				loading: true,
 				err: action.payload
 			};
-			break;
 		default:
 			return loading;
 	}

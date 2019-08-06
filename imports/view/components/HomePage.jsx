@@ -37,7 +37,8 @@ class HomePage extends React.Component {
         this.updateCards();
     }
 
-    componentDidUpdate(prevProps) {
+    // noinspection JSUnusedLocalSymbols
+    componentDidUpdate(prevProps, prevState, snapshot) {
       if (this.props.user !== prevProps.user || (prevProps.favourites && this.props.favourites
           && this.props.favourites.length !== prevProps.favourites.length)) {
             this.updateCards();
@@ -189,6 +190,7 @@ const NUM_RECIPES = 5;
 
 export default compose(
     withTracker(() => {
+        // noinspection JSUnresolvedVariable
         return {
             user: Meteor.user(),
             favourites: Favourites.findOne({_id: Meteor.userId()}),

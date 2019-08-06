@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
-import Reviews from '/imports/api/reviews';
+
 import Recipe from '../imports/model/Recipe.js';
 import Ingredient from '../imports/model/Ingredient.js';
 import {UOM} from '../imports/model/UnitOfMeasurement.js';

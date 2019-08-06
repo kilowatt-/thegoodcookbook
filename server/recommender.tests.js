@@ -154,6 +154,7 @@ describe("Recommender tests", function() {
     });
 
     it("updating recipe so that they are so dissimilar removes similarity rating on both ends", function() {
+        // noinspection JSUnusedLocalSymbols
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);
 

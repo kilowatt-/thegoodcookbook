@@ -38,12 +38,12 @@ class UserProfileTab extends React.Component {
 		this.props.openLoginDialog();
 	}
 
-	closeRegistrationForm() {
+	closeRegistrationForm(event) {
 		event.preventDefault();
 		this.props.closeSignupDialog();
 	}
 
-	closeLoginForm() {
+	closeLoginForm(event) {
 		event.preventDefault();
 		this.props.closeLoginDialog();
 	}

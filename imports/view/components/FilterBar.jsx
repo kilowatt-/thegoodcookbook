@@ -11,6 +11,7 @@ import Difficulty from '../../model/Difficulty.js';
 import '../style/SearchFilterBar.css';
 
 
+// noinspection JSUnresolvedVariable
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
     return {label: key, value: FoodType.FoodType[key]}
 });

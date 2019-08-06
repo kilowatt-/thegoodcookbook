@@ -13,22 +13,18 @@ export const favouritesReducer  = (state = INITIAL_STATE, action) => {
 				loading: true,
 				error: null
 			};
-			break;
 		case GET_FAVOURITES_SUCCESS:
 			return {
 				loading: false,
 				error: null
 			};
-			break;
 		case GET_FAVOURITES_ERROR:
 			return {
 				loading: false,
 				error: action.payload
 			};
-			break;
 		default:
 			return state;
-			break;
 	}
 
 };

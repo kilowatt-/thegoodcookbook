@@ -27,7 +27,7 @@ class IngredientInputs extends React.Component {
 		return (
 				keys.map((uom, index) => {
 
-					let menuKey = uom;
+
 					return (
 
 						<MenuItem key={uom} value={values[index]}>{values[index]}</MenuItem>

@@ -5,9 +5,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import '../style/RecipeForm.css';
 
 class StepsInput extends React.Component {
-	constructor(props) {
-		super();
-	}
 
 	render() {
 		let procedure = this.props.procedure;

@@ -16,6 +16,7 @@ export const getFavouritesSuccess = () => {
 
 export const getFavouritesError = (err) => {
 	return {
-		type: GET_FAVOURITES_ERROR
+		type: GET_FAVOURITES_ERROR,
+		payload: err
 	}
 };

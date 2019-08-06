@@ -61,14 +61,12 @@ class RecipeForm extends React.Component {
 
 	componentWillMount() {
 		ValidatorForm.addValidationRule('gtZero', (value) => {
-			if (!isNaN(value) && value > 0) {
-				return true;
-			}
-			return false;
+			return !isNaN(value) && value > 0;
+
 		});
 	}
 
-	addNewStep() {
+	addNewStep(event) {
 		event.preventDefault();
 
 		let recipe = this.state.recipe;
@@ -83,7 +81,6 @@ class RecipeForm extends React.Component {
 	}
 
 	removeStep(index) {
-		event.preventDefault();
 
 		let recipe = this.state.recipe;
 
@@ -99,7 +96,6 @@ class RecipeForm extends React.Component {
 	}
 
 	removeIngredient(id) {
-		event.preventDefault();
 
 		let recipe = this.state.recipe;
 

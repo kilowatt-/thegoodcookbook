@@ -42,7 +42,8 @@ class RecipeCards extends Component {
     Session.set('recipePage', PAGE_SIZE);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  // noinspection JSUnusedLocalSymbols
+    componentDidUpdate(prevProps, prevState, snapshot) {
       Session.set('favourites', this.props.currentTab === NavBarTabs.FAVORITES);
 
       if (this.props.currentTab === NavBarTabs.FAVORITES) {
