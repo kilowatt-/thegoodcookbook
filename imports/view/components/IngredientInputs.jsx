@@ -1,6 +1,4 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
 import {UOM} from '../../model/UnitOfMeasurement.js';
 import MenuItem from '@material-ui/core/MenuItem';
 import {TextValidator} from 'react-material-ui-form-validator';
@@ -29,7 +27,7 @@ class IngredientInputs extends React.Component {
 		return (
 				keys.map((uom, index) => {
 
-					let menuKey = uom;
+
 					return (
 
 						<MenuItem key={uom} value={values[index]}>{values[index]}</MenuItem>
@@ -57,8 +55,8 @@ class IngredientInputs extends React.Component {
 				<div key={index} className="single-ingredient">
 					<div className="amount-input">
 						<TextValidator className="ingredient-amount-input"
-													validators={['required', 'isNumber']}
-													errorMessages={['Required', 'Must be a number']}
+													validators={['required', 'gtZero']}
+													errorMessages={['Required', 'Must be greater than zero']}
 													key={qtyId}
 													name={qtyId}
 													onChange={this.props.handleChange}

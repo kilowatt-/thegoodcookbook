@@ -2,8 +2,8 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import CommonDialog from './CommonDialog.jsx';
 import RecipeForm from './RecipeForm.jsx';
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
+import {Meteor} from 'meteor/meteor';
+import {withTracker} from 'meteor/react-meteor-data';
 import '../style/RandomRecipeButton.css';
 
 class PostRecipeButton extends React.Component {

@@ -6,7 +6,7 @@ import {UOM} from "../imports/model/UnitOfMeasurement";
 import {Difficulty} from "../imports/model/Difficulty";
 import {FoodType} from "../imports/model/FoodType";
 import {newMap} from "./main";
-import {findNearestNeighbours, updateNearestNeighboursForRecipe} from "./util/recommender";
+import {findNearestNeighbours} from "./util/recommender";
 
 const TESTING_MODE = process.env.TESTING_MODE;
 
@@ -154,6 +154,7 @@ describe("Recommender tests", function() {
     });
 
     it("updating recipe so that they are so dissimilar removes similarity rating on both ends", function() {
+        // noinspection JSUnusedLocalSymbols
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);
 

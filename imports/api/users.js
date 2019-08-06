@@ -1,5 +1,5 @@
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import {Meteor} from 'meteor/meteor';
+import {Accounts} from 'meteor/accounts-base';
 
 Meteor.methods({
   'createUser'(user) {
@@ -9,4 +9,4 @@ Meteor.methods({
   			throw err;
   	});
   },
-})
+});

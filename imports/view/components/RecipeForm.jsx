@@ -1,5 +1,5 @@
-import { Difficulty } from '../../model/Difficulty.js';
-import { FoodType } from '../../model/FoodType.js'
+import {Difficulty} from '../../model/Difficulty.js';
+import {FoodType} from '../../model/FoodType.js'
 import React from 'react';
 import '../style/RecipeForm.css';
 import Button from '@material-ui/core/Button';
@@ -11,9 +11,8 @@ import {NO_IMAGE_URL} from '../../model/NoImgUrl'
 import IngredientInputs from './IngredientInputs.jsx';
 import StepsInput from './StepsInput'
 import QuantityIngredientMap from '../../model/QuantityIngredientMap';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {connect} from 'react-redux';
-import { Meteor } from 'meteor/meteor';
+import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import {Meteor} from 'meteor/meteor';
 import FormLabel from '@material-ui/core/FormLabel';
 
 class RecipeForm extends React.Component {
@@ -60,7 +59,14 @@ class RecipeForm extends React.Component {
 
 	}
 
-	addNewStep() {
+	componentWillMount() {
+		ValidatorForm.addValidationRule('gtZero', (value) => {
+			return !isNaN(value) && value > 0;
+
+		});
+	}
+
+	addNewStep(event) {
 		event.preventDefault();
 
 		let recipe = this.state.recipe;
@@ -75,7 +81,6 @@ class RecipeForm extends React.Component {
 	}
 
 	removeStep(index) {
-		event.preventDefault();
 
 		let recipe = this.state.recipe;
 
@@ -91,7 +96,6 @@ class RecipeForm extends React.Component {
 	}
 
 	removeIngredient(id) {
-		event.preventDefault();
 
 		let recipe = this.state.recipe;
 

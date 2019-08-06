@@ -19,7 +19,7 @@ class Recipe {
 		this.createdBy = '';
 		this.avgRating = 0;
 		this.numRatings = 0;
-		this.favouriteCount = 0;
+
 	}
 
 	addCreatedBy() {

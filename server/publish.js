@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
-import {findNearestNeighbours, getRecommendedForUser, updateNearestNeighboursForRecipe} from "./util/recommender";
+import {findNearestNeighbours, getRecommendedForUser} from "./util/recommender";
+import Reviews from '/imports/api/reviews';
 
 function publish() {
 	Meteor.publish('recipes', () => {

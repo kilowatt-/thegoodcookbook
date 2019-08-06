@@ -1,4 +1,4 @@
-const DEFAULT_INPUT = {searchType:'Name'}
+const DEFAULT_INPUT = {searchType:'Name'};
 
 export const inputReducer = (inputs = DEFAULT_INPUT, action) => {
 	if (action.type === "UPDATE_INPUT") {

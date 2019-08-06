@@ -1,16 +1,16 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import '../style/Login.css';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import {withTracker} from 'meteor/react-meteor-data';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 import RegistrationForm from './RegistrationForm';
 import CommonDialog from './CommonDialog';
 import LoginForm from './LoginForm';
 import Icon from '@material-ui/core/Icon';
-import {openLoginDialog, closeLoginDialog, openSignupDialog, closeSignupDialog} from '../../controller/actions/user.js';
-import { browseAll } from '../../controller/actions/navBar.js';
+import {closeLoginDialog, closeSignupDialog, openLoginDialog, openSignupDialog} from '../../controller/actions/user.js';
+import {browseAll} from '../../controller/actions/navBar.js';
 
 class UserProfileTab extends React.Component {
 
@@ -38,12 +38,12 @@ class UserProfileTab extends React.Component {
 		this.props.openLoginDialog();
 	}
 
-	closeRegistrationForm() {
+	closeRegistrationForm(event) {
 		event.preventDefault();
 		this.props.closeSignupDialog();
 	}
 
-	closeLoginForm() {
+	closeLoginForm(event) {
 		event.preventDefault();
 		this.props.closeLoginDialog();
 	}

@@ -1,4 +1,4 @@
-import { GET_FAVOURITES_BEGIN, GET_FAVOURITES_SUCCESS, GET_FAVOURITES_ERROR } from "../actions/favourites";
+import {GET_FAVOURITES_BEGIN, GET_FAVOURITES_ERROR, GET_FAVOURITES_SUCCESS} from "../actions/favourites";
 
 const INITIAL_STATE = {
 	loading: false,
@@ -13,22 +13,18 @@ export const favouritesReducer  = (state = INITIAL_STATE, action) => {
 				loading: true,
 				error: null
 			};
-			break;
 		case GET_FAVOURITES_SUCCESS:
 			return {
 				loading: false,
 				error: null
 			};
-			break;
 		case GET_FAVOURITES_ERROR:
 			return {
 				loading: false,
 				error: action.payload
 			};
-			break;
 		default:
 			return state;
-			break;
 	}
 
 };

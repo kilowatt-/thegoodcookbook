@@ -1,15 +1,7 @@
-import React, { Component } from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { withStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
+import {withTracker} from 'meteor/react-meteor-data';
 import CommonDialog from './CommonDialog'
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -17,9 +9,10 @@ import '../style/RecipeDetails.css';
 import RecipeReviews from './RecipeReviews';
 import EditRecipeButton from './EditRecipeButton';
 import Icon from '@material-ui/core/Icon';
-import { Session } from 'meteor/session'
+import {Session} from 'meteor/session'
 import Recipe from "../../model/Recipe";
 import Tooltip from '@material-ui/core/Tooltip';
+import getStars from "../stars";
 
 class RecipeDetails extends Component {
   constructor(props) {
@@ -72,7 +65,7 @@ class RecipeDetails extends Component {
         </div>
         <div className="stars-hearts">
           <div className="ratings-stars">
-            {this.getStars(this.props.recipe.avgRating)}
+            {getStars(this.props.recipe.avgRating, "detail")}
           </div>
           <div className="title-favourite-button">
             {this.isInFavourites(this.props.recipe) ?
@@ -156,19 +149,6 @@ class RecipeDetails extends Component {
     } else {
       return (<li key={0}>{procedure}</li>);
     }
-  }
-
-  getStars(rating) {
-    let numStars = 0;
-    let stars = [];
-    for(let i = 0; i < rating; i++) {
-      stars.push(<Icon color="primary" fontSize="large">star</Icon>);
-      numStars++;
-    }
-    for(let i = numStars; i < 5; i++) {
-      stars.push(<Icon color="disabled" fontSize="large">star</Icon>)
-    }
-    return stars;
   }
 
   render() {

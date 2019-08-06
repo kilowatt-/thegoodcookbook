@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Favourites from '/imports/api/favourites';
 import Recipes from '/imports/api/recipes';
-import Reviews from '/imports/api/reviews';
+
 import Recipe from '../imports/model/Recipe.js';
 import Ingredient from '../imports/model/Ingredient.js';
 import {UOM} from '../imports/model/UnitOfMeasurement.js';
@@ -49,7 +49,7 @@ Meteor.startup(() => {
 
     let rice = new Ingredient('Rice', UOM.OUNCE);
     let peas = new Ingredient('Peas', UOM.GRAM);
-    let eggs = new Ingredient('Eggs', UOM.PIECES)
+    let eggs = new Ingredient('Eggs', UOM.PIECES);
     let sausage = new Ingredient('Sausage', UOM.PIECES);
 
     let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)],

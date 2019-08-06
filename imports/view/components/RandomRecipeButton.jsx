@@ -1,10 +1,10 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { setRecipeDetails } from '../../controller/actions/recipe.js';
-import { openDetailedView } from '../../controller/actions/detailedView.js';
+import {withTracker} from 'meteor/react-meteor-data';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {setRecipeDetails} from '../../controller/actions/recipe.js';
+import {openDetailedView} from '../../controller/actions/detailedView.js';
 import '../style/RandomRecipeButton.css';
 import {getFilter} from "./RecipeCards";
 

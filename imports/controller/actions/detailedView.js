@@ -5,10 +5,10 @@ export const openDetailedView = () => {
   return {
     type: OPEN_DETAILED_VIEW
   }
-}
+};
 
 export const closeDetailedView = () => {
   return {
     type: CLOSE_DETAILED_VIEW
   }
-}
+};

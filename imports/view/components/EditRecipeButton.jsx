@@ -2,12 +2,9 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import CommonDialog from './CommonDialog.jsx';
 import RecipeForm from './RecipeForm.jsx';
-import { Meteor } from 'meteor/meteor';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from "react-redux";
-import { compose } from 'redux';
+import {Meteor} from 'meteor/meteor';
+import {withTracker} from 'meteor/react-meteor-data';
 import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
 
 class EditRecipeButton extends React.Component {
 

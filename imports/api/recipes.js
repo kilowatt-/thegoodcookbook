@@ -1,6 +1,5 @@
-import { Mongo } from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import {Mongo} from 'meteor/mongo';
+import {Meteor} from 'meteor/meteor';
 
 export default Recipes = new Mongo.Collection('recipes');
 
@@ -12,6 +11,9 @@ Meteor.methods({
       if (err) {
         throw err;
       }
+
+      recipe._id = id;
+
         Meteor.call('findNearestNeighbours', recipe);
     });
   },
@@ -41,6 +43,7 @@ Meteor.methods({
   },
   async 'recipes.getRecipes'(filter, addFields, sort, limit) {
     return await Recipes.rawCollection().aggregate(
+        
       [
         addFields,
         {$match: filter},

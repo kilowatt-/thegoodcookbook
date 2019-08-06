@@ -1,4 +1,7 @@
 export const UOM = {
+
+	NONE: ' ',
+
 	//Volume
 	TEASPOON: 'tsp',
 	TABLESPOON: 'tbsp',
@@ -28,6 +31,9 @@ export const UOM = {
 	PIECES: 'pcs',
 	DROP: 'drops',
 	DASH: 'dash',
-	TO_TASTE: 'to taste'
+	TO_TASTE: 'to taste',
+	CLOVE: 'clove',
 
-}
+
+
+};

@@ -1,15 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { TextValidator} from 'react-material-ui-form-validator';
-import FormLabel from '@material-ui/core/FormLabel';
+import {TextValidator} from 'react-material-ui-form-validator';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import '../style/RecipeForm.css';
 
 class StepsInput extends React.Component {
-	constructor(props) {
-		super();
-	}
 
 	render() {
 		let procedure = this.props.procedure;
@@ -18,7 +13,7 @@ class StepsInput extends React.Component {
 		return (
 			procedure.map((step, index) => {
 				let stepId = "stp_" + index;
-				let btnId= "btn_stp_del_" + index
+				let btnId= "btn_stp_del_" + index;
 
 				return (
 					<div key={index} className="single-procedure-step">

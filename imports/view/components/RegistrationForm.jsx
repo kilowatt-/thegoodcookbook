@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { Meteor } from 'meteor/meteor';
-import { closeSignupDialog } from '../../controller/actions/user.js';
-import { connect } from 'react-redux';
+import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import {Meteor} from 'meteor/meteor';
+import {closeSignupDialog} from '../../controller/actions/user.js';
+import {connect} from 'react-redux';
 import Icon from '@material-ui/core/Icon';
 import FormLabel from '@material-ui/core/FormLabel';
 import {goHome} from '../../controller/actions/navBar.js';
@@ -64,7 +64,7 @@ class RegistrationForm extends React.Component {
 				this.setState({
 					signingUp: false,
 					loggingIn: true
-				})
+				});
 				Meteor.loginWithPassword(this.state.email, this.state.password);
 				this.props.callback();
 				this.props.closeSignupDialog();

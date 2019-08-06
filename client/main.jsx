@@ -16,7 +16,8 @@ function loadOnStartup(store) {
 
 Meteor.startup(() => {
 
-	const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+	// noinspection JSUnresolvedVariable
+    const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
   render(<Provider store={store}><App /></Provider>,
   document.getElementById('react-target'));
 
@@ -24,8 +25,10 @@ Meteor.startup(() => {
 
 	Tracker.autorun(() => {
 		Meteor.subscribe('reviews');
-		Meteor.subscribe('recipes', {onReady: () => {store.dispatch(recipeLoadSuccess())}});
-		Meteor.subscribe('favourites', {onReady: () => {store.dispatch(getFavouritesSuccess())}});
+		Meteor.subscribe('recipes', {onReady: () => {store.dispatch(recipeLoadSuccess())},
+									onError: () => {store.dispatch(recipeLoadError(arguments))}});
+		Meteor.subscribe('favourites', {onReady: () => {store.dispatch(getFavouritesSuccess())},
+										onError: () => {store.dispatch(getFavouritesError(arguments))}});
 		Meteor.subscribe('userData');
 	});
 

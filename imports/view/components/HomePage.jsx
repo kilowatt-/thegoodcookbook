@@ -1,4 +1,3 @@
-import RecipeCards from './RecipeCards'
 import {compose} from "redux";
 import {withTracker} from "meteor/react-meteor-data";
 import {Meteor} from "meteor/meteor";
@@ -27,7 +26,7 @@ class HomePage extends React.Component {
             recommendations: [],
             numFavourites: 0,
             inDetailedView: false
-        }
+        };
 
         this.openDetailedView = this.openDetailedView.bind(this);
         this.closeRecipeDetails = this.closeRecipeDetails.bind(this);
@@ -38,7 +37,8 @@ class HomePage extends React.Component {
         this.updateCards();
     }
 
-    componentDidUpdate(prevProps) {
+    // noinspection JSUnusedLocalSymbols
+    componentDidUpdate(prevProps, prevState, snapshot) {
       if (this.props.user !== prevProps.user || (prevProps.favourites && this.props.favourites
           && this.props.favourites.length !== prevProps.favourites.length)) {
             this.updateCards();
@@ -184,17 +184,18 @@ const mapStateToProps = (state) => {
         currentTab: state.currentTab,
         dialogOpen: state.detailedViewOpened
     }
-}
+};
 
 const NUM_RECIPES = 5;
 
 export default compose(
     withTracker(() => {
+        // noinspection JSUnresolvedVariable
         return {
             user: Meteor.user(),
             favourites: Favourites.findOne({_id: Meteor.userId()}),
-            topRated: Recipes.find({}, {sort: {avgRating: -1}, limit: NUM_RECIPES}).fetch(),
-            mostRecent: Recipes.find({}, {sort: {dateAdded: -1}, limit: NUM_RECIPES}).fetch()
+            topRated: Recipes.find({}, {sort: {avgRating: -1, "numRatings": -1}, limit: NUM_RECIPES, nearestNeighbours: 0}).fetch(),
+            mostRecent: Recipes.find({}, {sort: {dateAdded: -1}, limit: NUM_RECIPES, nearestNeighbours: 0}).fetch()
         }
 
     }),connect(mapStateToProps, { setRecipeDetails, openDetailedView, closeDetailedView }))(HomePage);

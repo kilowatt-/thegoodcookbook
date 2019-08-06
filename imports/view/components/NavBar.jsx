@@ -1,11 +1,11 @@
 import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { Meteor } from 'meteor/meteor';
-import { browseFavorites, browseAdded, browseAll } from '../../controller/actions/navBar.js';
+import {withTracker} from 'meteor/react-meteor-data';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {Meteor} from 'meteor/meteor';
+import {browseAdded, browseAll, browseFavorites} from '../../controller/actions/navBar.js';
 import Button from '@material-ui/core/Button';
-import { NavBarTabs } from '../../model/NavBarTabs.js';
+import {NavBarTabs} from '../../model/NavBarTabs.js';
 import '../style/NavBar.css';
 
 class NavBar extends React.Component {
