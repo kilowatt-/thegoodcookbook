@@ -13,8 +13,6 @@ const App = () => (
             <RecipeCards />
             <HomePage />
         </div>
-        <div id="edamam-badge"></div>
-
 
     </div>
 );

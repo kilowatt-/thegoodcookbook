@@ -69,14 +69,14 @@ class RecipeDetails extends Component {
           </div>
           <div className="title-favourite-button">
             {this.isInFavourites(this.props.recipe) ?
-              <Tooltip title="Unfavorite">
+              <Tooltip title="Unsave">
                 <Button onClick={() => this.removeFromFavourites(this.props.recipe._id)}>
-                  <Icon className="icon-favourited-review favorite-icon">favorite</Icon>
+                  <Icon className="icon-favourited-review favorite-icon">bookmark</Icon>
                 </Button>
               </Tooltip> :
-              <Tooltip title="Favorite">
+              <Tooltip title="Save">
                 <Button onClick={() =>this.addToFavourites(this.props.recipe._id)}>
-                  <Icon className="icon-not-favourited-review favorite-icon">favorite_border</Icon>
+                  <Icon className="icon-not-favourited-review favorite-icon">bookmark_border</Icon>
                 </Button>
               </Tooltip>}
           </div>
@@ -87,7 +87,7 @@ class RecipeDetails extends Component {
             {this.props.recipe.difficulty}
           </div>
           <div className="recipe-item">
-            <span className="recipe-category-label">Time Needed: </span>
+            <span className="recipe-category-label">Prep Time: </span>
             {this.props.recipe.time + " mins"}
           </div>
           <div className="recipe-item">

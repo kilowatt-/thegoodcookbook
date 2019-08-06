@@ -23,6 +23,15 @@
   justify-content: space-between;
 }
 
+.your-review {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.your-review-title {
+  font-weight: bold;
+}
+
 .review-name {
   font-size: small;
   font-style: italic;

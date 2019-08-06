@@ -111,7 +111,7 @@ class RecipeReviews extends Component {
     });
     let currKey = 0;
     return (
-      <div className="review-container recipe-item">
+      <div className="review-container recipe-item" id="non-printable-section">
         <div className="recipe-item-label">
           <Typography variant="h6">Reviews:</Typography>
         </div>
@@ -167,7 +167,7 @@ class RecipeReviews extends Component {
            : null
         }
         { reviewByUser && !this.state.editing?
-          <div className="each-review" key={currKey++}>
+          <div className="each-review your-review" key={currKey++}>
             <div className="review-content">
               <div className="your-review-title review-part">
                 Your Review

@@ -38,6 +38,9 @@
     left: 0;
     top: 0;
   }
+  #non-printable-section * {
+    display: none;
+  }
 }
 
 .stars-hearts {

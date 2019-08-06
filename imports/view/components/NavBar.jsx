@@ -41,7 +41,7 @@ class NavBar extends React.Component {
               {this.props.currentTab === NavBarTabs.ALL? <hr></hr> : null}
             </div>
             <div className="nav-bar-buttons">
-              <Button onClick={this.browseFavorites}>My Favorites</Button>
+              <Button onClick={this.browseFavorites}>Saved Recipes</Button>
               {this.props.currentTab === NavBarTabs.FAVORITES? <hr></hr> : null}
             </div>
             <div className="nav-bar-buttons">
