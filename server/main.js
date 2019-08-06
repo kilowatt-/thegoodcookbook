@@ -49,7 +49,7 @@ Meteor.startup(() => {
 
     let rice = new Ingredient('Rice', UOM.OUNCE);
     let peas = new Ingredient('Peas', UOM.GRAM);
-    let eggs = new Ingredient('Eggs', UOM.PIECES)
+    let eggs = new Ingredient('Eggs', UOM.PIECES);
     let sausage = new Ingredient('Sausage', UOM.PIECES);
 
     let friedRice = new Recipe("Dad\'s Fried Rice", [newMap(25,rice),newMap(100,peas),newMap(150,eggs),newMap(5,sausage)],

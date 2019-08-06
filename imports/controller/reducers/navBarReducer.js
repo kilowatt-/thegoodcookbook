@@ -13,4 +13,4 @@ export const navBarReducer = (state = NavBarTabs.HOME, action) => {
   } else {
     return state;
   }
-}
+};

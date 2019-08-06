@@ -26,7 +26,7 @@ class HomePage extends React.Component {
             recommendations: [],
             numFavourites: 0,
             inDetailedView: false
-        }
+        };
 
         this.openDetailedView = this.openDetailedView.bind(this);
         this.closeRecipeDetails = this.closeRecipeDetails.bind(this);
@@ -183,7 +183,7 @@ const mapStateToProps = (state) => {
         currentTab: state.currentTab,
         dialogOpen: state.detailedViewOpened
     }
-}
+};
 
 const NUM_RECIPES = 5;
 

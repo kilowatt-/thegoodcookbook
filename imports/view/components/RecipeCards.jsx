@@ -20,7 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {Meteor} from 'meteor/meteor';
 import getStars from "../stars";
 
-const PAGE_SIZE = 8
+const PAGE_SIZE = 8;
 
 class RecipeCards extends Component {
   state = {
@@ -218,7 +218,7 @@ const mapStateToProps = (state) => {
   Session.set('searchText', state.inputReducer.searchBar);
   Session.set('chipSearch', state.inputReducer.chipSearch);
   Session.set('favourites', state.currentTab === NavBarTabs.FAVORITES);
-  Session.set('addedOnly', state.currentTab === NavBarTabs.ADDED)
+  Session.set('addedOnly', state.currentTab === NavBarTabs.ADDED);
   return {
           dialogOpen: state.detailedViewOpened,
           currentTab: state.currentTab,

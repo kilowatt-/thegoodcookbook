@@ -16,7 +16,7 @@ class StepsInput extends React.Component {
 		return (
 			procedure.map((step, index) => {
 				let stepId = "stp_" + index;
-				let btnId= "btn_stp_del_" + index
+				let btnId= "btn_stp_del_" + index;
 
 				return (
 					<div key={index} className="single-procedure-step">

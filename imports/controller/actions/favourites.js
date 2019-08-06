@@ -18,4 +18,4 @@ export const getFavouritesError = (err) => {
 	return {
 		type: GET_FAVOURITES_ERROR
 	}
-}
+};

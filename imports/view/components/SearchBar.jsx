@@ -30,7 +30,7 @@ const styles = {
 
 const SearchTypes = ['Name', 'Ingredients'].map(function(key){
     return {label: key, value: key}
-})
+});
 
 class SearchBar extends React.Component {
 
@@ -77,7 +77,7 @@ class SearchBar extends React.Component {
     getSearchBar(){
         const { classes } = this.props;
         if (this.props.searchType == 'Ingredients'){
-            this.props.updateInput(['searchBar', ''])
+            this.props.updateInput(['searchBar', '']);
             return (
                 <ChipInput
                 id="outlined-simple-start-adornment"
@@ -89,7 +89,7 @@ class SearchBar extends React.Component {
                 onChange={chips => this.props.updateInput(['chipSearch', chips])}
                 />)
         }else{
-            this.props.updateInput(['chipSearch', []])
+            this.props.updateInput(['chipSearch', []]);
             return (
                 <TextField
                     id="outlined-simple-start-adornment"
@@ -112,6 +112,6 @@ SearchBar.propTypes = {
 
 const mapStateToProps = (state) => {
 	return { searchType: state.inputReducer.searchType };
-}
+};
 
 export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(SearchBar);

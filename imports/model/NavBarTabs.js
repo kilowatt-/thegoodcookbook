@@ -3,4 +3,4 @@ export const NavBarTabs = {
 	ADDED: 'Added',
 	ALL: 'All',
 	HOME: 'Home'
-}
+};

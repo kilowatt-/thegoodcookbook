@@ -8,7 +8,7 @@ export const loginDialogReducer = (isOpen = false, action) => {
 	} else {
 		return isOpen;
 	}
-}
+};
 
 export const signupDialogReducer = (isOpen = false, action) => {
 	if (action.type === OPEN_SIGNUP) {
@@ -18,4 +18,4 @@ export const signupDialogReducer = (isOpen = false, action) => {
 	} else {
 		return isOpen;
 	}
-}
+};

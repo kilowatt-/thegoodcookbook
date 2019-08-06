@@ -8,4 +8,4 @@ export const recipeDetailedViewReducer = (isOpen = false, action) => {
 	} else {
 		return isOpen;
 	}
-}
+};

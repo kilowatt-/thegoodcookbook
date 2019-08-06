@@ -28,6 +28,6 @@ const mapStateToProps = (state) => {
   return {
     currentTab: state.currentTab
   }
-}
+};
 
 export default connect(mapStateToProps)(SearchFilterBar);

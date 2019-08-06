@@ -13,15 +13,15 @@ import '../style/SearchFilterBar.css';
 
 const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
     return {label: key, value: FoodType.FoodType[key]}
-})
+});
 
 const Difficulties = Object.keys(Difficulty.Difficulty).map(function(key){
     return {label: key, value: Difficulty.Difficulty[key]}
-})
+});
 
 const Timings = [10,20,30,40,50,60].map(function(key){
     return {label: key, value: key}
-})
+});
 
 
 
@@ -56,8 +56,8 @@ class FilterBar extends React.Component {
     }
 
     clearFilters() {
-        this.props.updateInput(['recipeType', ''])
-        this.props.updateInput(['selectedDifficulty', ''])
+        this.props.updateInput(['recipeType', '']);
+        this.props.updateInput(['selectedDifficulty', '']);
         this.props.updateInput(['selectedTiming', ''])
     }
 
@@ -147,6 +147,6 @@ const mapStateToProps = (state) => {
     return { recipeType: state.inputReducer.recipeType,
         selectedDifficulty: state.inputReducer.selectedDifficulty,
         selectedTiming: state.inputReducer.selectedTiming };
-}
+};
 
 export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(FilterBar);
