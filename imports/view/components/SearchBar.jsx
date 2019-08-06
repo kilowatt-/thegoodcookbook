@@ -76,7 +76,7 @@ class SearchBar extends React.Component {
 
     getSearchBar(){
         const { classes } = this.props;
-        if (this.props.searchType == 'Ingredients'){
+        if (this.props.searchType === 'Ingredients'){
             this.props.updateInput(['searchBar', '']);
             return (
                 <ChipInput
