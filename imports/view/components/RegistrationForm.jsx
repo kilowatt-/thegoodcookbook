@@ -33,7 +33,6 @@ class RegistrationForm extends React.Component {
 		})
 	}
 
-
 	componentWillUnmount() {
 		ValidatorForm.removeValidationRule('passwordsMatch');
 	}

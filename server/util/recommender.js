@@ -203,26 +203,28 @@ function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existin
     if (indexInNN === -1 && (nearestNeighbours.length === 0 ||
         similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity)) {
 
-        let insertionIndex = 0;
+        if (similarityRating >= TOO_DISSIMILAR_THRESHOLD && similarityRating <= TOO_SIMILAR_THRESHOLD) {
+            let insertionIndex = 0;
 
-        for (i = 0; i < nearestNeighbours.length; i++) {
+            for (i = 0; i < nearestNeighbours.length; i++) {
 
-            let currentSimilarity = nearestNeighbours[i].similarity;
+                let currentSimilarity = nearestNeighbours[i].similarity;
 
-            if (similarityRating >= currentSimilarity)
-                break;
+                if (similarityRating >= currentSimilarity)
+                    break;
+            }
+
+            if (nearestNeighbours.length >= LIMIT)
+                nearestNeighbours.pop();
+
+            nearestNeighbours.splice(insertionIndex, 0, recipeMap);
         }
-
-        if (nearestNeighbours.length >= LIMIT)
-            nearestNeighbours.pop();
-
-        nearestNeighbours.splice(insertionIndex, 0, recipeMap);
     }
 
     else if (indexInNN > -1 && nearestNeighbours[indexInNN].similarity !== similarityRating) {
         nearestNeighbours.splice(indexInNN, 1);
 
-        if (similarityRating > TOO_DISSIMILAR_THRESHOLD && similarityRating < TOO_SIMILAR_THRESHOLD) {
+        if (similarityRating >= TOO_DISSIMILAR_THRESHOLD && similarityRating <= TOO_SIMILAR_THRESHOLD) {
 
             let partitionIndex = nearestNeighbours.findIndex((elem) => {
                     return elem.similarity <= similarityRating;

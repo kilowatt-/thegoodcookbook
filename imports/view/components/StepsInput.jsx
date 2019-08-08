@@ -3,6 +3,7 @@ import {TextValidator} from 'react-material-ui-form-validator';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import '../style/RecipeForm.css';
+import {MAX_INSTRUCTION_LENGTH} from "./RecipeForm";
 
 class StepsInput extends React.Component {
 
@@ -22,8 +23,8 @@ class StepsInput extends React.Component {
 						</div>
 						<TextValidator multiline
 													fullWidth
-													validators={['required']}
-													errorMessages={['Required']}
+													validators={['required', 'maxStringLength:' + MAX_INSTRUCTION_LENGTH]}
+													errorMessages={['Required', 'Too long']}
 													key={stepId}
 													name={stepId}
 													onChange={ this.props.handleChange }

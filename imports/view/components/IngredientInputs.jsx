@@ -6,6 +6,7 @@ import '../style/RecipeForm.css';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
+import {MAX_INGREDIENT_LENGTH} from "./RecipeForm";
 
 class IngredientInputs extends React.Component {
 
@@ -55,8 +56,8 @@ class IngredientInputs extends React.Component {
 				<div key={index} className="single-ingredient">
 					<div className="amount-input">
 						<TextValidator className="ingredient-amount-input"
-													validators={['required', 'gtZero']}
-													errorMessages={['Required', 'Must be greater than zero']}
+													validators={['required', 'minNumber:0']}
+													errorMessages={['Required', 'Quantity must be greater than 0']}
 													key={qtyId}
 													name={qtyId}
 													onChange={this.props.handleChange}
@@ -71,8 +72,8 @@ class IngredientInputs extends React.Component {
 										{this.renderMenuItems()}
 										</TextField>
 					</div>
-					<TextValidator validators={['required']}
-												errorMessages={['Required']}
+					<TextValidator validators={['required',  'maxStringLength:' + MAX_INGREDIENT_LENGTH]}
+												errorMessages={['Required', 'Name too long']}
 												className="ingredient-name-input"
 												key={ingredientId}
 												name={ingredientId}
