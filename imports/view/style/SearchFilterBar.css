@@ -34,3 +34,7 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-formControl.MuiInputBase-adornedStart.MuiOutlinedInput-adornedStart {
+  width: 100%;
+}

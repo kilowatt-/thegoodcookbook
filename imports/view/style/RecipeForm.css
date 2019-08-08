@@ -99,3 +99,7 @@ div.submit_form {
 .MuiFormControl-root.MuiTextField-root.ingredient-amount-select {
 	width: 100%;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.MuiRadio-colorPrimary.Mui-checked.MuiIconButton-colorPrimary{
+	color: #A5AD8B;
+}
