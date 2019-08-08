@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import {withStyles} from '@material-ui/core/styles';
+import {MAX_INGREDIENT_LENGTH} from "./RecipeForm";
 
 const theme = createMuiTheme({
   overrides: {
@@ -87,47 +88,45 @@ class IngredientInputs extends React.Component {
 				let btnId = 'btn_' + index;
 
 				return (
-					<ThemeProvider theme={theme}>
-    				<div key={index} className="single-ingredient">
-    					<div className="amount-input">
-    						<TextValidator className="ingredient-amount-input"
-    													validators={['required', 'gtZero']}
-    													errorMessages={['Required', 'Must be greater than zero']}
-    													key={qtyId}
-    													name={qtyId}
-    													onChange={this.props.handleChange}
-    													value={ingredient.quantity}/>
-    						<TextField key={uomId}
-    										select
-    										name={uomId}
-    										className="ingredient-amount-select"
-    										onChange={ this.props.handleChange }
-    										value={ingredient.ingredient.uom}
-    										variant="outlined"
-    										InputProps={{
-                          classes: {
-                            root: classes.cssOutlinedInput,
-                            focused: classes.cssFocused,
-                            notchedOutline: classes.notchedOutline,
-                          }}}>
-    										{this.renderMenuItems()}
-    										</TextField>
-    					</div>
-    					<TextValidator validators={['required']}
-    												errorMessages={['Required']}
-    												className="ingredient-name-input"
-    												key={ingredientId}
-    												name={ingredientId}
-    												onChange={ this.props.handleChange }
-    												value={ingredient.ingredient.name}
-    												fullWidth />
-    					{index > 0 ?
-    						<Tooltip title="Delete Ingredient">
-    								<Icon className="icon-delete" onClick={() => this.removeIngredient(index)} key={btnId} name={btnId}>close</Icon>
-    						</Tooltip>:
-    						null}
-    				</div>
-				</ThemeProvider>
+				<div key={index} className="single-ingredient">
+					<div className="amount-input">
+						<TextValidator className="ingredient-amount-input"
+													validators={['required', 'minNumber:0']}
+													errorMessages={['Required', 'Quantity must be greater than 0']}
+													key={qtyId}
+													name={qtyId}
+													onChange={this.props.handleChange}
+													value={ingredient.quantity}/>
+						<TextField key={uomId}
+										select
+										name={uomId}
+										className="ingredient-amount-select"
+										onChange={ this.props.handleChange }
+										value={ingredient.ingredient.uom}
+										variant="outlined"
+                    InputProps={{
+                                classes: {
+                                  root: classes.cssOutlinedInput,
+                                  focused: classes.cssFocused,
+                                  notchedOutline: classes.notchedOutline,
+                                }}}>
+										{this.renderMenuItems()}
+										</TextField>
+					</div>
+					<TextValidator validators={['required',  'maxStringLength:' + MAX_INGREDIENT_LENGTH]}
+												errorMessages={['Required', 'Name too long']}
+												className="ingredient-name-input"
+												key={ingredientId}
+												name={ingredientId}
+												onChange={ this.props.handleChange }
+												value={ingredient.ingredient.name}
+												fullWidth />
+					{index > 0 ?
+						<Tooltip title="Delete Ingredient">
+								<Icon className="icon-delete" onClick={() => this.removeIngredient(index)} key={btnId} name={btnId}>close</Icon>
+						</Tooltip>:
+						null}
+				</div>
 				)
 			})
 			)
