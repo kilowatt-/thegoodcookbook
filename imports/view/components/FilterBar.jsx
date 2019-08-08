@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import FoodType from '../../model/FoodType.js';
 import Difficulty from '../../model/Difficulty.js';
 import '../style/SearchFilterBar.css';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 
 // noinspection JSUnresolvedVariable
@@ -25,7 +27,13 @@ const Timings = [10,20,30,40,50,60].map(function(key){
 });
 
 
-
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#A5AD8B',
+    },
+  }
+});
 
 const styles = {
     container: {
@@ -40,6 +48,17 @@ const styles = {
     menu: {
         width: 200,
     },
+    underline: {
+    '&:before': {
+      borderBottomColor: 'white',
+    },
+    '&:after': {
+      borderBottomColor: 'white',
+    },
+    '&:hover:before': {
+      borderBottomColor: ['white', '!important'],
+    },
+  },
 };
 
 
@@ -65,6 +84,7 @@ class FilterBar extends React.Component {
     FilterFields() {
         const { classes } = this.props;
         return (
+          <ThemeProvider theme={theme}>
             <form className={classes.container} noValidate autoComplete="off">
                 <TextField
                     id="filled-select-recipe"
@@ -80,8 +100,7 @@ class FilterBar extends React.Component {
                     }}
                     helperText="Recipe Type"
                     margin="normal"
-                    variant="filled"
-                >
+                    variant="filled">
                     {FoodTypes.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
@@ -102,8 +121,7 @@ class FilterBar extends React.Component {
                     }}
                     helperText="Difficulty"
                     margin="normal"
-                    variant="filled"
-                >
+                    variant="filled">
                     {Difficulties.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
@@ -112,32 +130,30 @@ class FilterBar extends React.Component {
                     <MenuItem key='' value=''></MenuItem>
                 </TextField>
                 <TextField
-                id="filled-select-timing"
-                select
-                className={classes.textField}
-                value={this.props.selectedTiming}
-                onChange={event => this.props.updateInput(['selectedTiming', event.target.value])}
-                SelectProps={{
-                    MenuProps: {
-                        className: classes.menu,
-                    },
-                }}
-                helperText="Time Needed"
-                margin="normal"
-                variant="filled"
-            >
+                  id="filled-select-timing"
+                  select
+                  className={classes.textField}
+                  value={this.props.selectedTiming}
+                  onChange={event => this.props.updateInput(['selectedTiming', event.target.value])}
+                  SelectProps={{
+                      MenuProps: {
+                          className: classes.menu,
+                      },
+                  }}
+                  helperText="Time Needed"
+                  margin="normal"
+                  variant="filled">
                 {Timings.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                          {"<" + option.label}
                     </MenuItem>
                 ))}
                 <MenuItem key='' value=''></MenuItem>
-            </TextField>
-            {/*<Button variant='contained' color='default' onClick= { this.clearFilters.bind(this) }>Clear All</Button>*/}
+                </TextField>
             </form>
+          </ThemeProvider>
         )
     }
-
 }
 
 FilterBar.propTypes = {

@@ -14,6 +14,17 @@ import QuantityIngredientMap from '../../model/QuantityIngredientMap';
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import {Meteor} from 'meteor/meteor';
 import FormLabel from '@material-ui/core/FormLabel';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+    cssOutlinedInput: {
+      "&$cssFocused $notchedOutline": {
+        borderColor: "#A5AD8B"
+      }
+    },
+    notchedOutline: {},
+    cssFocused: {},
+  };
 
 class RecipeForm extends React.Component {
 
@@ -206,6 +217,7 @@ class RecipeForm extends React.Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		return (
 			<div className="submit_form">
 			{ !this.props.closing ?
@@ -219,7 +231,14 @@ class RecipeForm extends React.Component {
 												onChange={ this.handleChange }
 												value = { this.state.recipe.recipeName }
 												fullWidth
-												variant="outlined"/>
+												variant="outlined"
+												InputProps={{
+      				            classes: {
+      				              root: classes.cssOutlinedInput,
+      				              focused: classes.cssFocused,
+      				              notchedOutline: classes.notchedOutline,
+      				            }
+      				          }}/>
 				</div>
 				<div className="difficulty-input recipe-form-input">
 					<FormLabel component="legend">Difficulty</FormLabel>
@@ -273,7 +292,14 @@ class RecipeForm extends React.Component {
 													onChange = { this.handleChange }
 													value={this.state.recipe.time}
 													fullWidth
-													variant="outlined"/>
+													variant="outlined"
+													InputProps={{
+      					            classes: {
+      					              root: classes.cssOutlinedInput,
+      					              focused: classes.cssFocused,
+      					              notchedOutline: classes.notchedOutline,
+      					            }
+      					          }}/>
 					</div>
 					<div className="cuisine-input recipe-form-input text-input">
 						<FormLabel component="legend">Cuisine</FormLabel>
@@ -284,7 +310,14 @@ class RecipeForm extends React.Component {
 													onChange={ this.handleChange }
 													value = { this.state.recipe.cuisine }
 													fullWidth
-													variant="outlined"/>
+													variant="outlined"
+													InputProps={{
+      					            classes: {
+      					              root: classes.cssOutlinedInput,
+      					              focused: classes.cssFocused,
+      					              notchedOutline: classes.notchedOutline,
+      					            }
+      					          }}/>
 					</div>
 				</div>
 				<div className="imgUrl-input recipe-form-input text-input">
@@ -297,7 +330,14 @@ class RecipeForm extends React.Component {
 												onChange = {this.handleChange}
 												value = {this.state.recipe.imgUrl === NO_IMAGE_URL? '' : this.state.recipe.imgUrl }
 												fullWidth
-												variant="outlined"/>
+												variant="outlined"
+												InputProps={{
+      				            classes: {
+      				              root: classes.cssOutlinedInput,
+      				              focused: classes.cssFocused,
+      				              notchedOutline: classes.notchedOutline,
+      				            }
+      				          }}/>
 				</div>
 				<div className="ingredients-input recipe-form-input">
 					<FormLabel component="legend">Ingredients</FormLabel>
@@ -326,4 +366,4 @@ class RecipeForm extends React.Component {
 	}
 }
 
-export default RecipeForm;
+export default withStyles(styles)(RecipeForm);

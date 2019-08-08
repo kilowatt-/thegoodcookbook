@@ -71,7 +71,7 @@
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #d9cebf;
+  background: #c8b8a3;
   border-radius: 10px;
 }
 
@@ -98,4 +98,5 @@
   padding-top: 12px;
   padding-bottom: 12px;
   font-weight: bold;
+  color: dimgray;
 }

@@ -8,6 +8,20 @@ import {updateInput} from "../../controller/actions/input.js";
 import PropTypes from 'prop-types';
 import ChipInput from 'material-ui-chip-input';
 import '../style/SearchFilterBar.css';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        "&$focused": {
+          color: "rgba(0, 0, 0, 0.54)"
+        }
+      }
+    }
+  }
+});
 
 const styles = {
     container: {
@@ -25,8 +39,18 @@ const styles = {
     searchIngredients:{
         margin: 0,
         marginTop: 8
-    }
-};
+    },
+    cssOutlinedInput: {
+      "&$cssFocused $notchedOutline": {
+        borderColor: "#A5AD8B"
+      },
+      '& label.Mui-focused': {
+        color: 'green !important',
+      }
+    },
+    notchedOutline: {},
+    cssFocused: {},
+  };
 
 const SearchTypes = ['Name', 'Ingredients'].map(function(key){
     return {label: key, value: key}
@@ -48,6 +72,7 @@ class SearchBar extends React.Component {
     TextFields() {
         const { classes } = this.props;
         return (
+          <ThemeProvider theme={theme}>
             <form className={classes.container} action="javascript:void(-1)" noValidate autoComplete="off">
                 <TextField
                     id="outlined-select-search"
@@ -62,7 +87,13 @@ class SearchBar extends React.Component {
                     }}
                     margin="normal"
                     variant="outlined"
-                >
+                    InputProps={{
+                      classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                      }
+                    }}>
                     {SearchTypes.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                             {option.label}
@@ -71,6 +102,7 @@ class SearchBar extends React.Component {
                 </TextField>
                 {this.getSearchBar()}
             </form>
+            </ThemeProvider>
         )
     }
 
@@ -87,7 +119,13 @@ class SearchBar extends React.Component {
                 variant="outlined"
                 defaultValue={[]}
                 onChange={chips => this.props.updateInput(['chipSearch', chips])}
-                />)
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  }
+                }}/>)
         }else{
             this.props.updateInput(['chipSearch', []]);
             return (
@@ -98,7 +136,13 @@ class SearchBar extends React.Component {
                     fullWidth
                     variant="outlined"
                     onChange={event => this.props.updateInput(['searchBar', event.target.value])}
-                />
+                    InputProps={{
+                      classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline,
+                      }
+                    }}/>
             )
         }
 
