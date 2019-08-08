@@ -67,6 +67,7 @@ class RecipeDetails extends Component {
           <div className="ratings-stars">
             {getStars(this.props.recipe.avgRating, "detail")}
           </div>
+          {Meteor.user()?
           <div className="title-favourite-button">
             {this.isInFavourites(this.props.recipe) ?
               <Tooltip title="Unsave">
@@ -79,7 +80,7 @@ class RecipeDetails extends Component {
                   <Icon className="icon-not-favourited-review favorite-icon">bookmark_border</Icon>
                 </Button>
               </Tooltip>}
-          </div>
+          </div>: null}
         </div>
         <div className="recipe-details-category-container recipe-item">
           <div className="recipe-item">
@@ -87,7 +88,7 @@ class RecipeDetails extends Component {
             {this.props.recipe.difficulty}
           </div>
           <div className="recipe-item">
-            <span className="recipe-category-label">Prep Time: </span>
+            <span className="recipe-category-label">Time Needed: </span>
             {this.props.recipe.time + " mins"}
           </div>
           <div className="recipe-item">

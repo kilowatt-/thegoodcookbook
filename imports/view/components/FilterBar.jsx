@@ -122,7 +122,7 @@ class FilterBar extends React.Component {
                         className: classes.menu,
                     },
                 }}
-                helperText="Prep Time"
+                helperText="Time Needed"
                 margin="normal"
                 variant="filled"
             >
