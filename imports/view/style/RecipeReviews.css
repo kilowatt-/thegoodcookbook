@@ -16,7 +16,7 @@
   padding: 5px;
   border-radius: 4px;
   margin-top: 4px;
-  background-color: #E8E8E8;
+  background-color: #F0F0F0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,17 +25,16 @@
 
 .your-review {
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 0, 0, 0.23);
 }
 
 .your-review-title {
   font-weight: bold;
+  color: #A5AD8B;
 }
 
 .review-name {
-  font-size: small;
-  font-style: italic;
-  font-weight: lighter;
+  color: #A5AD8B;
 }
 
 .review-part {
@@ -70,7 +69,7 @@
 }
 
 .star-input.checked {
-  color: #3f51b5;
+  color: #A5AD8B;
 }
 
 .one-star {
@@ -112,7 +111,7 @@
 .five-star:hover ~ .two-star,
 .five-star:hover ~ .one-star,
 .five-star:hover {
-  color: #3f51b5;
+  color: #A5AD8B;
 }
 
 .review-header-section {
@@ -124,7 +123,7 @@
 
 .material-icons.MuiIcon-root.icon-delete-review {
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.4);
   font-size: 1.2rem;
 }
 

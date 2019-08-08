@@ -7,6 +7,18 @@ import {connect} from 'react-redux';
 import Icon from '@material-ui/core/Icon';
 import FormLabel from '@material-ui/core/FormLabel';
 import {goHome} from '../../controller/actions/navBar.js';
+import {compose} from 'redux';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+    cssOutlinedInput: {
+      "&$cssFocused $notchedOutline": {
+        borderColor: "#d9cebf"
+      },
+    },
+    notchedOutline: {},
+    cssFocused: {},
+  };
 
 class LoginForm extends React.Component {
 
@@ -61,6 +73,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
       {
@@ -79,11 +92,44 @@ class LoginForm extends React.Component {
           <ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
             <div className="account-input">
               <FormLabel component="legend">Email</FormLabel>
-              <TextValidator disabled={this.state.loggingIn} className="tf_email" validators={['required', 'isEmail']} errorMessages={['Required', 'Enter a valid email']} id="email" name="email"  value={this.state.email} onChange={this.handleChange} fullWidth variant="outlined"/>
+              <TextValidator disabled={this.state.loggingIn}
+                            className="tf_email"
+                            validators={['required', 'isEmail']}
+                            errorMessages={['Required', 'Enter a valid email']}
+                            id="email"
+                            name="email"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                            fullWidth
+                            variant="outlined"
+                            InputProps={{
+                              classes: {
+                                root: classes.cssOutlinedInput,
+                                focused: classes.cssFocused,
+                                notchedOutline: classes.notchedOutline,
+                              }
+                            }}/>
             </div>
             <div className="account-input">
               <FormLabel component="legend">Password</FormLabel>
-              <TextValidator disabled={this.state.loggingIn} className="tf_password" validators={['required']} errorMessages={['Required']} id="password" name="password"  value={this.state.password} type='password' onChange={this.handleChange} fullWidth variant="outlined" />
+              <TextValidator disabled={this.state.loggingIn}
+                            className="tf_password"
+                            validators={['required']}
+                            errorMessages={['Required']}
+                            id="password"
+                            name="password"
+                            value={this.state.password}
+                            type='password'
+                            onChange={this.handleChange}
+                            fullWidth
+                            variant="outlined"
+                            InputProps={{
+                              classes: {
+                                root: classes.cssOutlinedInput,
+                                focused: classes.cssFocused,
+                                notchedOutline: classes.notchedOutline,
+                              }
+                            }}/>
             </div>
             <Button disabled={this.state.loggingIn} type="submit" className="bt_login">Log In</Button><br />
             <span style={{color:"red"}}>{this.state.error}</span>
@@ -96,4 +142,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default connect(null, { closeLoginDialog, goHome })(LoginForm);
+export default compose(withStyles(styles), connect(null, { closeLoginDialog, goHome }))(LoginForm);

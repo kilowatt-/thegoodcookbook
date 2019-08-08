@@ -6,7 +6,41 @@ import '../style/RecipeForm.css';
 import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import {withStyles} from '@material-ui/core/styles';
 import {MAX_INGREDIENT_LENGTH} from "./RecipeForm";
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiInput: {
+      underline: {
+				'&:after': {
+		      borderBottomColor: `#A5AD8B`,
+		    },
+		    '&$focused:after': {
+		      borderBottomColor: `#A5AD8B`,
+		    },
+		    '&:before': {
+		      borderBottomColor: `#A5AD8B`,
+		    },
+      },
+    },
+  },
+});
+
+const styles = {
+    cssOutlinedInput: {
+      "&$cssFocused $notchedOutline": {
+        borderColor: "#A5AD8B"
+      },
+      '& label.Mui-focused': {
+        color: 'green !important',
+      }
+    },
+    notchedOutline: {},
+    cssFocused: {},
+  };
 
 class IngredientInputs extends React.Component {
 
@@ -40,6 +74,7 @@ class IngredientInputs extends React.Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 
 		let ingredients = this.props.ingredients;
 
@@ -68,7 +103,13 @@ class IngredientInputs extends React.Component {
 										className="ingredient-amount-select"
 										onChange={ this.props.handleChange }
 										value={ingredient.ingredient.uom}
-										variant="outlined">
+										variant="outlined"
+                    InputProps={{
+                                classes: {
+                                  root: classes.cssOutlinedInput,
+                                  focused: classes.cssFocused,
+                                  notchedOutline: classes.notchedOutline,
+                                }}}>
 										{this.renderMenuItems()}
 										</TextField>
 					</div>
@@ -92,4 +133,4 @@ class IngredientInputs extends React.Component {
 	}
 }
 
-export default IngredientInputs;
+export default withStyles(styles)(IngredientInputs);

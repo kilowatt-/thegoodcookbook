@@ -36,9 +36,14 @@
 	align-items: center;
 }
 
+.user-profile-icon {
+	color: dimgray;
+}
+
 .username {
 	display: flex;
 	flex-direction: row;
+	color: dimgray;
 }
 
 .log-in-text {
@@ -60,11 +65,11 @@
 
 .logout-button-text {
 	cursor: pointer;
-	color: #c8b8a3;
+	color: #A5AD8B;
 }
 
 .logout-text {
-	color: #c8b8a3;
+	color: #A5AD8B;
 }
 
 .login-form {

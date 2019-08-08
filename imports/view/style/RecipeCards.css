@@ -165,3 +165,7 @@
 .edit_recipe {
   width: 100%;
 }
+
+.no-cards-message {
+  color: dimgray;
+}

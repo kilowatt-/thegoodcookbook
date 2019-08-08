@@ -69,7 +69,7 @@ class UserProfileTab extends React.Component {
 			<div className="login">
 				{Meteor.user() ?
 					<div className="user-profile">
-						<Icon>person</Icon>
+						<Icon className="user-profile-icon">person</Icon>
 						<div className="username">
 							{Meteor.user().name}
 							<div className="logout-button">

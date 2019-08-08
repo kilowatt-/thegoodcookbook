@@ -14,6 +14,18 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import {Session} from "meteor/session";
 import getStars from "../stars";
+import {compose} from 'redux';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+    cssOutlinedInput: {
+      "&$cssFocused $notchedOutline": {
+        borderColor: "#A5AD8B"
+      },
+    },
+    notchedOutline: {},
+    cssFocused: {},
+  };
 
 class RecipeReviews extends Component {
 
@@ -110,6 +122,7 @@ class RecipeReviews extends Component {
       return review.userID === Meteor.userId()
     });
     let currKey = 0;
+    const { classes } = this.props;
     return (
       <div className="review-container recipe-item" id="non-printable-section">
         <div className="recipe-item-label">
@@ -158,7 +171,14 @@ class RecipeReviews extends Component {
                               multiline={true}
                               variant='outlined'
                               fullWidth
-                              placeholder="Write your review..."/>
+                              placeholder="Write your review..."
+                              InputProps={{
+                                classes: {
+                                  root: classes.cssOutlinedInput,
+                                  focused: classes.cssFocused,
+                                  notchedOutline: classes.notchedOutline,
+                                }
+                              }}/>
               </div>
               <Button type="submit">{this.state.editing? "Update Review" : "Submit Review"}</Button>
               {this.state.editing? <Button onClick={this.cancelEdit}>Cancel</Button> : null}
@@ -238,11 +258,11 @@ class RecipeReviews extends Component {
 
 }
 
-export default
-  withTracker(() => {
-    return {
-      reviews: Reviews.find({recipeID: Session.get('recipeID')}).fetch(),
-      user: Meteor.user(),
-      recipe: Recipes.findOne({_id: Session.get('recipeID')})
-    };
-  })(RecipeReviews);
+export default compose(withStyles(styles),
+withTracker(() => {
+  return {
+    reviews: Reviews.find({recipeID: Session.get('recipeID')}).fetch(),
+    user: Meteor.user(),
+    recipe: Recipes.findOne({_id: Session.get('recipeID')})
+  };
+}))(RecipeReviews);
