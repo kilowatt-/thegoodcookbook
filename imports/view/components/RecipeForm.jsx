@@ -15,6 +15,11 @@ import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import {Meteor} from 'meteor/meteor';
 import FormLabel from '@material-ui/core/FormLabel';
 
+export const MAX_CUISINE_TYPE_LENGTH = 50;
+export const MAX_MINUTES = 100000;
+export const MAX_INSTRUCTION_LENGTH = 1000;
+export const MAX_INGREDIENT_LENGTH = 100;
+
 class RecipeForm extends React.Component {
 
 	closeDialog() {
@@ -59,12 +64,6 @@ class RecipeForm extends React.Component {
 
 	}
 
-	componentWillMount() {
-		ValidatorForm.addValidationRule('gtZero', (value) => {
-			return !isNaN(value) && value > 0;
-
-		});
-	}
 
 	addNewStep(event) {
 		event.preventDefault();
@@ -267,8 +266,8 @@ class RecipeForm extends React.Component {
 					<div className="time-input recipe-form-input text-input">
 						<FormLabel component="legend">Time Needed (Minutes)</FormLabel>
 						<TextValidator className="recipe-input-text-box"
-													validators={['required', 'isNumber', 'minNumber:1']}
-													errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute']}
+													validators={['required', 'isNumber', 'minNumber:1', 'maxNumber:' + MAX_MINUTES]}
+													errorMessages={['Required', 'Must be a number', 'Time must be at least 1 minute', 'Too long']}
 													name="time"
 													onChange = { this.handleChange }
 													value={this.state.recipe.time}
@@ -278,8 +277,8 @@ class RecipeForm extends React.Component {
 					<div className="cuisine-input recipe-form-input text-input">
 						<FormLabel component="legend">Cuisine</FormLabel>
 						<TextValidator className="recipe-input-text-box"
-													validators={['required']}
-													errorMessages={['Required']}
+													validators={['required', 'maxStringLength:' + MAX_CUISINE_TYPE_LENGTH ]}
+													errorMessages={['Required', 'Input too long']}
 													name="cuisine"
 													onChange={ this.handleChange }
 													value = { this.state.recipe.cuisine }
