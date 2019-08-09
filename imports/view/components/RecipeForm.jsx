@@ -30,6 +30,7 @@ export const MAX_CUISINE_TYPE_LENGTH = 50;
 export const MAX_MINUTES = 100000;
 export const MAX_INSTRUCTION_LENGTH = 1000;
 export const MAX_INGREDIENT_LENGTH = 100;
+export const MAX_RECIPE_NAME_LENGTH = 64;
 
 class RecipeForm extends React.Component {
 
@@ -224,8 +225,8 @@ class RecipeForm extends React.Component {
 				<div className="recipe-name-input recipe-form-input text-input">
 					<FormLabel component="legend">Recipe Name</FormLabel>
 					<TextValidator className="recipe-input-text-box"
-												validators={['required']}
-												errorMessages={['Required']}
+												validators={['required', 'maxStringLength:' + MAX_RECIPE_NAME_LENGTH]}
+												errorMessages={['Required', 'Recipe name too long']}
 												name="recipeName"
 												onChange={ this.handleChange }
 												value = { this.state.recipe.recipeName }
