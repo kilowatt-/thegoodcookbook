@@ -289,7 +289,7 @@ export const getFilter = () => {
         filter.time = {$lt: selectedTiming}
     }
     if (searchText) {
-        filter.recipeName = {$regex: new RegExp(searchText.split("").filter(char => char.match("[A-Za-z0-9]")).join(""), "i")};
+        filter.recipeName = {$regex: new RegExp(searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), "i")};
     }
     if (favourites) {
         filter._id =
