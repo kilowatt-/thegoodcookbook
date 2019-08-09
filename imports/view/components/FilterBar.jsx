@@ -1,44 +1,44 @@
-import React from 'react';
+import React from "react";
 import {connect} from "react-redux";
-import {compose} from 'redux';
-import {withStyles} from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+import {compose} from "redux";
+import {withStyles} from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 import {updateInput} from "../../controller/actions/input.js";
-import PropTypes from 'prop-types';
-import FoodType from '../../model/FoodType.js';
-import Difficulty from '../../model/Difficulty.js';
-import '../style/SearchFilterBar.css';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import PropTypes from "prop-types";
+import FoodType from "../../model/FoodType.js";
+import Difficulty from "../../model/Difficulty.js";
+import "../style/SearchFilterBar.css";
+import {createMuiTheme} from "@material-ui/core/styles";
+import {ThemeProvider} from "@material-ui/styles";
 
 
 // noinspection JSUnresolvedVariable
-const FoodTypes = Object.keys(FoodType.FoodType).map(function(key){
+const FoodTypes = Object.keys(FoodType.FoodType).map(function (key) {
     return {label: key, value: FoodType.FoodType[key]}
 });
 
-const Difficulties = Object.keys(Difficulty.Difficulty).map(function(key){
+const Difficulties = Object.keys(Difficulty.Difficulty).map(function (key) {
     return {label: key, value: Difficulty.Difficulty[key]}
 });
 
-const Timings = [10,20,30,40,50,60].map(function(key){
+const Timings = [10, 20, 30, 40, 50, 60].map(function (key) {
     return {label: key, value: key}
 });
 
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#A5AD8B',
-    },
-  }
+    palette: {
+        primary: {
+            main: "#A5AD8B",
+        },
+    }
 });
 
 const styles = {
     container: {
-        display: 'flex',
-        flexWrap: 'nowrap',
+        display: "flex",
+        flexWrap: "nowrap",
         margin: 8
     },
     textField: {
@@ -49,16 +49,16 @@ const styles = {
         width: 200,
     },
     underline: {
-    '&:before': {
-      borderBottomColor: 'white',
+        "&:before": {
+            borderBottomColor: "white",
+        },
+        "&:after": {
+            borderBottomColor: "white",
+        },
+        "&:hover:before": {
+            borderBottomColor: ["white", "!important"],
+        },
     },
-    '&:after': {
-      borderBottomColor: 'white',
-    },
-    '&:hover:before': {
-      borderBottomColor: ['white', '!important'],
-    },
-  },
 };
 
 
@@ -76,94 +76,96 @@ class FilterBar extends React.Component {
     }
 
     clearFilters() {
-        this.props.updateInput(['recipeType', '']);
-        this.props.updateInput(['selectedDifficulty', '']);
-        this.props.updateInput(['selectedTiming', ''])
+        this.props.updateInput(["recipeType", ""]);
+        this.props.updateInput(["selectedDifficulty", ""]);
+        this.props.updateInput(["selectedTiming", ""])
     }
 
     FilterFields() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
-          <ThemeProvider theme={theme}>
-            <form className={classes.container} noValidate autoComplete="off">
-                <TextField
-                    id="filled-select-recipe"
-                    select
-                    style={{ color: 'lightgray' }}
-                    className={classes.textField}
-                    value={this.props.recipeType}
-                    onChange={event => this.props.updateInput(['recipeType', event.target.value])}
-                    SelectProps={{
-                        MenuProps: {
-                            className: classes.menu,
-                        },
-                    }}
-                    helperText="Recipe Type"
-                    margin="normal"
-                    variant="filled">
-                    {FoodTypes.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                    <MenuItem key='' value=''></MenuItem>
-                </TextField>
-                <TextField
-                    id="filled-select-difficulty"
-                    select
-                    className={classes.textField}
-                    value={this.props.selectedDifficulty}
-                    onChange={event => this.props.updateInput(['selectedDifficulty', event.target.value])}
-                    SelectProps={{
-                        MenuProps: {
-                            className: classes.menu,
-                        },
-                    }}
-                    helperText="Difficulty"
-                    margin="normal"
-                    variant="filled">
-                    {Difficulties.map(option => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                    <MenuItem key='' value=''></MenuItem>
-                </TextField>
-                <TextField
-                  id="filled-select-timing"
-                  select
-                  className={classes.textField}
-                  value={this.props.selectedTiming}
-                  onChange={event => this.props.updateInput(['selectedTiming', event.target.value])}
-                  SelectProps={{
-                      MenuProps: {
-                          className: classes.menu,
-                      },
-                  }}
-                  helperText="Time Needed"
-                  margin="normal"
-                  variant="filled">
-                {Timings.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                         {"<" + option.label}
-                    </MenuItem>
-                ))}
-                <MenuItem key='' value=''></MenuItem>
-                </TextField>
-            </form>
-          </ThemeProvider>
+            <ThemeProvider theme={theme}>
+                <form className={classes.container} noValidate autoComplete="off">
+                    <TextField
+                        id="filled-select-recipe"
+                        select
+                        style={{color: "lightgray"}}
+                        className={classes.textField}
+                        value={this.props.recipeType}
+                        onChange={event => this.props.updateInput(["recipeType", event.target.value])}
+                        SelectProps={{
+                            MenuProps: {
+                                className: classes.menu,
+                            },
+                        }}
+                        helperText="Recipe Type"
+                        margin="normal"
+                        variant="filled">
+                        {FoodTypes.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                        <MenuItem key='' value=''></MenuItem>
+                    </TextField>
+                    <TextField
+                        id="filled-select-difficulty"
+                        select
+                        className={classes.textField}
+                        value={this.props.selectedDifficulty}
+                        onChange={event => this.props.updateInput(["selectedDifficulty", event.target.value])}
+                        SelectProps={{
+                            MenuProps: {
+                                className: classes.menu,
+                            },
+                        }}
+                        helperText="Difficulty"
+                        margin="normal"
+                        variant="filled">
+                        {Difficulties.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                        <MenuItem key='' value=''></MenuItem>
+                    </TextField>
+                    <TextField
+                        id="filled-select-timing"
+                        select
+                        className={classes.textField}
+                        value={this.props.selectedTiming}
+                        onChange={event => this.props.updateInput(["selectedTiming", event.target.value])}
+                        SelectProps={{
+                            MenuProps: {
+                                className: classes.menu,
+                            },
+                        }}
+                        helperText="Time Needed"
+                        margin="normal"
+                        variant="filled">
+                        {Timings.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {"<" + option.label}
+                            </MenuItem>
+                        ))}
+                        <MenuItem key='' value=''></MenuItem>
+                    </TextField>
+                </form>
+            </ThemeProvider>
         )
     }
 }
 
 FilterBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
-    return { recipeType: state.inputReducer.recipeType,
+    return {
+        recipeType: state.inputReducer.recipeType,
         selectedDifficulty: state.inputReducer.selectedDifficulty,
-        selectedTiming: state.inputReducer.selectedTiming };
+        selectedTiming: state.inputReducer.selectedTiming
+    };
 };
 
-export default compose(withStyles(styles), connect(mapStateToProps, { updateInput }))(FilterBar);
+export default compose(withStyles(styles), connect(mapStateToProps, {updateInput}))(FilterBar);

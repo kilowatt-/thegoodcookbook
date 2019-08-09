@@ -1,32 +1,32 @@
 .header-content {
-	display: flex;
-	background-color: whitesmoke;
- 	flex-direction: row;
-	height: 100%;
-	align-items: center;
-	justify-content: space-between;
-	padding: 5px;
-	padding-left: 12px;
-	padding-right: 12px;
+    display: flex;
+    background-color: whitesmoke;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .title-and-nav-bar {
-	display: flex;
-  width: 100%;
-	align-items: center;
+    display: flex;
+    width: 100%;
+    align-items: center;
 }
 
 .title {
-	border-bottom: none;
-	vertical-align: middle;
-	left: 0;
-	top: 0;
-	padding-left: 10px;
-	font-size: xx-large;
-	font-weight: bold;
-	height: 100%;
-	display: flex;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	cursor: pointer;
+    border-bottom: none;
+    vertical-align: middle;
+    left: 0;
+    top: 0;
+    padding-left: 10px;
+    font-size: xx-large;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
