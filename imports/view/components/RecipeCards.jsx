@@ -342,7 +342,7 @@ const getSort = () => {
     return null;
 };
 
-const updateRecipes = () => {
+export const updateRecipes = () => {
     Meteor.call("recipes.getRecipes", getFilter(), getAddFields(), getSort(), Session.get("recipePage"), function (err, data) {
         if (err) {
             throw(err);
