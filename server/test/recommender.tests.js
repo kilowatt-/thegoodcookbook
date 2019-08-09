@@ -1,12 +1,12 @@
 import assert from "assert";
 import {resetDatabase} from "meteor/xolvio:cleaner";
-import Recipe from "../imports/model/Recipe";
-import Ingredient from "../imports/model/Ingredient";
-import {UOM} from "../imports/model/UnitOfMeasurement";
-import {Difficulty} from "../imports/model/Difficulty";
-import {FoodType} from "../imports/model/FoodType";
-import {newMap} from "./main";
-import {findNearestNeighbours} from "./util/recommender";
+import Recipe from "../../imports/model/Recipe";
+import Ingredient from "../../imports/model/Ingredient";
+import {UOM} from "../../imports/model/UnitOfMeasurement";
+import {Difficulty} from "../../imports/model/Difficulty";
+import {FoodType} from "../../imports/model/FoodType";
+import {newMap} from "../main";
+import {findNearestNeighbours} from "../util/recommender";
 
 const TESTING_MODE = process.env.TESTING_MODE;
 
