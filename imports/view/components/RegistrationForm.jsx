@@ -41,7 +41,7 @@ class RegistrationForm extends React.Component {
 
     componentDidMount() {
         ValidatorForm.addValidationRule("passwordsMatch", (value) => {
-            return (value === this.state.password);
+            return (value === this.state.password && value === this.state.password_verify);
         })
     }
 
@@ -106,7 +106,7 @@ class RegistrationForm extends React.Component {
                     :
                     <div className="account-form-container">
                         <Icon className="account-icon">account_circle</Icon>
-                        <ValidatorForm className="login-form" onSubmit={this.handleSubmit}>
+                        <ValidatorForm className="login-form"  instantValidate={false} onSubmit={this.handleSubmit}>
                             <div className="account-input">
                                 <FormLabel component="legend">Name</FormLabel>
                                 <TextValidator disabled={this.state.signingUp}
@@ -149,11 +149,32 @@ class RegistrationForm extends React.Component {
                                 <FormLabel component="legend">Password</FormLabel>
                                 <TextValidator disabled={this.state.signingUp}
                                                className="tf_password"
-                                               validators={["required"]}
-                                               errorMessages={["Required"]}
+                                               validators={["required", "passwordsMatch"]}
+                                               errorMessages={["Required", "Passwords must match"]}
                                                id="password"
                                                name="password"
                                                value={this.state.password}
+                                               type='password'
+                                               onChange={this.handleChange}
+                                               fullWidth
+                                               variant="outlined"
+                                               InputProps={{
+                                                   classes: {
+                                                       root: classes.cssOutlinedInput,
+                                                       focused: classes.cssFocused,
+                                                       notchedOutline: classes.notchedOutline,
+                                                   }
+                                               }}/>
+                            </div>
+                            <div className="account-input">
+                                <FormLabel component="legend">Confirm Password</FormLabel>
+                                <TextValidator disabled={this.state.signingUp}
+                                               className="tf_password_match"
+                                               validators={["required", "passwordsMatch"]}
+                                               errorMessages={["Required", "Passwords must match"]}
+                                               id="password_verify"
+                                               name="password_verify"
+                                               value={this.state.password_verify}
                                                type='password'
                                                onChange={this.handleChange}
                                                fullWidth
