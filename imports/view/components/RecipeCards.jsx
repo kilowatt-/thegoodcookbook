@@ -280,7 +280,7 @@ export const getFilter = () => {
       filter.time = {$lt:selectedTiming}
     }
     if (searchText){
-      filter.recipeName = { $regex: new RegExp(searchText, "i")}
+      filter.recipeName = { $regex:  new RegExp(searchText.split("").filter(char => char.match("[A-Za-z0-9]")).join(""), "i")};
     }
     if (favourites) {
         filter._id =

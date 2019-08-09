@@ -12,4 +12,4 @@ The root directory of the project consists of the following directories:
 * **client** - Client-facing webpages. The HTML/CSS of the main page is set up here.
 
 * **imports** - This is where all of the front-end logic is stored. Further broken down into the following directories:
-    * **api** - 
+    * **api** - This serves as 
