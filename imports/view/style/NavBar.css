@@ -6,20 +6,20 @@
 }
 
 .nav-bar-container.home-nav-bar-container {
-  padding-top: 0;
+    padding-top: 0;
 }
 
 .nav-bar {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 2fr 3fr 3fr;
-  padding-left: 12px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 3fr 3fr;
+    padding-left: 12px;
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-text {
-  width: 100%;
+    width: 100%;
 }
 
 .nav-bar-buttons {
-  width: 100%;
+    width: 100%;
 }

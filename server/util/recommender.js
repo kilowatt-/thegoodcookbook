@@ -1,6 +1,6 @@
-import Favourites from '/imports/api/favourites';
+import Favourites from "/imports/api/favourites";
 import Recipes from "../../imports/api/recipes";
-import Heap from 'heap';
+import Heap from "heap";
 import {FoodType} from "../../imports/model/FoodType";
 
 //WEIGHTS
@@ -19,7 +19,7 @@ export function findNearestNeighbours(recipe) {
 
     let recipes = Recipes.find({_id: {$ne: recipe._id}}).fetch();
 
-    let similarityHeap= new Heap((m1, m2) => {
+    let similarityHeap = new Heap((m1, m2) => {
         return m2.similarity - m1.similarity;
     });
 
@@ -75,12 +75,12 @@ function rateIngredientsSimilarity(newIngredients, existingIngredients) {
             similarity++;
     }
 
-    let matchPercentage = similarity/total;
+    let matchPercentage = similarity / total;
 
     if (otherSet.size === total)
         return matchPercentage;
     else {
-        let unmatchedPercentage = (otherSet.size - similarity)/otherSet.size;
+        let unmatchedPercentage = (otherSet.size - similarity) / otherSet.size;
 
         let otherMatch = 1 - unmatchedPercentage;
         // Do some weighting if the other set's size is more than two times the smaller set's size
@@ -88,7 +88,7 @@ function rateIngredientsSimilarity(newIngredients, existingIngredients) {
         if (otherSet.size > (setToIterate.size * 2)) {
             const MATCH_PERCENTAGE_WEIGHT = 0.5;
 
-            return matchPercentage * MATCH_PERCENTAGE_WEIGHT + otherMatch*(1 - MATCH_PERCENTAGE_WEIGHT);
+            return matchPercentage * MATCH_PERCENTAGE_WEIGHT + otherMatch * (1 - MATCH_PERCENTAGE_WEIGHT);
         }
 
         return otherMatch;
@@ -201,7 +201,7 @@ function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existin
     };
 
     if (indexInNN === -1 && (nearestNeighbours.length === 0 ||
-        similarityRating > nearestNeighbours[nearestNeighbours.length-1].similarity)) {
+        similarityRating > nearestNeighbours[nearestNeighbours.length - 1].similarity)) {
 
         if (similarityRating >= TOO_DISSIMILAR_THRESHOLD && similarityRating <= TOO_SIMILAR_THRESHOLD) {
             let insertionIndex = 0;
@@ -219,9 +219,7 @@ function updateNearestNeighboursForRecipe(newRecipeId, similarityRating, existin
 
             nearestNeighbours.splice(insertionIndex, 0, recipeMap);
         }
-    }
-
-    else if (indexInNN > -1 && nearestNeighbours[indexInNN].similarity !== similarityRating) {
+    } else if (indexInNN > -1 && nearestNeighbours[indexInNN].similarity !== similarityRating) {
         nearestNeighbours.splice(indexInNN, 1);
 
         if (similarityRating >= TOO_DISSIMILAR_THRESHOLD && similarityRating <= TOO_SIMILAR_THRESHOLD) {
@@ -255,7 +253,7 @@ export function getRecommendedForUser() {
 
             nearestNeighbours.forEach((map) => {
                 if (!favourites.includes(map.recipeID))
-                allRecommendations.add(map.recipeID);
+                    allRecommendations.add(map.recipeID);
             });
         }
 
@@ -272,9 +270,7 @@ export function getRecommendedForUser() {
 
                 randomizedRecommendations.push(allRecommendationsArray.splice(random, 1)[0]);
             }
-        }
-
-        else
+        } else
             randomizedRecommendations = allRecommendationsArray;
 
 
@@ -284,10 +280,11 @@ export function getRecommendedForUser() {
             sort: {"avgRating": -1, "numRatings": -1}
         }).fetch());
 
-    }
-    else {
-        return Recipes.find({"numRatings": {$gt: 0}}, {limit: LIMIT,
-            sort: {"avgRating": -1, "numRatings": -1}}).fetch();
+    } else {
+        return Recipes.find({"numRatings": {$gt: 0}}, {
+            limit: LIMIT,
+            sort: {"avgRating": -1, "numRatings": -1}
+        }).fetch();
     }
 
 }

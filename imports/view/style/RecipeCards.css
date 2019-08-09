@@ -1,170 +1,176 @@
 .card-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: stretch;
-  align-content: flex-start;
-  justify-content: flex-start;
-  width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .card {
-  display: flex;
-  flex-basis: 23.6%;
-  flex-direction: column;
-  padding: 6px;
+    display: flex;
+    flex-basis: 23.6%;
+    flex-direction: column;
+    padding: 6px;
 }
 
 .MuiCard-root {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .MuiCardContent-root.recipe-card-content-container {
-  padding-bottom: 8px;
+    padding-bottom: 8px;
 }
 
 .MuiButton-root {
-  color: peru;
+    color: peru;
 }
 
 .MuiCardContent-root {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .card-summary-info-item {
-  display: flex;
-  grid-template-columns: 1fr 4fr;
+    display: flex;
+    grid-template-columns: 1fr 4fr;
 }
 
 .card-rating-stars {
-  margin-top: 4px;
-  margin-bottom: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
 
 .missing-ingredients-card-container {
-  width: 100%;
+    width: 100%;
 }
 
 .card-summary-info {
-  display: flex;
-  flex-direction: row;
-  margin-left: 5px;
-  margin-right: 5px;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    margin-left: 5px;
+    margin-right: 5px;
+    justify-content: space-between;
 }
 
 .card-body-section {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .MuiCardMedia-media.recipe-cards-image {
-  min-height: 170px;
-  max-height: 170px;
+    min-height: 170px;
+    max-height: 170px;
 }
 
 .recipe-time-text {
-  padding-left: 5px;
+    padding-left: 5px;
 }
 
 .recipe-cards-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 8px;
-  margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .see-more-button {
-  width: 25%;
-  margin: 8px;
-  background-color: whitesmoke;
-  border-radius: 4px;
+    width: 25%;
+    margin: 8px;
+    background-color: whitesmoke;
+    border-radius: 4px;
 }
 
 .back-to-top-button {
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-  border-radius: 5px;
-  padding-top: 10px;
-  display: flex;
-  background-color: whitesmoke;
-  padding-left: 8px;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    border-radius: 5px;
+    padding-top: 10px;
+    display: flex;
+    background-color: whitesmoke;
+    padding-left: 8px;
 }
 
 .missing-ingredients-title {
-  padding: 6px;
-  font-size: 20px;
+    padding: 6px;
+    font-size: 20px;
 }
 
 .more-ingredients-flag {
-  padding: 5px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+    padding: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .MuiTypography-root.MuiTypography-h5.MuiTypography-gutterBottom {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .MuiCardActions-root.MuiCardActions-spacing {
-  background-color: whitesmoke;
+    background-color: whitesmoke;
 }
+
 /**credit to tobiasahlin.com/spinkit for this CSS spinner**/
 .spinner {
-  margin: 100px auto 0;
-  width: 70px;
-  text-align: center;
+    margin: 100px auto 0;
+    width: 70px;
+    text-align: center;
 }
 
 .spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #ffffff;
+    width: 18px;
+    height: 18px;
+    background-color: #ffffff;
 
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
 
 .spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
 }
 
 .spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
 }
 
 @-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+    0%, 80%, 100% {
+        -webkit-transform: scale(0)
+    }
+    40% {
+        -webkit-transform: scale(1.0)
+    }
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 40% {
-      -webkit-transform: scale(1.0);
-      transform: scale(1.0);
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
     }
 }
 
 .edit_recipe {
-  width: 100%;
+    width: 100%;
 }
 
 .no-cards-message {
-  color: dimgray;
+    color: dimgray;
 }

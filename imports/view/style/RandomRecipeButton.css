@@ -6,6 +6,6 @@
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-contained.random-recipe-button {
-  min-height: 60px;
-  margin-bottom: 16px;
+    min-height: 60px;
+    margin-bottom: 16px;
 }

@@ -1,105 +1,105 @@
 div.submit_form {
-	width: 100%;
+    width: 100%;
 }
 
 .bt_submit {
-	float:right;
+    float: right;
 }
 
 .recipe-form-input {
-	margin: 5px;
-	margin-bottom: 15px;
+    margin: 5px;
+    margin-bottom: 15px;
 }
 
 .time-and-cuisine {
-	display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .cuisine-input {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 .difficulty-input {
-	font-size: 1rem;
+    font-size: 1rem;
 }
 
 .radio-button-option {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .radio-group-options {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	align-items: center;
-	flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .MuiInputBase-input.MuiOutlinedInput-input {
-	padding: 10px;
+    padding: 10px;
 }
 
 .single-procedure-step {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
 }
 
 .input-container {
-	border-style: solid;
-	border-width: 1px;
-	border-color: rgba(0, 0, 0, 0.23);
-	border-radius: 4px;
-	margin-top: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.23);
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .icon-delete {
-	cursor: pointer;
-	color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.54);
 }
 
 .procedure-label {
-	padding-right: 8px;
-	color: rgba(0, 0, 0, 0.54);
+    padding-right: 8px;
+    color: rgba(0, 0, 0, 0.54);
 }
 
 .procedure-add-step {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .single-ingredient {
-	padding: 8px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .amount-input {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	margin-right: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-right: 8px;
 }
 
 .MuiFormControl-root.MuiTextField-root.ingredient-name-input.MuiFormControl-fullWidth {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .MuiFormControl-root.MuiTextField-root.ingredient-amount-input {
-	margin-right: 8px;
-	margin-top: 24px;
+    margin-right: 8px;
+    margin-top: 24px;
 }
 
 .MuiFormControl-root.MuiTextField-root.ingredient-amount-select {
-	width: 100%;
+    width: 100%;
 }
 
-.MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.MuiRadio-colorPrimary.Mui-checked.MuiIconButton-colorPrimary{
-	color: #A5AD8B;
+.MuiButtonBase-root.MuiIconButton-root.MuiRadio-root.MuiRadio-colorPrimary.Mui-checked.MuiIconButton-colorPrimary {
+    color: #A5AD8B;
 }

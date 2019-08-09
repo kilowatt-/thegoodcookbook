@@ -1,5 +1,5 @@
 import assert from "assert";
-import {resetDatabase} from 'meteor/xolvio:cleaner';
+import {resetDatabase} from "meteor/xolvio:cleaner";
 import Recipe from "../imports/model/Recipe";
 import Ingredient from "../imports/model/Ingredient";
 import {UOM} from "../imports/model/UnitOfMeasurement";
@@ -20,41 +20,39 @@ function initializeRecipes() {
     let testIngredient1 = new Ingredient("test ingredient 1", UOM.DASH);
     let testIngredient2 = new Ingredient("koel", UOM.PIECES);
 
-    benedict = new Recipe("Bob's Benedict", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)],
+    benedict = new Recipe("Bob's Benedict", [newMap(15, muffin), newMap(10, cheese), newMap(50, ham)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
-    benedict2 = new Recipe("Benedict 2", [newMap(15,muffin), newMap(10,cheese), newMap(50,ham)],
+    benedict2 = new Recipe("Benedict 2", [newMap(15, muffin), newMap(10, cheese), newMap(50, ham)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
-    benedict3 = new Recipe("Benedict 3", [newMap(15,muffin), newMap(10,eggs)],
+    benedict3 = new Recipe("Benedict 3", [newMap(15, muffin), newMap(10, eggs)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.SNACK, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
-    benedict4 = new Recipe("Benedict 4", [newMap(10,ham), newMap(12, testIngredient2)],
+    benedict4 = new Recipe("Benedict 4", [newMap(10, ham), newMap(12, testIngredient2)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
-    bird = new Recipe("Koel", [newMap(10, testIngredient1), newMap(50, testIngredient2)], ["bleh bleh bleh"], Difficulty.EASY, 50, FoodType.DINNER, "Japanese", '');
+    bird = new Recipe("Koel", [newMap(10, testIngredient1), newMap(50, testIngredient2)], ["bleh bleh bleh"], Difficulty.EASY, 50, FoodType.DINNER, "Japanese", "");
 
 }
 
-describe("Recommender tests", function() {
-    beforeEach(function() {
-        if (TESTING_MODE === '1') {
+describe("Recommender tests", function () {
+    beforeEach(function () {
+        if (TESTING_MODE === "1") {
             resetDatabase();
             initializeRecipes();
-        }
-
-        else {
+        } else {
             throw "Application is not in testing mode.";
         }
     });
 
-    it("adding just one recipe to the database should result in an empty nearest neighbours", function() {
+    it("adding just one recipe to the database should result in an empty nearest neighbours", function () {
         Recipes.insert(benedict);
 
-        assert(Array.isArray(findNearestNeighbours(benedict)), 'findNearestNeighbours is an array');
-        assert.deepEqual(findNearestNeighbours(benedict), [], 'no nearest neighbours');
+        assert(Array.isArray(findNearestNeighbours(benedict)), "findNearestNeighbours is an array");
+        assert.deepEqual(findNearestNeighbours(benedict), [], "no nearest neighbours");
     });
 
-    it("adding two exactly the same recipes should not result in them being nearest neighbours to each other", function() {
+    it("adding two exactly the same recipes should not result in them being nearest neighbours to each other", function () {
         Recipes.insert(benedict);
         Recipes.insert(benedict2);
 
@@ -67,11 +65,11 @@ describe("Recommender tests", function() {
 
         recipes = Recipes.find().fetch();
 
-        assert.deepEqual(recipes[0].nearestNeighbours, [], 'no nearest neighbours');
-        assert.deepEqual(recipes[1].nearestNeighbours, [], 'no nearest neighbours');
+        assert.deepEqual(recipes[0].nearestNeighbours, [], "no nearest neighbours");
+        assert.deepEqual(recipes[1].nearestNeighbours, [], "no nearest neighbours");
     });
 
-    it("adding two completely different recipes should not result in them being nearest neighbours to each other", function() {
+    it("adding two completely different recipes should not result in them being nearest neighbours to each other", function () {
 
 
         Recipes.insert(bird);
@@ -85,11 +83,11 @@ describe("Recommender tests", function() {
 
         recipes = Recipes.find().fetch();
 
-        assert.deepEqual(recipes[0].nearestNeighbours, [], 'no nearest neighbours for bird');
-        assert.deepEqual(recipes[1].nearestNeighbours, [], 'no nearest neighbours for benedict');
+        assert.deepEqual(recipes[0].nearestNeighbours, [], "no nearest neighbours for bird");
+        assert.deepEqual(recipes[1].nearestNeighbours, [], "no nearest neighbours for benedict");
     });
 
-    it("adding somewhat similar recipes should result in them being nearest neighbours to each other", function() {
+    it("adding somewhat similar recipes should result in them being nearest neighbours to each other", function () {
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);
 
@@ -114,7 +112,7 @@ describe("Recommender tests", function() {
         assert.equal(nnBenedict1[0].similarity, nnBenedict2[0].similarity);
     });
 
-    it("updating recipes updates the similarity on both ends", function() {
+    it("updating recipes updates the similarity on both ends", function () {
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);
 
@@ -153,7 +151,7 @@ describe("Recommender tests", function() {
         assert.equal(updatedSimilarity2[0].recipeID, benedict1Id);
     });
 
-    it("updating recipe so that they are so dissimilar removes similarity rating on both ends", function() {
+    it("updating recipe so that they are so dissimilar removes similarity rating on both ends", function () {
         // noinspection JSUnusedLocalSymbols
         let benedict1Id = Recipes.insert(benedict);
         let benedict2Id = Recipes.insert(benedict3);

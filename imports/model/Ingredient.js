@@ -1,16 +1,16 @@
 class Ingredient {
-	constructor(name, uom) {
-		this.name = name;
-		this.uom = uom;
-	}
+    constructor(name, uom) {
+        this.name = name;
+        this.uom = uom;
+    }
 
-	setName(name) {
-		this.name=name;
-	}
+    setName(name) {
+        this.name = name;
+    }
 
-	setUOM(uom) {
-		this.uom = uom;
-	}
+    setUOM(uom) {
+        this.uom = uom;
+    }
 }
 
 export default Ingredient;

@@ -1,12 +1,12 @@
-import {Meteor} from 'meteor/meteor';
-import {Accounts} from 'meteor/accounts-base';
+import {Meteor} from "meteor/meteor";
+import {Accounts} from "meteor/accounts-base";
 
 Meteor.methods({
-  'createUser'(user) {
+    "createUser"(user) {
 
-  	Accounts.createUser(user, (err) => {
-  		if (err)
-  			throw err;
-  	});
-  },
+        Accounts.createUser(user, (err) => {
+            if (err)
+                throw err;
+        });
+    },
 });

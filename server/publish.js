@@ -1,51 +1,50 @@
-import {Meteor} from 'meteor/meteor';
+import {Meteor} from "meteor/meteor";
 import {findNearestNeighbours, getRecommendedForUser} from "./util/recommender";
-import Reviews from '/imports/api/reviews';
+import Reviews from "/imports/api/reviews";
 
 function publish() {
-	Meteor.publish('recipes', () => {
-		return Recipes.find({});
-	});
+    Meteor.publish("recipes", () => {
+        return Recipes.find({});
+    });
 
-	Meteor.publish('reviews', () => {
-		return Reviews.find({});
-	});
+    Meteor.publish("reviews", () => {
+        return Reviews.find({});
+    });
 
-	Meteor.publish('favourites', function() {
-		if (this.userId)
-			return Favourites.find({_id: this.userId});
-		else
-			return this.ready();
-	});
+    Meteor.publish("favourites", function () {
+        if (this.userId)
+            return Favourites.find({_id: this.userId});
+        else
+            return this.ready();
+    });
 
-	Meteor.publish('userData', function() {
-		if (this.userId)
-			return Meteor.users.find(
-				{_id: this.userId},
-				{fields: {name: 1}});
-		
-		else 
-			return this.ready();
-	});
+    Meteor.publish("userData", function () {
+        if (this.userId)
+            return Meteor.users.find(
+                {_id: this.userId},
+                {fields: {name: 1}});
 
-	Meteor.methods({
-		getRecommended() {
-			if (this.userId)
-				return getRecommendedForUser();
+        else
+            return this.ready();
+    });
 
-			return [];
-		}
-	});
+    Meteor.methods({
+        getRecommended() {
+            if (this.userId)
+                return getRecommendedForUser();
 
-	Meteor.methods( {
-		findNearestNeighbours(recipe) {
-			if (recipe) {
-				findNearestNeighbours(recipe);
-			}
-			else
-				throw "Passed null recipe"
-		}
-	})
+            return [];
+        }
+    });
+
+    Meteor.methods({
+        findNearestNeighbours(recipe) {
+            if (recipe) {
+                findNearestNeighbours(recipe);
+            } else
+                throw "Passed null recipe"
+        }
+    })
 }
 
 export default publish;
