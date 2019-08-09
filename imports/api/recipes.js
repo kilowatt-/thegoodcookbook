@@ -42,6 +42,7 @@ Meteor.methods({
         Recipes.update(recipeID, {$inc: {"favouriteCount": -1}});
     },
     async "recipes.getRecipes"(filter, addFields, sort, limit) {
+        if (!this.connection){return}
         return await Recipes.rawCollection().aggregate(
             [
                 addFields,
