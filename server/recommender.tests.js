@@ -31,7 +31,8 @@ function initializeRecipes() {
     benedict4 = new Recipe("Benedict 4", [newMap(10, ham), newMap(12, testIngredient2)],
         ["blah blah blah"], Difficulty.HARD, 30, FoodType.BREAKFAST, "Western", "https://hips.hearstapps.com/hmg-prod/images/190319-eggs-benedict-horizontal-071-1553030422.jpg");
 
-    bird = new Recipe("Koel", [newMap(10, testIngredient1), newMap(50, testIngredient2)], ["bleh bleh bleh"], Difficulty.EASY, 50, FoodType.DINNER, "Japanese", "");
+
+    bird = new Recipe("Koel", [newMap(10, testIngredient1), newMap(50, testIngredient2), newMap(40, ham)], ["bleh bleh bleh"], Difficulty.EASY, 50, FoodType.DINNER, "Japanese", "");
 
 }
 
@@ -187,4 +188,39 @@ describe("Recommender tests", function () {
         assert.notDeepEqual(updatedSimilarity1, initialSimilarity1);
         assert.notDeepEqual(updatedSimilarity2, initialSimilarity2);
     });
+
+    it("adding dissimilar recipe does not update other recipes' nearest neighbour", function() {
+        let benedict1Id = Recipes.insert(benedict);
+
+        let recipes = Recipes.find().fetch();
+
+        findNearestNeighbours(recipes[0]);
+
+        let benedict1Recipe = Recipes.findOne({_id: benedict1Id});
+
+        let nn1 = benedict1Recipe.nearestNeighbours;
+
+        assert.equal(nn1.length, 0, "no nearest neighbours for B1");
+
+        let birdId = Recipes.insert(bird);
+
+        recipes = Recipes.find().fetch();
+
+        assert.equal(recipes.length, 2, "two recipes in database");
+
+        findNearestNeighbours(recipes[1]);
+
+        let benedict2Recipe = Recipes.findOne({_id: birdId});
+        let nn2 = benedict2Recipe.nearestNeighbours;
+
+        assert.equal(nn2.length, 0, "no nearest neighbours for B2");
+
+        benedict1Recipe = Recipes.findOne({_id: benedict1Id});
+
+        nn1 = benedict1Recipe.nearestNeighbours;
+
+        assert.equal(nn1.length, 0, "no nearest neighbours for B1 after adding B2.");
+
+    });
+
 });
