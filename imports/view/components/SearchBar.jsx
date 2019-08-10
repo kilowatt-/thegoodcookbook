@@ -109,7 +109,7 @@ class SearchBar extends React.Component {
     getSearchBar() {
         const {classes} = this.props;
         if (this.props.searchType === "Ingredients") {
-            this.props.updateInput(["searchBar", ""]);
+            if (this.props.searchBar != ""){this.props.updateInput(["searchBar", ""])}
             return (
                 <ChipInput
                     id="outlined-simple-start-adornment"
@@ -118,6 +118,7 @@ class SearchBar extends React.Component {
                     fullWidth
                     variant="outlined"
                     defaultValue={[]}
+                    value={this.props.chipSearch || []}
                     onChange={chips => this.props.updateInput(["chipSearch", chips])}
                     InputProps={{
                         classes: {
@@ -127,7 +128,7 @@ class SearchBar extends React.Component {
                         }
                     }}/>)
         } else {
-            this.props.updateInput(["chipSearch", []]);
+            if (this.props.chipSearch != ""){this.props.updateInput(["chipSearch", []])}
             return (
                 <TextField
                     id="outlined-simple-start-adornment"
@@ -135,6 +136,7 @@ class SearchBar extends React.Component {
                     placeholder="Find a Recipe"
                     fullWidth
                     variant="outlined"
+                    value={this.props.searchBar}
                     onChange={event => this.props.updateInput(["searchBar", event.target.value])}
                     InputProps={{
                         classes: {
@@ -145,7 +147,6 @@ class SearchBar extends React.Component {
                     }}/>
             )
         }
-
     }
 
 }
@@ -155,7 +156,9 @@ SearchBar.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    return {searchType: state.inputReducer.searchType};
+    return {searchType: state.inputReducer.searchType,
+            chipSearch: state.inputReducer.chipSearch,
+            searchBar: state.inputReducer.searchBar};
 };
 
 export default compose(withStyles(styles), connect(mapStateToProps, {updateInput}))(SearchBar);
