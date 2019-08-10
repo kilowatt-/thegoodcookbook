@@ -16,6 +16,7 @@ import {Session} from "meteor/session";
 import getStars from "../stars";
 import {compose} from "redux";
 import {withStyles} from "@material-ui/core/styles";
+import {updateRecipes} from "./RecipeCards";
 
 const styles = {
     cssOutlinedInput: {
@@ -68,9 +69,12 @@ class RecipeReviews extends Component {
         Meteor.call("reviews.update", newReview._id, newReview);
         let totalRating = (this.props.recipe.avgRating * this.props.recipe.numRatings) - Number(this.state.reviewToUpdateRating) + Number(this.state.review.rating);
         let newAvgRating = (this.props.recipe.numRatings > 0 ? totalRating / this.props.recipe.numRatings : 0);
-        Meteor.call("recipes.updateAvgRating", this.props.recipe._id, newAvgRating);
+        Meteor.call("recipes.updateAvgRating", this.props.recipe._id, newAvgRating, (err) => {
+            if (err)
+                throw err;
+            updateRecipes();
+        });
         this.setState({review: {recipeID: "", name: "", rating: "0", comment: ""}, editing: false});
-
     }
 
     addReview(newReview) {
@@ -80,7 +84,11 @@ class RecipeReviews extends Component {
         let numRatings = this.props.recipe.numRatings + 1;
         let newAvgRating = (numRatings > 0 ? totalRating / numRatings : 0);
         Meteor.call("recipes.updateAvgRating", this.props.recipe._id, newAvgRating);
-        Meteor.call("recipes.updateNumRatings", this.props.recipe._id, numRatings);
+        Meteor.call("recipes.updateNumRatings", this.props.recipe._id, numRatings, (err) => {
+            if (err)
+                throw err;
+            updateRecipes();
+        });
         this.setState({review: {recipeID: "", name: "", rating: "0", comment: ""}});
     }
 

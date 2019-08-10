@@ -103,6 +103,7 @@
 .missing-ingredients-title {
     padding: 6px;
     font-size: 20px;
+    color: dimgray;
 }
 
 .more-ingredients-flag {
