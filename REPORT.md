@@ -23,7 +23,7 @@ that we set out to achieve at the inception of the project, including all of our
 
 [See STRUCTURE.md](STRUCTURE.md)
  
- ###Major components of the web application
+ ### Major components of the web application
  
  The Good Cook Book consists of the following major components:
  
