@@ -4,6 +4,8 @@ Application: Recipe web app
 
 Project Title: The GoodCookBook
 
+[Project Report](REPORT.md) | [Project Structure](STRUCTURE.md)
+
 ### High Level Project Description:
 The good cook book is a web application for users to browse cooking recipes, add their own, and review other recipes. To make finding recipes easier, users can filter the recipes based on things such as cuisine, difficulty level, and even ingredients needed to make the recipe.
 
