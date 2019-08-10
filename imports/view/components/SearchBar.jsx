@@ -118,7 +118,6 @@ class SearchBar extends React.Component {
                     fullWidth
                     variant="outlined"
                     defaultValue={[]}
-                    value={this.props.chipSearch || []}
                     onChange={chips => this.props.updateInput(["chipSearch", chips])}
                     InputProps={{
                         classes: {
