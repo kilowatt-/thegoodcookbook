@@ -83,11 +83,11 @@ The recommender algorithm runs whenever a new recipe is added.
 used throughout the application. 
 - Responsible for decisions related to application structure and standards.
  - Responsible for deployment, including moving the database and application to the cloud. 
-    - This necessitated having to make changes to the website's front-end,
-including having to use Redux for implementing "loading state"
+    - Changed Redux to implement "loading" states
  - Created the "random recipe" button and recipe submission form.
  - Wrote the recommender system and algorithm.
  - Removed Meteor's default `autopublish` behaviour, and wrote the subscriptions/publications necessary for the app to function without `autopublish`.
+ - **Initiative/Added Contribution**: Implemented an entire recommender system from scratch.
  
  **Jennifer**
  
@@ -98,6 +98,7 @@ including having to use Redux for implementing "loading state"
  - Wrote the recipe detailed view component.
  - Removed Meteor's default `insecure` behaviour and wrote the Collection methods necessary for the application to function without `insecure`.
  - Created navigation bar tabs and added the "My Added Recipes" filter.
+ - **Initiative/Added Contribution**: Showed mastery of CSS and React for UI/UX/front-end development.
  
  **Ryan**
  
@@ -107,6 +108,7 @@ including having to use Redux for implementing "loading state"
  - Implemented pagination of recipe cards.
  - Abstracted Redux reducer for basic inputs
  - Implemeted various improvements to search functionality, including making ingredients search insensitive
+ - **Initiative/Added Contribution**: Showed mastery of using MongoDB for aggregations in ingredient search
  
  ### Challenges faced by group
  
