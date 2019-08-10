@@ -1,4 +1,4 @@
-##CPSC436I PROJECT REPORT
+## CPSC436I PROJECT REPORT
 
 **Project Name**: The Good Cook Book ([Heroku Link](https://thegoodcookbook.herokuapp.com))
 
