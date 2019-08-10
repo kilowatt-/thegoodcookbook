@@ -43,12 +43,14 @@ Meteor.methods({
     },
     async "recipes.getRecipes"(filter, addFields, sort, limit) {
         if (!this.connection){return}
+        var query = []
+        if (addFields){
+          query = query.concat(addFields)
+        }
+        query.push({$match: filter})
+        query.push(sort)
         return await Recipes.rawCollection().aggregate(
-            [
-                addFields,
-                {$match: filter},
-                sort
-            ].filter(x => x != null)
+            query.filter(x => x != null)
         ).limit(limit || 5).toArray();
     }
 });

@@ -310,7 +310,7 @@ export const getFilter = () => {
 const getAddFields = () => {
     const chipSearch = Session.get("chipSearch");
     if (chipSearch && chipSearch.length) {
-        return {
+        return [{
             $addFields: {
                 intersection_count: {
                     $size: {
@@ -326,9 +326,17 @@ const getAddFields = () => {
                             })
                         ]
                     }
-                }
+                },
+              ingredient_count: {
+                $size: "$ingredients"
+              }
             }
-        };
+        },
+        {$addFields: {
+          ingredient_needed_count: {
+            $subtract: ["$ingredient_count", "$intersection_count"]
+          }
+        }}];
     }
     return null;
 };
@@ -337,7 +345,7 @@ const getSort = () => {
     const chipSearch = Session.get("chipSearch");
 
     if (chipSearch && chipSearch.length) {
-        return {$sort: {intersection_count: -1}}
+        return {$sort: {ingredient_needed_count: 1}}
     }
     return null;
 };
