@@ -128,7 +128,7 @@ class SearchBar extends React.Component {
                         }
                     }}/>)
         } else {
-            if (this.props.chipSearch != ""){this.props.updateInput(["chipSearch", ""])}
+            if (this.props.chipSearch != ""){this.props.updateInput(["chipSearch", []])}
             return (
                 <TextField
                     id="outlined-simple-start-adornment"
