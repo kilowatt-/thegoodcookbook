@@ -15,6 +15,7 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import {Meteor} from "meteor/meteor";
 import FormLabel from "@material-ui/core/FormLabel";
 import {withStyles} from "@material-ui/core/styles";
+import {updateRecipes} from "./RecipeCards";
 
 const styles = {
     cssOutlinedInput: {
@@ -148,7 +149,11 @@ class RecipeForm extends React.Component {
             if (recipeToAdd.imgUrl === "") {
                 recipeToAdd.imgUrl = NO_IMAGE_URL;
             }
-            Meteor.call("recipes.updateRecipe", id, recipeToAdd);
+            Meteor.call("recipes.updateRecipe", id, recipeToAdd, (err) => {
+                if (err)
+                    throw err;
+                updateRecipes();
+            });
 
         } else {
             this.state.recipe.addCreatedBy();
@@ -156,7 +161,11 @@ class RecipeForm extends React.Component {
             if (recipeToAdd.imgUrl === "") {
                 recipeToAdd.imgUrl = NO_IMAGE_URL;
             }
-            Meteor.call("recipes.insert", recipeToAdd);
+            Meteor.call("recipes.insert", recipeToAdd, (err) => {
+                if (err)
+                    throw err;
+                updateRecipes();
+            });
         }
 
 
@@ -332,7 +341,7 @@ class RecipeForm extends React.Component {
                             <FormLabel component="legend">Image URL</FormLabel>
                             <TextValidator className="recipe-input-text-box"
                                            name="imgUrl"
-                                           validators={["matchRegexp:(http)?s?:?(\/\/[^\"']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$"]}
+                                           validators={["matchRegexp:(https):?(\/\/[^\"']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$"]}
                                            errorMessages={["Enter valid image URL"]}
                                            placeholder='Accepted extensions:  .gif, .png, .bmp, .jpg, .jpeg'
                                            onChange={this.handleChange}
