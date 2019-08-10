@@ -74,10 +74,25 @@ class RegistrationForm extends React.Component {
                     signingUp: false,
                     loggingIn: true
                 });
-                Meteor.loginWithPassword(this.state.email, this.state.password);
-                this.props.callback();
-                this.props.closeSignupDialog();
-                this.props.goHome();
+
+                Meteor.loginWithPassword(this.state.email, this.state.password,
+                    (err) => {
+                        if (err) {
+                            this.setState({
+                                error: err.reason,
+                                loggingIn: false
+                            })
+                        } else {
+                            this.setState({
+                                email: "",
+                                password: "",
+                                error: "",
+                                loggingIn: false
+                            });
+                            this.props.closeSignupDialog();
+                            this.props.goHome();
+                        }
+                    })
             }
         })
     }
