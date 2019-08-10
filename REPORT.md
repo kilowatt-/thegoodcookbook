@@ -9,7 +9,7 @@
 - Ryan Knauer
 - Kean Wah Wong
 
-###Project Summary
+### Project Summary
 
 The Good Cook Book is a recipe discovery app targeting anybody who cooks or wants to learn to cook.
  
@@ -19,7 +19,7 @@ Users are able to find new recipes based on food categories, as well as add comm
 Our initial goals can be found in [the README.md](README.md) file. We are pleased to report that we have met all of the goals
 that we set out to achieve at the inception of the project, including all of our stretch goals.
 
-###Code Structure
+### Code Structure
 
 [See STRUCTURE.md](STRUCTURE.md)
  
