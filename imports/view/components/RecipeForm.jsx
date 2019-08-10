@@ -341,7 +341,7 @@ class RecipeForm extends React.Component {
                             <FormLabel component="legend">Image URL</FormLabel>
                             <TextValidator className="recipe-input-text-box"
                                            name="imgUrl"
-                                           validators={["matchRegexp:(http)?s?:?(\/\/[^\"']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$"]}
+                                           validators={["matchRegexp:(https):?(\/\/[^\"']*\/.+\.(?:png|jpg|jpeg|gif|png|bmp))$"]}
                                            errorMessages={["Enter valid image URL"]}
                                            placeholder='Accepted extensions:  .gif, .png, .bmp, .jpg, .jpeg'
                                            onChange={this.handleChange}
