@@ -1,5 +1,7 @@
 CS 436I Project Proposal
 
+[Heroku Link](https://thegoodcookbook.herokuapp.com)
+
 Application: Recipe web app
 
 Project Title: The GoodCookBook
